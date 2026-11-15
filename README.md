@@ -115,3 +115,9 @@ the offline demo; a cold start of a hosted site without internet is not supporte
 Deployment remains pending. The Anthropic key is available in the current
 execution environment, but a live call using a synthetic demo label returned
 `network`; real-photo accuracy remains unmeasured without labeled box photos.
+
+## Deployment and remaining plan
+
+See [DEPLOYMENT.md](DEPLOYMENT.md). Milestone 6 is prepared but awaits Vercel
+access, hosted acceptance checks, and the physical wifi-off rehearsal.
+Run `npm run check:release -- <app-url>` to check a running release over HTTP.

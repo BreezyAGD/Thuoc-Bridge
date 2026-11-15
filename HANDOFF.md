@@ -1,3 +1,15 @@
+# Milestone 6 release preparation
+
+Current branch: `build/milestone-6`. See `DEPLOYMENT.md` for the full plan,
+Vercel setup, acceptance gates, and wifi-off local-server rehearsal.
+Deployment is NOT complete: no VERCEL_TOKEN or project binding is available,
+and the browser security policy rejected the Vercel browser action.
+No alternate route was used to bypass that restriction.
+
+Added `npm run check:release -- <app-url>` for real HTTP acceptance checks:
+all app pages, exact sample hashes, eight reconciliation variants, and invalid
+API input rejection. This does not claim live vision or browser verification.
+
 # Current handoff — milestone 5 completed
 
 The original milestone-3 handoff below is historical. Current work is on
