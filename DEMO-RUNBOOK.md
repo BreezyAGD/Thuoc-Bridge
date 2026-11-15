@@ -96,10 +96,10 @@ npx playwright install chromium
 npm run check:browser
 ```
 
-The 13 Chromium tests cover consent, bilingual navigation, patient messages,
+The 14 Chromium tests cover consent, bilingual navigation, patient messages,
 empty/error print states, all eight demo variants, source-photo/transcript
 panels, Letter PDFs, responsive layouts at 320/390/768 px, and reconciliation
-retry. They block external browser requests and start a separate production
+retry, plus honest real-photo strength/unit metrics. They block external browser requests and start a separate production
 server on port 3100 with the test-only network preload and empty Anthropic
 credentials. Demo scenarios must make zero extraction API calls. This is a
 browser simulation of the synthetic path, not a physical camera or wifi test.
@@ -107,3 +107,8 @@ browser simulation of the synthetic path, not a physical camera or wifi test.
 GitHub Actions runs the browser tests after the server checks. Its
 `synthetic-browser-report` artifact contains the HTML report and synthetic PDFs;
 failing tests retain screenshots and traces. Local reports are git-ignored.
+
+Cloudflare runtime check: after `npm run cf:build`, use
+`TEST_SERVER=cloudflare npm run check:browser` to run the same suite in local
+Workers. Cloudflare deployment replaces the earlier Vercel target; see
+[DEPLOYMENT.md](DEPLOYMENT.md).
