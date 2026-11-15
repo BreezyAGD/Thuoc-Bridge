@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AppHeader } from "./components/AppHeader";
-import { giveConsent, useLang } from "@/lib/client-store";
+import { giveConsent, useConsentRevision, useLang } from "@/lib/client-store";
 
 /** Consent / disclaimer screen. Vietnamese first. */
-export default function Home() {
+function ConsentForm() {
   const { t } = useLang();
   const router = useRouter();
   const [agreed, setAgreed] = useState(false);
@@ -54,4 +54,9 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export default function Home() {
+  const revision = useConsentRevision();
+  return <ConsentForm key={revision} />;
 }

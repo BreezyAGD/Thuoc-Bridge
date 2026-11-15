@@ -71,7 +71,7 @@ using `WRANGLER_LOG_PATH` and `XDG_CONFIG_HOME`. Do not copy proxy credentials.
 6. Record URL, commit, deployment status, hosted HTTP results, live extraction
    result, and rehearsal evidence before marking milestone 6 complete.
 
-For Workers Builds connected to GitHub, select `build/milestone-7` (includes the Cloudflare migration), not
+For Workers Builds connected to GitHub, select `build/milestone-8` (includes the Cloudflare migration and visit lifecycle), not
 `main` (which still holds only the initial README). Use Node 24, build command
 `npm run cf:build`, deploy command `npm run cf:deploy`, root directory `/`.
 Configure runtime secrets separately from build variables; this build needs no
@@ -97,3 +97,6 @@ Use [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md) for the local-server wifi-off demo and
 References: [OpenNext setup](https://opennext.js.org/cloudflare/get-started),
 [cache options](https://opennext.js.org/cloudflare/caching),
 [Cloudflare secrets](https://developers.cloudflare.com/workers/configuration/secrets/).
+
+[Milestone 8](MILESTONE-8.md) adds local visit reset and stale-result protection.
+Its browser regressions run against Node and Workers in the same CI workflow.

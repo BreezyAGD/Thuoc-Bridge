@@ -125,3 +125,121 @@ test("real-photo amount/unit metric stays unmeasured without labels", async ({ p
   await expect(metric.locator("dd")).toHaveText("0/0 · Not measured");
   await expect(page.getByText("0 human-labeled photos", { exact: false })).toBeVisible();
 });
+
+async function confirmNewVisit(page: Page) {
+  await page.getByRole("button", { name: "Start new visit", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Start a new visit?" })).toBeVisible();
+  await page.getByRole("button", { name: "Clear visit and continue", exact: true }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole("heading", { name: /Before you start|Trước khi bắt đầu/ })).toBeVisible();
+}
+
+test("new visit can be canceled, then clears only app visit data and consent", async ({ page }) => {
+  await consent(page);
+  await page.getByRole("checkbox", { name: "Demo mode (starts a new visit)", exact: true }).check();
+  await expect(page.getByText("Paracetamol", { exact: true })).toBeVisible();
+  await page.evaluate(() => {
+    sessionStorage.setItem("tb.visit.v3", "old fixture");
+    sessionStorage.setItem("unrelated.fixture", "keep");
+  });
+  await page.getByRole("button", { name: "Start new visit", exact: true }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(page.getByText("Paracetamol", { exact: true })).toBeVisible();
+  await confirmNewVisit(page);
+  const saved = await page.evaluate(() => ({
+    visits: Object.keys(sessionStorage).filter(k => k.startsWith("tb.visit.")),
+    consent: sessionStorage.getItem("tb.consent"),
+    unrelated: sessionStorage.getItem("unrelated.fixture"),
+    lang: localStorage.getItem("tb.lang"),
+  }));
+  expect(saved).toEqual({ visits: [], consent: null, unrelated: "keep", lang: "en" });
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Start", exact: true })).toBeDisabled();
+  await page.goto("/patient");
+  await expect(page.getByRole("link", { name: "Back to the first page" })).toBeVisible();
+  await page.goto("/clinician");
+  await expect(page.getByText("No photos yet.", { exact: false })).toBeVisible();
+  await expect(page.getByText("Norco", { exact: true })).toHaveCount(0);
+  await page.getByRole("link", { name: "Printable English summary" }).click();
+  await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeDisabled();
+});
+
+test("new visit cancels pending extraction without reviving an old product", async ({ page }) => {
+  await consent(page);
+  const started = Promise.withResolvers<void>();
+  const release = Promise.withResolvers<void>();
+  const finished = Promise.withResolvers<void>();
+  await page.route("**/api/extract", async route => {
+    started.resolve();
+    await release.promise;
+    try { await route.fulfill({ json: manifest.entries[0].result }); } catch { /* browser canceled */ }
+    finished.resolve();
+  });
+  try {
+    await page.locator('input[type="file"]').last().setInputFiles("public/demo-assets/1-paracetamol-duplication-0.jpg");
+    await started.promise;
+    const canceled = page.waitForEvent("requestfailed", { predicate: request => new URL(request.url()).pathname === "/api/extract" });
+    await confirmNewVisit(page);
+    await canceled;
+    release.resolve();
+    await finished.promise;
+    await page.goto("/clinician");
+    await expect(page.getByText("No photos yet.", { exact: false })).toBeVisible();
+    await expect(page.getByText("Reading 1 photo(s)…", { exact: true })).toHaveCount(0);
+    await page.getByRole("link", { name: "Printable English summary" }).click();
+    await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeDisabled();
+  } finally { release.resolve(); }
+});
+
+test("new visit cancels pending reconciliation before a different demo", async ({ page }) => {
+  await demo(page);
+  const started = Promise.withResolvers<void>();
+  const release = Promise.withResolvers<void>();
+  const finished = Promise.withResolvers<void>();
+  await page.route("**/api/reconcile", async route => {
+    const response = await route.fetch();
+    started.resolve();
+    await release.promise;
+    try { await route.fulfill({ response }); } catch { /* browser canceled */ }
+    finished.resolve();
+  });
+  try {
+    await page.getByRole("textbox", { name: "Add a US medicine" }).fill("warfarin");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+    await started.promise;
+    const canceled = page.waitForEvent("requestfailed", { predicate: request => new URL(request.url()).pathname === "/api/reconcile" });
+    await confirmNewVisit(page);
+    await canceled;
+    release.resolve();
+    await finished.promise;
+    await page.unroute("**/api/reconcile");
+    await demo(page, "5-herbal-no-ingredient-list");
+    await expect(page.getByText("warfarin", { exact: true })).toHaveCount(0);
+    await page.getByRole("link", { name: "Printable English summary" }).click();
+    await expect(page.getByRole("heading", { name: "Alerts requiring review (1)" })).toBeVisible();
+    await expect(page.getByText("ASSUMED paracetamol 650", { exact: true })).toHaveCount(0);
+  } finally { release.resolve(); }
+});
+
+test("editing medicines invalidates printable results until matching finishes", async ({ page }) => {
+  await demo(page);
+  const started = Promise.withResolvers<void>();
+  const release = Promise.withResolvers<void>();
+  await page.route("**/api/reconcile", async route => {
+    const response = await route.fetch();
+    started.resolve();
+    await release.promise;
+    await route.fulfill({ response });
+  });
+  try {
+    await page.getByRole("textbox", { name: "Add a US medicine" }).fill("warfarin");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+    await started.promise;
+    await page.getByRole("link", { name: "Printable English summary" }).click();
+    await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeDisabled();
+    release.resolve();
+    await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeEnabled();
+    await expect(page.getByText("warfarin", { exact: true })).toBeVisible();
+  } finally { release.resolve(); }
+});

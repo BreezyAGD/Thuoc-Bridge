@@ -96,7 +96,7 @@ npx playwright install chromium
 npm run check:browser
 ```
 
-The 14 Chromium tests cover consent, bilingual navigation, patient messages,
+The 18 Chromium tests cover consent, bilingual navigation, patient messages,
 empty/error print states, all eight demo variants, source-photo/transcript
 panels, Letter PDFs, responsive layouts at 320/390/768 px, and reconciliation
 retry, plus honest real-photo strength/unit metrics. They block external browser requests and start a separate production
@@ -112,3 +112,7 @@ Cloudflare runtime check: after `npm run cf:build`, use
 `TEST_SERVER=cloudflare npm run check:browser` to run the same suite in local
 Workers. Cloudflare deployment replaces the earlier Vercel target; see
 [DEPLOYMENT.md](DEPLOYMENT.md).
+
+Before handing the device to another participant, use **Start new visit** and
+confirm the local clearing action. The next visit starts with unchecked consent;
+previous PDFs on disk remain. See [MILESTONE-8.md](MILESTONE-8.md).

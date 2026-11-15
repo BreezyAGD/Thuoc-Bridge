@@ -49,6 +49,11 @@ const vi = {
   navClinician: "Điều dưỡng / Dược sĩ",
   talkTitle: "Điều cần nói với điều dưỡng hoặc dược sĩ",
   disclaimer: "Không thay thế cho dược sĩ.",
+  newVisit: "Bắt đầu lượt mới",
+  newVisitTitle: "Bắt đầu lượt mới?",
+  newVisitHelp: "Xóa thuốc, ảnh và kết quả của lượt này khỏi tab này rồi quay lại màn hình đồng ý. Các tệp đã tải xuống vẫn còn.",
+  clearVisit: "Xóa lượt này và tiếp tục",
+  cancel: "Hủy",
 };
 
 const en: typeof vi = {
@@ -95,6 +100,11 @@ const en: typeof vi = {
   navClinician: "Nurse / Pharmacist",
   talkTitle: "Things to tell your nurse or pharmacist",
   disclaimer: "Not a substitute for a pharmacist.",
+  newVisit: "Start new visit",
+  newVisitTitle: "Start a new visit?",
+  newVisitHelp: "Clear this visit’s medicines, photos, and results from this tab and return to consent. Downloaded files remain.",
+  clearVisit: "Clear visit and continue",
+  cancel: "Cancel",
 };
 
 export const dict: Record<Lang, typeof vi> = { vi, en };

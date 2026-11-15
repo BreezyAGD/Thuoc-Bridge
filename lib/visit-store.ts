@@ -38,6 +38,8 @@ let loaded = false;
 const listeners = new Set<() => void>();
 /** Full downscaled photos by product id, for the clinician's "verify" panel. */
 const images = new Map<string, string>();
+const extractionControllers = new Map<string, AbortController>();
+let visitEpoch = 0;
 
 function load() {
   if (loaded || typeof window === "undefined") return;
@@ -108,12 +110,16 @@ function patchProduct(id: string, patch: Partial<VisitProduct>) {
 }
 
 let reconSeq = 0;
+let reconController: AbortController | undefined;
 let reconTimer: ReturnType<typeof setTimeout> | undefined;
 
 /** Re-run guard + RxNorm normalization for everything in the visit. */
 function scheduleReconcile() {
   reconSeq++;
+  reconController?.abort();
   clearTimeout(reconTimer);
+  // Invalidate old results immediately, including during the debounce window.
+  set({ ...visit, recon: null, reconState: visit.products.length || visit.usMeds.length ? "loading" : "idle" });
   reconTimer = setTimeout(async () => {
     const seq = ++reconSeq;
     const done = visit.products.filter((p) => p.state === "done");
@@ -121,11 +127,14 @@ function scheduleReconcile() {
       set({ ...visit, recon: null, reconState: "idle" });
       return;
     }
+    const controller = new AbortController();
+    reconController = controller;
     set({ ...visit, reconState: "loading" });
     try {
       const res = await fetch("/api/reconcile", {
         method: "POST",
         headers: { "content-type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           products: done.map((p) => ({
             id: p.id,
@@ -143,14 +152,15 @@ function scheduleReconcile() {
   }, 150);
 }
 
-async function callExtract(image: string, mediaType: string, originalHash: string): Promise<ExtractResult> {
-  return extractWithCache(image, mediaType, visit.demoMode, originalHash);
+async function callExtract(image: string, mediaType: string, originalHash: string, signal: AbortSignal): Promise<ExtractResult> {
+  return extractWithCache(image, mediaType, visit.demoMode, originalHash, signal);
 }
 
 /** Each photo is one product. Photos are read in parallel. */
 export async function addPhotos(files: FileList | File[] | null) {
   if (!files) return;
   load();
+  const epoch = visitEpoch;
   await Promise.all(
     Array.from(files).map(async (file) => {
       const id = crypto.randomUUID();
@@ -162,19 +172,28 @@ export async function addPhotos(files: FileList | File[] | null) {
         patchProduct(id, { state: "image_error" });
         return;
       }
-      if (!visit.products.some((p) => p.id === id)) return;
+      if (epoch !== visitEpoch || !visit.products.some((p) => p.id === id)) return;
       images.set(id, prepared.dataUrl);
       patchProduct(id, { thumbUrl: prepared.thumbUrl });
       const originalHash = await imageHash(await file.arrayBuffer());
-      if (!visit.products.some((p) => p.id === id)) return;
-      const result = await callExtract(prepared.base64, prepared.mediaType, originalHash);
-      patchProduct(id, { state: "done", result });
-      scheduleReconcile();
+      if (epoch !== visitEpoch || !visit.products.some((p) => p.id === id)) return;
+      const controller = new AbortController();
+      extractionControllers.set(id, controller);
+      try {
+        const result = await callExtract(prepared.base64, prepared.mediaType, originalHash, controller.signal);
+        if (epoch !== visitEpoch || !visit.products.some((p) => p.id === id)) return;
+        patchProduct(id, { state: "done", result });
+        scheduleReconcile();
+      } finally {
+        extractionControllers.delete(id);
+      }
     }),
   );
 }
 
 export function removeProduct(id: string) {
+  extractionControllers.get(id)?.abort();
+  extractionControllers.delete(id);
   images.delete(id);
   set({ ...visit, products: visit.products.filter((p) => p.id !== id) });
   scheduleReconcile();
@@ -195,9 +214,24 @@ export function removeUsMed(id: string) {
 
 export function resetVisit() {
   clearTimeout(reconTimer);
+  reconController?.abort();
+  reconController = undefined;
+  for (const controller of extractionControllers.values()) controller.abort();
+  extractionControllers.clear();
   images.clear();
   reconSeq++;
+  visitEpoch++;
+  loaded = true;
   set(EMPTY);
+  try {
+    // Remove current and older app visit formats, without clearing unrelated storage.
+    for (let i = window.sessionStorage.length - 1; i >= 0; i--) {
+      const key = window.sessionStorage.key(i);
+      if (key?.startsWith("tb.visit.")) window.sessionStorage.removeItem(key);
+    }
+  } catch {
+    // In-memory reset still works when browser storage is blocked.
+  }
 }
 
 /** Loading a demo starts a fresh synthetic visit; no image is sent to the API. */

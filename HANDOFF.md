@@ -1,3 +1,17 @@
+# Milestone 8 — current release branch
+
+Current branch: `build/milestone-8`, based on `build/milestone-7`.
+Added bilingual Start new visit with cancel/confirm, local data and consent
+clearing, language retention, and fresh consent even with cached Next.js pages.
+Pending fetches are aborted; visit generation and reconciliation sequence guards
+reject old callbacks. Editing medicines invalidates results before debounce.
+No Visit storage fields changed, so the persisted v4 shape remains compatible.
+Reset removes old tb.visit.* formats, without clearing unrelated browser storage.
+Four lifecycle browser regressions supplement the existing fourteen cases; CI
+runs all eighteen against Node and local Workers. See MILESTONE-8.md.
+Cloudflare access is deferred by the user. Real photos and human reviews remain
+unavailable; those milestones are not marked complete by these changes.
+
 # Milestone 7 started (current)
 
 Branch: `build/milestone-7`, based on `build/cloudflare-milestone-6`.

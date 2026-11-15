@@ -1,5 +1,6 @@
 "use client";
 
+import { NewVisit } from "./NewVisit";
 import { demoScenarios } from "@/lib/cache";
 import { loadDemo, resetVisit, useVisit } from "@/lib/visit-store";
 import { useLang } from "@/lib/client-store";
@@ -19,5 +20,6 @@ export function DemoControls({ english = false }: { english?: boolean }) {
         {demoScenarios.map((s) => <option key={s.id} value={s.id}>{s.description}</option>)}
       </select>
     </>}
+    <NewVisit english={english} />
   </div>;
 }

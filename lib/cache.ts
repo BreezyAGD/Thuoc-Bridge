@@ -15,13 +15,14 @@ export function cachedExtraction(hash: string): ExtractResult | null {
   return parsed.success ? parsed.data : null;
 }
 
-export async function extractWithCache(image: string, mediaType: string, demoMode: boolean, originalHash?: string): Promise<ExtractResult> {
+export async function extractWithCache(image: string, mediaType: string, demoMode: boolean, originalHash?: string, signal?: AbortSignal): Promise<ExtractResult> {
   const cached = cachedExtraction(originalHash ?? await imageHash(image));
   if (demoMode) return cached ?? { status: "error", code: "bad_request", message: "No demo cache for this image." };
   try {
     const response = await fetch("/api/extract", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ image, mediaType }), signal: AbortSignal.timeout(90_000),
+      body: JSON.stringify({ image, mediaType }),
+      signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(90_000)]) : AbortSignal.timeout(90_000),
     });
     const parsed = ExtractResultSchema.safeParse(await response.json());
     if (!response.ok || !parsed.success || parsed.data.status === "error") {

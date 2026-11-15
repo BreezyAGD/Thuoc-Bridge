@@ -56,3 +56,7 @@ current milestone status. Deployment stays pending Cloudflare account access.
 Milestone 7 has started: [validation and review readiness](MILESTONE-7.md),
 including separate exact printed strength/unit scoring. Real-photo collection
 and qualified reviewer sign-offs remain pending.
+
+Milestone 8 adds [visit management](MILESTONE-8.md): Start new visit clears
+local visit data, cancels pending work, and requires fresh consent while keeping
+the language preference. Downloaded PDFs remain. Latest branch: `build/milestone-8`.

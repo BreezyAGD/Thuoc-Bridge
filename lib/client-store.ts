@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { dict, type Lang } from "./i18n";
 
 /**
@@ -25,6 +25,7 @@ function notify() {
 
 const LANG_KEY = "tb.lang";
 const CONSENT_KEY = "tb.consent";
+let consentRevision = 0;
 
 function readLang(): Lang {
   try {
@@ -47,6 +48,7 @@ export function setLang(lang: Lang) {
 /** Vietnamese first: "vi" is the default and the server-rendered language. */
 export function useLang() {
   const lang = useSyncExternalStore<Lang>(subscribe, readLang, () => "vi");
+  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   return { lang, t: dict[lang] };
 }
 
@@ -65,6 +67,17 @@ export function giveConsent() {
     // Storage blocked: the consent screen will show again.
   }
   notify();
+}
+
+export function clearConsent() {
+  consentRevision++;
+  try { window.sessionStorage.removeItem(CONSENT_KEY); } catch { /* blocked storage */ }
+  notify();
+}
+
+/** Remount the consent form after reset, including preserved App Router pages. */
+export function useConsentRevision(): number {
+  return useSyncExternalStore(subscribe, () => consentRevision, () => 0);
 }
 
 export function useConsent(): boolean {
