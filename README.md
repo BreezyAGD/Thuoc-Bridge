@@ -1,143 +1,54 @@
 # Thuốc Bridge
 
-Medication reconciliation for Vietnamese-speaking patients who take medicines
-bought in Vietnam or at Vietnamese pharmacies. A patient photographs the box;
-a nurse or pharmacist gets the active ingredients mapped to RxNorm, with
-duplication and interaction alerts.
+Medication reconciliation for Vietnamese-speaking patients who use medicines
+bought in Vietnam. A patient photographs a medicine box; a clinician reviews
+guard-checked ingredients mapped to RxNorm and deterministic, cited alerts.
 
-**Prototype. Not a substitute for a pharmacist. No real patient data.**
+**Hackathon prototype. No real patient data. Not a substitute for a pharmacist.**
 
-## Accuracy architecture
+The model transcribes visible text only. The guard verifies text provenance;
+normalization and alerts use deterministic code. Unresolved ingredients stay
+Unverified. The 27 curated rules still await qualified clinical sign-off.
+Vietnamese text awaits fluent-speaker review. Real-photo accuracy is unmeasured;
+two live synthetic image smoke checks passed and are reported separately.
 
-| Step | What | How |
-|---|---|---|
-| A. Extraction | Read only what is printed on the package | Claude vision (`claude-sonnet-5-5`), strict JSON schema, verbatim source text per field |
-| B. Normalization | Ingredient name → RxNorm RxCUI | NLM RxNav REST API, deterministic, no LLM |
-| C. Interactions | Duplications, drug–drug, herb–drug | Curated `data/interactions.json`, each rule cited and signed off |
+## Run
 
-The LLM never infers ingredients from a brand name and never creates an alert.
-Anything unresolved is shown as **Unverified**.
+Use Node.js 24. Run `npm ci`, then `npm run dev`, and open
+http://localhost:3000. The patient interface defaults to Vietnamese. Accept
+consent and enable Demo mode to use the committed synthetic samples without
+an API key. Clinician view links to a printable English summary.
 
-Between A and B a deterministic guard checks that every extracted value really
-appears in the transcript of the label. Values that fail are dropped and
-flagged; they are never shown to the patient.
+Live extraction needs `ANTHROPIC_API_KEY` in the shell or git-ignored `.env.local`.
+Only the server uses that key. Images are downscaled, sent through the API to
+Anthropic, and never written or logged server-side. On this managed environment,
+Node live calls need `NODE_USE_ENV_PROXY=1` to honor the existing HTTPS proxy.
+Keep TLS verification enabled; never commit keys, proxy credentials, or photos
+with personal details.
 
-Status: steps A, B and C plus milestone 4 demo/evaluation infrastructure are built.
-Real-photo validation is pending a local API key, box photos, and human labels.
-The printable summary and deployment remain future milestones.
+## Checks and judging
 
-**None of the 27 rules in `data/interactions.json` is clinically verified yet.**
-Each has a cited source and a machine-fetched quote from it, and shows as
-"Pending pharmacist review" until a qualified reviewer puts their name in its
-`verified_by` field. The rule list is short and curated; it is not a complete
-interaction screen.
+- `npm run check:all`: typecheck, lint, normalization, alerts, demo cache, scorer,
+  production build, and key-free offline server/API checks.
+- `npx playwright install chromium` once, then `npm run check:browser`: Chromium
+  consent, demo, responsive layout, error/retry, and PDF checks after a build.
+- `npm run check:golden`: readiness of independently labeled real photos.
+- `npm run eval`: real-photo metrics and separate synthetic alert regression.
+- `npm run check:release -- <app-url>`: HTTP acceptance of a running deployment.
 
-## Checks
+See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md) for the wifi-off local-server fallback and
+[REVIEW.md](REVIEW.md) for reviewer tasks. Longer summaries continue onto extra
+pages rather than hiding findings. The eight demo variants fit one Letter page.
 
-```bash
-npm run check:normalize   # 41 ingredient names -> expected RxCUIs (RxNav or the committed cache)
-npm run check:scenarios   # 11 demo scenarios -> exact expected alert sets
-npm run check:demo        # cached demo scenarios with all network fetches blocked
-npm run check:eval        # scoring regression checks
-npm run eval              # fresh photo extraction + deterministic alert scenarios -> eval/results.json
-npm run rules:refresh     # re-fetch RxCUIs and source quotes for every rule (needs network)
-```
+## Cloudflare Workers
 
-See `eval/README.md` for how to add hand-labeled products to `eval/golden.json`.
+Cloudflare replaces Vercel as the target. `npm run cf:build` adapts the existing
+Next.js app using OpenNext. `npm run cf:dry-run` verifies its upload bundle.
+`npm run cf:preview` serves it in the local Workers runtime. After a build,
+`npm run cf:deploy` publishes when Cloudflare access is configured.
 
-## Run locally
-
-```bash
-npm install
-cp .env.example .env.local   # then put your key in .env.local
-npm run dev
-```
-
-Open http://localhost:3000, accept the disclaimer, and add a photo of a
-medicine box.
-
-## Demo mode and metrics
-
-Enable **Demo mode** in the header. It starts a fresh visit and loads a synthetic
-sample label plus US medicines. Choose a scenario, then open the clinician view
-to inspect its alerts. The eight choices cover all five required scenarios,
-including Tylenol/Norco, warfarin/apixaban and the older cold formulation.
-Turn demo mode off to clear the sample visit before adding your own photos.
-
-These are visibly marked **synthetic labels**, derived from `eval/scenarios.json`,
-not real box photos or recorded model outputs. Regenerate them with
-`npm run demo:build`. Cache filenames are SHA-256 hashes of the public JPEG bytes;
-`demo-cache/index.json` bundles the validated results for browser use. Demo mode
-never calls Anthropic. Normal mode can fall back to these entries after an
-extraction HTTP/network/parse error only when the original image bytes match.
-Unknown images never inherit a sample result; model refusals remain unverified.
-Uploaded images are never recorded in this cache.
-
-For an offline rehearsal, start `npm run dev` while connected and open the app;
-disable external networking while keeping localhost reachable. Select each demo
-and open `/clinician`. The committed RxNav cache covers every sample ingredient
-and US medicine. A running local server is still required; this is not a PWA.
-
-Open `/about-metrics` for counts, denominators, provenance, and limitations.
-`npm run eval` uses fresh `extractLabel` calls on human-labeled photos, never the
-demo cache. The initial empty photo set is explicitly **not measured**, while
-synthetic alert regression reports its actual results separately. Regenerate
-the report before `npm run build` to update the deployed metrics page.
-
-Extract one photo from the command line (same code path as the app):
-
-```bash
-npm run extract -- path/to/photo.jpg
-```
-
-## Privacy
-
-- Photos are downscaled in the browser, sent to `/api/extract`, forwarded to
-  the Anthropic API, and discarded. They are never written to disk or logged.
-- `.env.local` is git-ignored. Never commit an API key.
-
-## Printable English summary (milestone 5)
-
-From `/clinician`, choose **Printable English summary**, then **Print / Save PDF**.
-The summary includes guard-checked label values, US medicine names, RxCUIs,
-confidence, unresolved items, and cited clinician alerts with review status.
-Printing is disabled until the current reconciliation finishes successfully.
-Choose Letter or A4 portrait and disable browser headers and footers. Each of
-the eight demo variants fits one Letter page; longer real visits can continue
-onto additional pages without dropping findings. The PDF is generated locally
-by the browser; there is no summary upload or server-side persistence.
-
-Verified on Chromium: 320/390/768 px layouts, empty and ready summary states,
-all eight demo variants with external browser requests blocked, and one-page
-Letter PDFs for each variant. The local Next server must remain running for
-the offline demo; a cold start of a hosted site without internet is not supported.
-
-Deployment remains pending. The Anthropic key is available in the current
-execution environment, but a live call using a synthetic demo label returned
-`network`; real-photo accuracy remains unmeasured without labeled box photos.
-
-## Deployment and remaining plan
-
-See [DEPLOYMENT.md](DEPLOYMENT.md). Milestone 6 is prepared but awaits Vercel
-access, hosted acceptance checks, and the physical wifi-off rehearsal.
-Run `npm run check:release -- <app-url>` to check a running release over HTTP.
-
-Live Anthropic connectivity is now validated on two synthetic samples; see
-[eval/README.md](eval/README.md) for the environment proxy setting and separate
-smoke report. Real-photo metrics remain unmeasured. Start the next validation
-step with `npm run check:golden` and the [review packet](REVIEW.md).
-
-## Repeatable demo checks without keys or real photos
-
-Run `npm run check:all` to build and verify the synthetic demo, including an
-isolated production HTTP rehearsal with external TCP blocked and API credentials
-removed from the child environment. After an existing build,
-`npm run check:offline-release` runs just that rehearsal. GitHub Actions runs
-the same checks on pushes and pull requests. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md)
-for the presentation flow and physical wifi-off rehearsal. The automated check
-covers the server/API; browser interaction and real-photo validation remain
-separate.
-
-Browser checks: after building, run `npx playwright install chromium` once, then
-`npm run check:browser`. CI also runs the browser suite and saves its report and
-synthetic summary PDFs. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md).
+No R2/KV/D1 storage is configured. The static cache stores build-time shells;
+visit data and uploaded images are not persisted there. Anthropic is a Worker
+runtime secret. `.dev.vars.example` documents local Wrangler secrets.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for setup, commands, acceptance gates, and
+current milestone status. Deployment stays pending Cloudflare account access.

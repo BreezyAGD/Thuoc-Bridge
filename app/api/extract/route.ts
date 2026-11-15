@@ -1,7 +1,7 @@
 import { extractLabel } from "@/lib/extract";
 import { ExtractRequestSchema, type ExtractResult } from "@/lib/schema";
 
-// Vision calls can take a while; give the function room on Vercel.
+// Host metadata only; Cloudflare enforces its own request and CPU limits.
 export const maxDuration = 60;
 
 const HTTP_STATUS: Record<string, number> = {

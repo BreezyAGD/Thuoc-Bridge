@@ -53,3 +53,11 @@ next-env.d.ts
 # Browser regression artifacts (synthetic fixtures only)
 /playwright-report/
 /test-results/
+
+# Cloudflare build output, local runtime state, and secrets
+.open-next/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+cloudflare-env.d.ts

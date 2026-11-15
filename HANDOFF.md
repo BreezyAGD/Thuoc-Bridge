@@ -1,3 +1,17 @@
+# Cloudflare migration (current)
+
+Cloudflare Workers replaces Vercel by user request. Branch:
+`build/cloudflare-milestone-6`, based on `validation/browser-rehearsal`.
+OpenNext 1.20.17 and Wrangler 4.148.0 support the pinned Next 16.4.6.
+Added wrangler.jsonc, open-next.config.ts, static headers, local secret template,
+cf build/preview/deploy/dry-run scripts, and Workers browser testing in CI.
+The read-only static cache does not store visit data. No R2/KV/D1 is configured.
+Compatibility date is 2026-10-13 to match the pinned local workerd binary.
+Build, dry-run, and every HTTP demo variant pass in local Workers.
+No Cloudflare token/account access exists here; no hosted deployment claimed.
+DEPLOYMENT.md is authoritative; older Vercel notes below are historical.
+Milestone 7 is newly defined as validation/review readiness, starting next.
+
 # Browser rehearsal update
 
 Current release candidate: `validation/browser-rehearsal`, based on

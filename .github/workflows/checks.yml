@@ -23,6 +23,12 @@ jobs:
       - run: npm run check:all
       - run: npx playwright install --with-deps chromium
       - run: npm run check:browser
+      - run: npm run cf:build
+      - run: npm run cf:dry-run
+      - run: npm run check:browser
+        env:
+          TEST_SERVER: cloudflare
+          WRANGLER_SEND_METRICS: "false"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

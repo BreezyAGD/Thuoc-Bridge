@@ -1,112 +1,99 @@
-# Thuốc Bridge release plan
+# Cloudflare Workers deployment — milestone 6
 
-## Current status
+Cloudflare Workers replaces Vercel as the deployment target. Use OpenNext for
+this existing Next.js app; do not use a static Cloudflare Pages export because
+`/api/extract` and `/api/reconcile` require server execution.
 
-Milestones 1–5 are implemented. Milestone 6 is **prepared, not deployed**.
-No hosted URL has been verified. Two live synthetic Anthropic extractions now
-pass with guard, RxNorm, and alert checks (see eval/live-smoke-results.json).
-Real-photo extraction accuracy is still unmeasured.
-The latest release candidate is `validation/browser-rehearsal`, which includes
-`validation/live-vision` and `build/milestone-6`.
-`main` still contains only the initial README; do not deploy it.
+## Configuration
 
-## Deploy on Vercel
+- `wrangler.jsonc`: Worker `thuoc-bridge`, Node compatibility, self-service
+  binding, static assets, compatibility date pinned to the installed runtime.
+- `open-next.config.ts`: read-only build-time static cache. Cache interception
+  stays off for Partial Prerendering. No ISR, R2, KV, D1, or uploaded-image store.
+- Existing `next dev`, Node production server, and offline fallback still work.
+- `public/_headers` caches hashed build assets. Worker observability is disabled;
+  request bodies/images must never be logged. Existing API logs contain only
+  counts, outcome codes, and elapsed times.
+- Anthropic is a runtime secret. Nothing named `NEXT_PUBLIC_` should contain it.
 
-1. Import GitHub repository `BreezyAGD/Thuoc-Bridge` into the intended Vercel
-   account/team. Choose Next.js, repository root, Node.js 24.x, `npm ci`,
-   `npm run build`, and the default Next.js output directory.
-2. Set the production branch to `validation/browser-rehearsal`. Do not merge or change
-   `main` just to deploy. For a preview instead, select this same branch and
-   configure the key for Preview as well.
-3. Add `ANTHROPIC_API_KEY` as a sensitive, server-side environment variable.
-   Do not use a `NEXT_PUBLIC_` prefix, commit `.env.local`, or paste the key
-   into a URL. Redeploy after setting/changing the variable.
-4. Deploy and wait for Vercel's Ready status. If the build fails, inspect the
-   build logs before changing pinned dependency versions or Next.js settings.
-5. Run `npm run check:release -- https://YOUR-DEPLOYMENT.vercel.app` against
-   the actual URL. This checks all five pages, exact demo image hashes, all
-   eight synthetic scenario variants through the HTTP API, and invalid-input
-   rejection. It does not invoke Anthropic or measure photo accuracy.
-   An authentication/protection page must not be counted as an app success.
-6. Open the hosted patient view on a phone. Accept consent, enable Demo mode,
-   and run the five scenario families below. Open clinician view and printable
-   summary for each. Verify the summary PDF and source-photo/transcript panel.
-7. With a synthetic sample, test `/api/extract` once with Demo mode OFF.
-   Confirm an actual `status: ok` response, source text against the image, and
-   guarded downstream results. A cached fallback is not proof of a live call.
-   Then repeat with consented, non-identifying real box photos and hand labels.
-8. Record deployment URL, commit, Ready status, HTTP check output, live vision
-   result, and rehearsal results here before marking milestone 6 complete.
+## Build and verify locally (no Cloudflare account needed)
 
-Alternatively, when `VERCEL_TOKEN` is securely available in the execution
-session, use the official Vercel CLI to link the intended account/project,
-configure runtime secrets, and deploy this branch. Do not print or commit the
-credential. Account/team selection is still required if ambiguous.
-
-## Wifi-off judging rehearsal
-
-A hosted website needs internet for a cold load and API requests. Demo mode
-caches extraction and RxNorm data; it is not a service worker or a fully offline
-hosted app. Use the local production server for the wifi-off rehearsal:
+Use Node.js 24 and install dependencies with `npm ci`.
 
 ```sh
-npm ci
-npm run typecheck
-npm run lint
-npm run check:normalize
-npm run check:scenarios
-npm run check:demo
-npm run check:eval
-npm run build
-npm run start
+npm run check:all
+npm run cf:build
+npm run cf:dry-run
+npm run cf:preview -- --ip 127.0.0.1 --port 8788
 ```
 
-Open `http://localhost:3000`, enable Demo mode, then disable wifi on the demo
-laptop while leaving the local server running. Use the browser on that same
-laptop. Do not use a separate phone that depends on wifi to reach the laptop.
-Run `npm run check:release -- http://localhost:3000` in a second terminal.
+In a second terminal:
 
-| Scenario family | Required visible finding |
-| --- | --- |
-| Paracetamol + Tylenol / Norco | Acetaminophen duplication; per-unit strengths |
-| Ginkgo + warfarin / apixaban | Cited interaction; unresolved ingredients retained |
-| Combination cold medicine + BP medicine | Decongestant/BP warning; PPA flag in PPA variant |
-| OTC antibiotic | OTC antibiotic and allergy-review flags |
-| Herbal product with no readable ingredients | Unverified; bring box / ask pharmacist |
+```sh
+npm run check:release -- http://127.0.0.1:8788
+```
 
-For every family: verify patient-safe fixed sentences, English clinician
-alerts and citations, pending pharmacist review labels, and printable summary.
-Reconnect wifi after rehearsal. Keep the local demo available as the judging
-fallback. No real patient data in the demo or repository.
+For the browser suite against Workers, stop the manual preview, install Chromium
+once, then run:
 
-## Full plan after deployment
+```sh
+npx playwright install chromium
+TEST_SERVER=cloudflare npm run check:browser
+```
 
-| Milestone / gate | Status and next action |
-| --- | --- |
-| 1. Consent, photo upload, extraction | Implemented; live synthetic vision validated; real-photo validation pending |
-| 2. Provenance guard, RxNorm, clinician table, US medicines | Implemented; 41 normalization fixtures pass |
-| 3. Deterministic alerts and patient messages | Implemented; 11 synthetic scenarios pass; 27 rules await clinical review |
-| 4. Demo cache, evaluation, metrics | Implemented; eight demo variants pass offline logic checks; real-photo metrics unmeasured |
-| 5. Mobile polish and English print summary | Implemented; prior Chromium checks at 320/390/768 px and all eight one-page Letter demo PDFs pass |
-| 6. Vercel deployment and full dry-run | Blocked on deployment access; release checks/runbook prepared; hosted and physical wifi-off evidence pending |
-| Real-photo validation | Supply non-identifying box photos in `eval/photos/`, independently label `eval/golden.json`, run `npm run eval`; investigate every mismatch |
-| Clinical and language review | Pharmacist verifies rules and evidence; Vietnamese speaker reviews UI and fixed messages; keep review status honest |
-| Final judging rehearsal | Time the five scenarios, check source provenance, PDF, live-vs-demo labels, and local-server fallback |
+CI runs the Node checks, Chromium suite, OpenNext build, deployment dry-run,
+and the same Chromium suite against local Workers. Dry-run bundles and checks
+upload size but does not publish. A local Workers pass is not a hosted result.
 
-The original plan is a hackathon prototype plan. Deployment and synthetic
-regression results do not establish clinical accuracy or readiness for patient
-care. Do not invent photo metrics or reviewer sign-offs.
+For local live extraction, copy `.dev.vars.example` to git-ignored `.dev.vars`
+and set the key there. The app never needs a browser-visible key. On managed
+cloud environments, Wrangler logs/config can be placed in writable task paths
+using `WRANGLER_LOG_PATH` and `XDG_CONFIG_HOME`. Do not copy proxy credentials.
 
-Validation update: live transport works on this managed environment with Node 24
-and `NODE_USE_ENV_PROXY=1`. See `eval/README.md`, `npm run check:golden`, and
-[REVIEW.md](REVIEW.md) for the next real-photo and human review steps.
+## Deploy once Cloudflare access is available
 
-The key-free automated production rehearsal is now available as
-`npm run check:offline-release` (requires a completed build), or as part of
-`npm run check:all`. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md) for exact coverage,
-its limits, and the judging flow. This does not mark Vercel deployment or a
-physical wifi-off browser rehearsal complete.
+1. Select the intended Cloudflare account. Configure `CLOUDFLARE_API_TOKEN`
+   securely for Workers deployment and `CLOUDFLARE_ACCOUNT_ID` for that account,
+   or use `npx wrangler login` on your own computer. Do not paste tokens in chat.
+   No Cloudflare credentials were available during this migration.
+2. Build and deploy the release branch:
+   `npm run cf:build` then `npm run cf:deploy`. This uses the configured Worker
+   name `thuoc-bridge`; rename it and its self-reference together if needed.
+3. Add `ANTHROPIC_API_KEY` using the Cloudflare Worker secret UI or
+   `npx wrangler secret put ANTHROPIC_API_KEY`. Enter it through the secure prompt,
+   never as a command argument or committed variable. Cloudflare's API token is
+   for deployment only and must not become an app runtime binding.
+4. Open the actual Worker URL returned by deployment, then run
+   `npm run check:release -- <actual-worker-url>`. Do not guess a workers.dev URL.
+5. Test one live synthetic extraction with Demo mode OFF and confirm `status:ok`
+   from `/api/extract`; cached fallback does not prove a live call. Check the
+   clinician source panel, patient messages, demo variants, and PDFs on the host.
+6. Record URL, commit, deployment status, hosted HTTP results, live extraction
+   result, and rehearsal evidence before marking milestone 6 complete.
 
-The latest branch adds Chromium browser regression and PDF checks to CI.
-Use `npm run check:browser` after building and installing Chromium with
-`npx playwright install chromium`. This supplements the offline HTTP checks.
+For Workers Builds connected to GitHub, select the latest release branch, not
+`main` (which still holds only the initial README). Use Node 24, build command
+`npm run cf:build`, deploy command `npm run cf:deploy`, root directory `/`.
+Configure runtime secrets separately from build variables; this build needs no
+Anthropic key. No custom domain, DNS change, or paid storage is required by this
+configuration. Confirm the account's current plan limits before launch; a
+successful dry-run does not establish hosted CPU/request-limit behavior.
+
+## Plan status
+
+Milestones 1–5 are implemented. Milestone 6's Cloudflare adaptation can be
+verified locally, but hosted deployment and the physical wifi-off rehearsal
+remain open. Automated offline Node and browser regression already exist.
+Two live synthetic Anthropic calls passed; real-photo metrics remain unmeasured.
+
+Milestone 7 starts validation and review readiness: precise evaluation of
+printed names, strength/unit pairs, RxCUIs, and Unverified behavior, plus human
+clinical and language review. It cannot be called clinically validated without
+real independent labels and qualified reviewer sign-off.
+
+Use [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md) for the local-server wifi-off demo and
+[REVIEW.md](REVIEW.md) for human review. A hosted website is not cold-start offline.
+
+References: [OpenNext setup](https://opennext.js.org/cloudflare/get-started),
+[cache options](https://opennext.js.org/cloudflare/caching),
+[Cloudflare secrets](https://developers.cloudflare.com/workers/configuration/secrets/).
