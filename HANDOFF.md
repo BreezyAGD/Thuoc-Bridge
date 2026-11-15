@@ -1,3 +1,13 @@
+# Browser rehearsal update
+
+Current release candidate: `validation/browser-rehearsal`, based on
+`validation/offline-release`. Adds a key-free Chromium test suite for consent,
+bilingual navigation, synthetic demo scenarios, source verification, responsive
+layouts, error/retry, and one-page printable PDFs. Tests run in CI after the
+server checks; reports contain only committed synthetic fixtures.
+See DEMO-RUNBOOK.md and `npm run check:browser`.
+Real photos, human sign-offs, and Vercel deployment remain deferred.
+
 # Automated offline release rehearsal
 
 Latest branch: `validation/offline-release`, based on `validation/live-vision`.

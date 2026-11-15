@@ -6,7 +6,7 @@ Milestones 1–5 are implemented. Milestone 6 is **prepared, not deployed**.
 No hosted URL has been verified. Two live synthetic Anthropic extractions now
 pass with guard, RxNorm, and alert checks (see eval/live-smoke-results.json).
 Real-photo extraction accuracy is still unmeasured.
-The latest release candidate is `validation/offline-release`, which includes
+The latest release candidate is `validation/browser-rehearsal`, which includes
 `validation/live-vision` and `build/milestone-6`.
 `main` still contains only the initial README; do not deploy it.
 
@@ -15,7 +15,7 @@ The latest release candidate is `validation/offline-release`, which includes
 1. Import GitHub repository `BreezyAGD/Thuoc-Bridge` into the intended Vercel
    account/team. Choose Next.js, repository root, Node.js 24.x, `npm ci`,
    `npm run build`, and the default Next.js output directory.
-2. Set the production branch to `validation/offline-release`. Do not merge or change
+2. Set the production branch to `validation/browser-rehearsal`. Do not merge or change
    `main` just to deploy. For a preview instead, select this same branch and
    configure the key for Preview as well.
 3. Add `ANTHROPIC_API_KEY` as a sensitive, server-side environment variable.
@@ -106,3 +106,7 @@ The key-free automated production rehearsal is now available as
 `npm run check:all`. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md) for exact coverage,
 its limits, and the judging flow. This does not mark Vercel deployment or a
 physical wifi-off browser rehearsal complete.
+
+The latest branch adds Chromium browser regression and PDF checks to CI.
+Use `npm run check:browser` after building and installing Chromium with
+`npx playwright install chromium`. This supplements the offline HTTP checks.

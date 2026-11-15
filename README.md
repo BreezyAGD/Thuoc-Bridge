@@ -137,3 +137,7 @@ the same checks on pushes and pull requests. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.
 for the presentation flow and physical wifi-off rehearsal. The automated check
 covers the server/API; browser interaction and real-photo validation remain
 separate.
+
+Browser checks: after building, run `npx playwright install chromium` once, then
+`npm run check:browser`. CI also runs the browser suite and saves its report and
+synthetic summary PDFs. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md).
