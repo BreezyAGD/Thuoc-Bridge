@@ -8,7 +8,7 @@ async function main() {
   assert(["http:", "https:"].includes(base.protocol), "Expected an HTTP(S) app URL");
   assert(!base.username && !base.password && !base.search && !base.hash, "Do not include credentials or tokens in the URL");
   const request = (path: string, init?: RequestInit) => fetch(new URL(path, base), { ...init, signal: AbortSignal.timeout(60_000) });
-  for (const path of ["/", "/patient", "/clinician", "/summary", "/about-metrics"]) {
+  for (const path of ["/", "/patient", "/clinician", "/summary", "/about-metrics", "/demo-guide"]) {
     const res = await request(path);
     assert.equal(res.status, 200, `${path}: expected 200; check deployment/protection settings`);
     assert((res.headers.get("content-type") ?? "").includes("text/html"), `${path}: expected HTML`);

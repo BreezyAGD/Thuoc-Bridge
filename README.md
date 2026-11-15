@@ -60,3 +60,8 @@ and qualified reviewer sign-offs remain pending.
 Milestone 8 adds [visit management](MILESTONE-8.md): Start new visit clears
 local visit data, cancels pending work, and requires fresh consent while keeping
 the language preference. Downloaded PDFs remain. Latest branch: `build/milestone-8`.
+
+Milestone 9 adds a [guided presentation demo](MILESTONE-9.md) at `/demo-guide`,
+linked from the patient and clinician controls. It walks through five synthetic
+cases, checks expected findings, and links to source review and summaries.
+Latest branch: `build/milestone-9`.

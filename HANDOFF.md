@@ -1,3 +1,15 @@
+# Milestone 9 — current
+
+Branch: `build/milestone-9`, based on `build/milestone-8`.
+Added /demo-guide: English guided presentation of five synthetic scenarios,
+fixture/rule-derived expected findings, actual rule-set comparison, retry and
+mismatch states, and source-review/summary links. Loading asks before replacing
+a non-demo visit; step navigation alone does not mutate it. No live extraction.
+HTTP release acceptance now covers six pages. Five new browser regressions
+bring the suite to 23; CI runs it against Node and local Workers.
+See MILESTONE-9.md and DEMO-RUNBOOK.md. All prior migration/lifecycle work is
+included. Deployment access, real photos, and human reviews remain deferred.
+
 # Milestone 8 — current release branch
 
 Current branch: `build/milestone-8`, based on `build/milestone-7`.

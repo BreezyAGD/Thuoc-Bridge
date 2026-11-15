@@ -247,3 +247,92 @@ test("editing medicines invalidates printable results until matching finishes", 
     await expect(page.locator("main.summary").getByText("warfarin", { exact: true })).toBeVisible();
   } finally { release.resolve(); }
 });
+
+test("walkthrough navigation alone does not create or replace a visit", async ({ page }) => {
+  let calls = 0;
+  page.on("request", request => { if (["/api/extract", "/api/reconcile"].includes(new URL(request.url()).pathname)) calls++; });
+  await page.goto("/demo-guide");
+  await expect(page.getByRole("heading", { name: "Demo walkthrough", exact: true })).toBeVisible();
+  await expect(page.getByText("Step 1 of 5", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Previous step", exact: true })).toBeDisabled();
+  await page.getByRole("button", { name: "Next step", exact: true }).click();
+  await expect(page.getByText("Step 2 of 5", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open printable summary", exact: true })).toHaveCount(0);
+  expect(calls).toBe(0);
+});
+
+test("walkthrough checks five synthetic cases and links to sources and summary", async ({ page }) => {
+  let extractionCalls = 0;
+  page.on("request", request => { if (new URL(request.url()).pathname === "/api/extract") extractionCalls++; });
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto("/demo-guide");
+  const cases = ["1-paracetamol-duplication", "2-ginkgo-warfarin", "3-cold-medicine-bp", "4-otc-antibiotic", "5-herbal-no-ingredient-list"];
+  for (let index = 0; index < cases.length; index++) {
+    const scenario = manifest.scenarios.find(s => s.id === cases[index])!;
+    await expect(page.getByText(`Step ${index + 1} of 5`, { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText("Expected demo findings reproduced.");
+    await expect(page.getByRole("list", { name: "Expected demo findings", exact: true }).getByRole("listitem")).toHaveCount(scenario.expected.length);
+    await expect(page.getByRole("list", { name: "Expected demo findings", exact: true }).getByText("· Observed", { exact: true })).toHaveCount(scenario.expected.length);
+    await noOverflow(page);
+    if (index < cases.length - 1) {
+      await page.getByRole("button", { name: "Next step", exact: true }).click();
+      await expect(page.getByRole("link", { name: "Open printable summary", exact: true })).toHaveCount(0);
+    }
+  }
+  await expect(page.getByRole("button", { name: "Next step", exact: true })).toBeDisabled();
+  await page.getByRole("link", { name: "Review clinician findings", exact: true }).click();
+  await page.getByRole("button", { name: "View photo + transcript", exact: true }).first().click();
+  await expect(page.getByRole("img", { name: "Photo of the medicine package" })).toBeVisible();
+  await page.getByRole("button", { name: "Close", exact: true }).click();
+  await page.getByRole("link", { name: "Printable English summary", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Alerts requiring review (1)", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeEnabled();
+  expect(extractionCalls).toBe(0);
+});
+
+test("walkthrough asks before replacing a current non-demo visit", async ({ page }) => {
+  await page.goto("/clinician");
+  await page.getByRole("textbox", { name: "Add a US medicine" }).fill("Tylenol");
+  await page.getByRole("button", { name: "Add", exact: true }).click();
+  await expect(page.getByText(/Checked against 27 curated rules/)).toBeVisible();
+  await page.getByRole("link", { name: "Demo walkthrough", exact: true }).click();
+  await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Replace the current visit?" })).toBeVisible();
+  await page.getByRole("button", { name: "Cancel", exact: true }).click();
+  const before = await page.evaluate(() => JSON.parse(sessionStorage.getItem("tb.visit.v4")!));
+  expect(before.demoMode).toBe(false);
+  expect(before.usMeds.map((m: { text: string }) => m.text)).toEqual(["Tylenol"]);
+  await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
+  await page.getByRole("button", { name: "Replace with synthetic demo", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Expected demo findings reproduced.");
+  const after = await page.evaluate(() => JSON.parse(sessionStorage.getItem("tb.visit.v4")!));
+  expect(after.demoMode).toBe(true);
+  expect(after.usMeds.map((m: { text: string }) => m.text)).toEqual(["Norco"]);
+});
+
+test("walkthrough holds summary link on failed check and supports retry", async ({ page }) => {
+  await page.route("**/api/reconcile", route => route.fulfill({ status: 503, contentType: "application/json", body: "{}" }));
+  await page.goto("/demo-guide");
+  await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Could not check this demo.");
+  await expect(page.getByRole("link", { name: "Open printable summary", exact: true })).toHaveCount(0);
+  await page.unroute("**/api/reconcile");
+  await page.getByRole("button", { name: "Retry scenario check", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Expected demo findings reproduced.");
+  await expect(page.getByRole("link", { name: "Open printable summary", exact: true })).toBeVisible();
+});
+
+test("walkthrough distinguishes a fixture mismatch from a passed demo", async ({ page }) => {
+  await page.route("**/api/reconcile", async route => {
+    const response = await route.fetch();
+    const json = await response.json();
+    await route.fulfill({ json: { ...json, alerts: [] } });
+  });
+  await page.goto("/demo-guide");
+  await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Demo output differs from the fixture.");
+  await expect(page.getByRole("status")).not.toContainText("Expected demo findings reproduced.");
+  await expect(page.getByRole("link", { name: "Open printable summary", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Review clinician findings", exact: true })).toBeVisible();
+});

@@ -96,7 +96,7 @@ npx playwright install chromium
 npm run check:browser
 ```
 
-The 18 Chromium tests cover consent, bilingual navigation, patient messages,
+The 23 Chromium tests cover consent, bilingual navigation, patient messages,
 empty/error print states, all eight demo variants, source-photo/transcript
 panels, Letter PDFs, responsive layouts at 320/390/768 px, and reconciliation
 retry, plus honest real-photo strength/unit metrics. They block external browser requests and start a separate production
@@ -116,3 +116,11 @@ Workers. Cloudflare deployment replaces the earlier Vercel target; see
 Before handing the device to another participant, use **Start new visit** and
 confirm the local clearing action. The next visit starts with unchecked consent;
 previous PDFs on disk remain. See [MILESTONE-8.md](MILESTONE-8.md).
+
+## Guided presentation
+
+Open **Demo walkthrough** from the patient or clinician controls. `/demo-guide`
+provides the five-step English presenter flow, expected synthetic findings,
+loading/error/mismatch status, and source-review/summary links. Loading asks
+before replacing a non-demo visit. Step navigation alone preserves the visit.
+Read [MILESTONE-9.md](MILESTONE-9.md) for coverage and limits.

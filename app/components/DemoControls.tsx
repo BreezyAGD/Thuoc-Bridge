@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { NewVisit } from "./NewVisit";
 import { demoScenarios } from "@/lib/cache";
 import { loadDemo, resetVisit, useVisit } from "@/lib/visit-store";
@@ -20,6 +21,9 @@ export function DemoControls({ english = false }: { english?: boolean }) {
         {demoScenarios.map((s) => <option key={s.id} value={s.id}>{s.description}</option>)}
       </select>
     </>}
-    <NewVisit english={english} />
+    <div className="flex flex-wrap items-center gap-3">
+      <Link href="/demo-guide" className="inline-flex min-h-11 items-center underline">{lang === "vi" ? "Hướng dẫn minh họa" : "Demo walkthrough"}</Link>
+      <NewVisit english={english} />
+    </div>
   </div>;
 }
