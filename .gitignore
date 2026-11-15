@@ -49,3 +49,7 @@ next-env.d.ts
 # Local evaluation photos require explicit privacy review before publication.
 /eval/photos/*
 !/eval/photos/.gitkeep
+
+# Browser regression artifacts (synthetic fixtures only)
+/playwright-report/
+/test-results/

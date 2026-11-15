@@ -19,7 +19,8 @@
     "check:release": "tsx scripts/release-check.ts",
     "check:golden": "tsx scripts/golden-check.ts",
     "check:offline-release": "tsx scripts/offline-release-check.ts",
-    "check:all": "npm run typecheck && npm run lint && npm run check:normalize && npm run check:scenarios && npm run check:demo && npm run check:eval && npm run build && npm run check:offline-release"
+    "check:all": "npm run typecheck && npm run lint && npm run check:normalize && npm run check:scenarios && npm run check:demo && npm run check:eval && npm run build && npm run check:offline-release",
+    "check:browser": "playwright test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
@@ -29,6 +30,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
