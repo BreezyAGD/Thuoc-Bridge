@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "example-single-ingredient",
+      "photo": "eval/photos/example-single-ingredient.jpg",
+      "labeled_by": "YOUR NAME",
+      "expect_unverified": false,
+      "brand_name": "BRAND AS PRINTED",
+      "ingredients": [
+        {
+          "name_printed": "Paracetamol",
+          "strength": 500,
+          "unit": "mg",
+          "rxcui": "161",
+          "us_name": "acetaminophen"
+        }
+      ],
+      "notes": "Template only. Copy the shape, replace every value with what YOUR box prints."
+    },
+    {
+      "id": "example-no-ingredient-list",
+      "photo": "eval/photos/example-no-ingredient-list.jpg",
+      "labeled_by": "YOUR NAME",
+      "expect_unverified": true,
+      "brand_name": "BRAND AS PRINTED",
+      "ingredients": [],
+      "notes": "Front of a box with no ingredient list visible: the pipeline must answer Unverified."
+    }
+  ]
+}

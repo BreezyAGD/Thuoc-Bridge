@@ -13,6 +13,7 @@ export function AppHeader() {
         </Link>
         <button
           type="button"
+          lang={lang === "vi" ? "en" : "vi"}
           onClick={() => setLang(lang === "vi" ? "en" : "vi")}
           className="min-h-12 rounded-full border border-white/60 px-4 text-base font-medium active:bg-teal-800"
         >

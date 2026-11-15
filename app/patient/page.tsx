@@ -5,28 +5,16 @@ import { useRef, useState } from "react";
 import { AppHeader } from "../components/AppHeader";
 import { useConsent, useLang } from "@/lib/client-store";
 import type { Strings } from "@/lib/i18n";
-import { prepareImage } from "@/lib/image";
-import { isUnverified, type ExtractResult } from "@/lib/schema";
-
-type Item = {
-  id: string;
-  thumbUrl: string | null;
-  state: "reading" | "done" | "image_error";
-  result?: ExtractResult;
-};
-
-async function callExtract(image: string, mediaType: string): Promise<ExtractResult> {
-  try {
-    const res = await fetch("/api/extract", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ image, mediaType }),
-    });
-    return (await res.json()) as ExtractResult;
-  } catch {
-    return { status: "error", code: "network", message: "Request failed" };
-  }
-}
+import type { IngredientRow, ProductRow, UsMedRow } from "@/lib/reconcile";
+import { isUnverified } from "@/lib/schema";
+import {
+  addPhotos,
+  addUsMed,
+  removeProduct,
+  removeUsMed,
+  useVisit,
+  type VisitProduct,
+} from "@/lib/visit-store";
 
 function formatStrength(value: number | null, unit: string | null, lang: string) {
   if (value === null) return null;
@@ -36,26 +24,45 @@ function formatStrength(value: number | null, unit: string | null, lang: string)
   return unit ? `${n} ${unit}` : n;
 }
 
+/**
+ * The US generic name, shown to the patient only when the RxNorm match is
+ * solid and the name actually differs from what is printed on the box.
+ */
+function usNameFor(ing: IngredientRow): string | null {
+  if (ing.confidence !== "high" && ing.confidence !== "medium") return null;
+  if (ing.resolution.concepts.length !== 1) return null;
+  const name = ing.resolution.concepts[0].name;
+  return ing.printed_name.toLowerCase().includes(name.toLowerCase()) ? null : name;
+}
+
 function ProductCard({
   item,
+  row,
+  reconFailed,
   t,
   lang,
-  onRemove,
 }: {
-  item: Item;
+  item: VisitProduct;
+  row: ProductRow | undefined;
+  reconFailed: boolean;
   t: Strings;
   lang: string;
-  onRemove: () => void;
 }) {
   const result = item.result;
   const extraction = result?.status === "ok" ? result.extraction : null;
-  const unverified = item.state === "done" && result ? isUnverified(result) : false;
+  // The patient only ever sees values that passed the deterministic guard:
+  // names found on the label, and strengths that match their printed text.
+  const checked = row ? row.ingredients.filter((i) => i.name_verified) : null;
+  const unverified =
+    item.state === "done" && result
+      ? isUnverified(result) || (checked !== null && checked.length === 0)
+      : false;
 
   return (
     <li className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="flex gap-4">
         {item.thumbUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element -- local data URL, never uploaded to an image CDN
+          // eslint-disable-next-line @next/next/no-img-element -- local data URL, never sent to an image CDN
           <img
             src={item.thumbUrl}
             alt=""
@@ -73,9 +80,7 @@ function ProductCard({
             </p>
           )}
 
-          {item.state === "image_error" && (
-            <p className="text-lg text-red-700">{t.errorImage}</p>
-          )}
+          {item.state === "image_error" && <p className="text-lg text-red-700">{t.errorImage}</p>}
 
           {item.state === "done" && result?.status === "error" && (
             <p className="text-lg text-red-700">{t.errorGeneric}</p>
@@ -84,7 +89,7 @@ function ProductCard({
           {item.state === "done" && result?.status !== "error" && (
             <>
               <h2 className="text-xl font-bold break-words">
-                {extraction?.brand_name.value ?? t.unknownName}
+                {(row ? row.brand : extraction?.brand_name.value) ?? t.unknownName}
               </h2>
 
               {unverified ? (
@@ -92,17 +97,25 @@ function ProductCard({
                   <p className="text-lg font-bold text-amber-900">{t.unverified}</p>
                   <p className="mt-1 text-lg text-amber-900">{t.unverifiedHelp}</p>
                 </div>
+              ) : checked === null ? (
+                <p className="mt-2 text-lg text-slate-700" role="status">
+                  {reconFailed ? t.errorGeneric : t.checking}
+                </p>
               ) : (
                 <>
                   <p className="mt-2 text-lg text-slate-700">{t.contains}</p>
-                  <ul className="mt-1 flex flex-col gap-1 text-lg">
-                    {extraction!.ingredients.map((ing, i) => {
-                      const strength = formatStrength(ing.strength.value, ing.unit.value, lang);
+                  <ul className="mt-1 flex flex-col gap-2 text-lg">
+                    {checked.map((ing, i) => {
+                      const strength = formatStrength(ing.strength, ing.unit, lang);
+                      const usName = usNameFor(ing);
                       return (
-                        <li key={i} className="font-semibold">
-                          {ing.name.value}
-                          {strength && (
-                            <span className="font-normal text-slate-700"> · {strength}</span>
+                        <li key={i}>
+                          <span className="font-semibold">{ing.printed_name}</span>
+                          {strength && <span className="text-slate-700"> · {strength}</span>}
+                          {usName && (
+                            <span className="block text-base text-teal-800">
+                              {t.usName} <span className="font-semibold">{usName}</span>
+                            </span>
                           )}
                         </li>
                       );
@@ -131,7 +144,7 @@ function ProductCard({
         )}
         <button
           type="button"
-          onClick={onRemove}
+          onClick={() => removeProduct(item.id)}
           className="min-h-10 shrink-0 rounded-lg px-3 text-base text-slate-600 underline active:bg-slate-100"
         >
           {t.remove}
@@ -141,37 +154,90 @@ function ProductCard({
   );
 }
 
+function UsMeds({
+  meds,
+  rows,
+  loading,
+  t,
+}: {
+  meds: { id: string; text: string }[];
+  rows: UsMedRow[];
+  loading: boolean;
+  t: Strings;
+}) {
+  const [text, setText] = useState("");
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-xl font-bold">{t.usMedsTitle}</h2>
+      <p className="mt-1 text-base text-slate-600">{t.usMedsHint}</p>
+      <form
+        className="mt-3 flex gap-2"
+        onSubmit={(e) => {
+          e.preventDefault();
+          addUsMed(text);
+          setText("");
+        }}
+      >
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={t.usMedsPlaceholder}
+          aria-label={t.usMedsTitle}
+          maxLength={120}
+          autoComplete="off"
+          className="min-h-14 min-w-0 flex-1 rounded-xl border-2 border-slate-300 px-4 text-lg focus:border-teal-600 focus:outline-none"
+        />
+        <button
+          type="submit"
+          disabled={!text.trim()}
+          className="min-h-14 shrink-0 rounded-xl bg-teal-700 px-5 text-lg font-bold text-white active:bg-teal-800 disabled:bg-slate-300 disabled:text-slate-500"
+        >
+          {t.add}
+        </button>
+      </form>
+
+      {meds.length > 0 && (
+        <ul className="mt-3 flex flex-col gap-2">
+          {meds.map((med) => {
+            const row = rows.find((r) => r.id === med.id);
+            const resolved = row && row.confidence !== "unverified";
+            return (
+              <li key={med.id} className="flex items-start justify-between gap-3 rounded-xl bg-slate-50 p-3">
+                <div className="min-w-0 text-lg">
+                  <p className="font-semibold break-words">{med.text}</p>
+                  {!row && loading && <p className="text-base text-slate-600">{t.checking}</p>}
+                  {row && resolved && (
+                    <p className="text-base text-teal-800">
+                      {t.usMedFound}{" "}
+                      <span className="font-semibold">
+                        {row.resolution.concepts.map((c) => c.name).join(" + ")}
+                      </span>
+                    </p>
+                  )}
+                  {row && !resolved && <p className="text-base text-amber-900">{t.usMedUnknown}</p>}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => removeUsMed(med.id)}
+                  className="min-h-10 shrink-0 rounded-lg px-3 text-base text-slate-600 underline active:bg-slate-100"
+                >
+                  {t.remove}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </section>
+  );
+}
+
 export default function PatientPage() {
   const { lang, t } = useLang();
   const consented = useConsent();
-  const [items, setItems] = useState<Item[]>([]);
+  const visit = useVisit();
   const cameraInput = useRef<HTMLInputElement>(null);
   const libraryInput = useRef<HTMLInputElement>(null);
-
-  function update(id: string, patch: Partial<Item>) {
-    setItems((current) => current.map((it) => (it.id === id ? { ...it, ...patch } : it)));
-  }
-
-  async function addFiles(files: FileList | null) {
-    if (!files) return;
-    // Each photo is one product. Photos are processed in parallel.
-    await Promise.all(
-      Array.from(files).map(async (file) => {
-        const id = crypto.randomUUID();
-        setItems((current) => [...current, { id, thumbUrl: null, state: "reading" }]);
-        let prepared;
-        try {
-          prepared = await prepareImage(file);
-        } catch {
-          update(id, { state: "image_error" });
-          return;
-        }
-        update(id, { thumbUrl: prepared.thumbUrl });
-        const result = await callExtract(prepared.base64, prepared.mediaType);
-        update(id, { state: "done", result });
-      }),
-    );
-  }
 
   if (!consented) {
     return (
@@ -189,6 +255,8 @@ export default function PatientPage() {
       </>
     );
   }
+
+  const hasAnything = visit.products.length > 0 || visit.usMeds.length > 0;
 
   return (
     <>
@@ -220,7 +288,7 @@ export default function PatientPage() {
             capture="environment"
             className="hidden"
             onChange={(e) => {
-              void addFiles(e.target.files);
+              void addPhotos(e.target.files);
               e.target.value = "";
             }}
           />
@@ -231,28 +299,45 @@ export default function PatientPage() {
             multiple
             className="hidden"
             onChange={(e) => {
-              void addFiles(e.target.files);
+              void addPhotos(e.target.files);
               e.target.value = "";
             }}
           />
         </div>
 
-        {items.length === 0 ? (
+        {visit.products.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-slate-300 p-6 text-center text-lg text-slate-600">
             {t.empty}
           </p>
         ) : (
           <ul className="flex flex-col gap-4">
-            {items.map((item) => (
+            {visit.products.map((item) => (
               <ProductCard
                 key={item.id}
                 item={item}
+                row={visit.recon?.products.find((p) => p.id === item.id)}
+                reconFailed={visit.reconState === "error"}
                 t={t}
                 lang={lang}
-                onRemove={() => setItems((current) => current.filter((it) => it.id !== item.id))}
               />
             ))}
           </ul>
+        )}
+
+        <UsMeds
+          meds={visit.usMeds}
+          rows={visit.recon?.usMeds ?? []}
+          loading={visit.reconState === "loading"}
+          t={t}
+        />
+
+        {hasAnything && (
+          <Link
+            href="/clinician"
+            className="flex min-h-16 items-center justify-center rounded-2xl bg-slate-800 px-6 text-center text-lg font-bold text-white active:bg-slate-900"
+          >
+            {t.toClinician}
+          </Link>
         )}
 
         <p className="mt-auto pt-4 text-center text-sm text-slate-500">{t.disclaimer}</p>

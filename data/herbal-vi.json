@@ -1,0 +1,20 @@
+{
+  "_comment": "Vietnamese herbal names -> botanical name and the RxNorm search terms to try. Keys are lowercase WITH diacritics (tỏi is not tôi). NEEDS REVIEW: every row is a botanical identification that the chemistry/pre-med teammate must confirm, then put their name in verified_by. Unverified rows still resolve, but the clinician view marks them as pending review.",
+  "herbs": [
+    { "vi": "bạch quả", "latin": "Ginkgo biloba", "english": "ginkgo", "rxnorm_terms": ["Ginkgo biloba extract", "ginkgo biloba"], "verified_by": null },
+    { "vi": "đinh lăng", "latin": "Polyscias fruticosa", "english": "ming aralia", "rxnorm_terms": ["Polyscias fruticosa"], "verified_by": null },
+    { "vi": "đương quy", "latin": "Angelica sinensis", "english": "dong quai", "rxnorm_terms": ["Angelica sinensis root", "dong quai", "Angelica sinensis"], "verified_by": null },
+    { "vi": "nhân sâm", "latin": "Panax ginseng", "english": "Asian ginseng", "rxnorm_terms": ["Asian ginseng", "Panax ginseng", "ginseng"], "verified_by": null },
+    { "vi": "tam thất", "latin": "Panax notoginseng", "english": "notoginseng", "rxnorm_terms": ["Panax notoginseng", "notoginseng"], "verified_by": null },
+    { "vi": "đan sâm", "latin": "Salvia miltiorrhiza", "english": "danshen", "rxnorm_terms": ["Salvia miltiorrhiza", "danshen"], "verified_by": null },
+    { "vi": "xuyên khung", "latin": "Ligusticum chuanxiong", "english": "Szechuan lovage", "rxnorm_terms": ["Ligusticum chuanxiong", "Ligusticum wallichii"], "verified_by": null },
+    { "vi": "ích mẫu", "latin": "Leonurus japonicus", "english": "Chinese motherwort", "rxnorm_terms": ["Leonurus japonicus", "motherwort"], "verified_by": null },
+    { "vi": "ngưu tất", "latin": "Achyranthes bidentata", "english": "ox knee", "rxnorm_terms": ["Achyranthes bidentata"], "verified_by": null },
+    { "vi": "nghệ", "latin": "Curcuma longa", "english": "turmeric", "rxnorm_terms": ["turmeric", "Curcuma longa"], "verified_by": null },
+    { "vi": "tỏi", "latin": "Allium sativum", "english": "garlic", "rxnorm_terms": ["garlic", "Allium sativum"], "verified_by": null },
+    { "vi": "gừng", "latin": "Zingiber officinale", "english": "ginger", "rxnorm_terms": ["ginger", "Zingiber officinale"], "verified_by": null },
+    { "vi": "cam thảo", "latin": "Glycyrrhiza uralensis / glabra", "english": "licorice", "rxnorm_terms": ["licorice", "Glycyrrhiza glabra"], "verified_by": null },
+    { "vi": "xuyên tâm liên", "latin": "Andrographis paniculata", "english": "andrographis", "rxnorm_terms": ["Andrographis paniculata", "andrographis"], "verified_by": null },
+    { "vi": "linh chi", "latin": "Ganoderma lucidum", "english": "reishi", "rxnorm_terms": ["Ganoderma lucidum", "reishi"], "verified_by": null }
+  ]
+}

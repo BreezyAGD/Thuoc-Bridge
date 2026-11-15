@@ -18,7 +18,20 @@ duplication and interaction alerts.
 The LLM never infers ingredients from a brand name and never creates an alert.
 Anything unresolved is shown as **Unverified**.
 
-Status: step A is built (milestone 1). Steps B and C are next.
+Between A and B a deterministic guard checks that every extracted value really
+appears in the transcript of the label. Values that fail are dropped and
+flagged; they are never shown to the patient.
+
+Status: steps A and B and the clinician table are built (milestone 2). Step C
+(alerts) is next.
+
+## Checks
+
+```bash
+npm run check:normalize   # 41 ingredient names -> expected RxCUIs (RxNav or the committed cache)
+```
+
+See `eval/README.md` for how to add hand-labeled products to `eval/golden.json`.
 
 ## Run locally
 
