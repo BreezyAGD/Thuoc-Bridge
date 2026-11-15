@@ -135,6 +135,7 @@ async function confirmNewVisit(page: Page) {
 }
 
 test("new visit can be canceled, then clears only app visit data and consent", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
   await consent(page);
   await page.getByRole("checkbox", { name: "Demo mode (starts a new visit)", exact: true }).check();
   await expect(page.getByText("Paracetamol", { exact: true })).toBeVisible();
@@ -144,9 +145,12 @@ test("new visit can be canceled, then clears only app visit data and consent", a
   });
   await page.getByRole("button", { name: "Start new visit", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Cancel", exact: true })).toBeFocused();
+  await noOverflow(page);
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await expect(page.getByText("Paracetamol", { exact: true })).toBeVisible();
   await confirmNewVisit(page);
+  await expect(page.getByRole("button", { name: "Start", exact: true })).toBeDisabled();
   const saved = await page.evaluate(() => ({
     visits: Object.keys(sessionStorage).filter(k => k.startsWith("tb.visit.")),
     consent: sessionStorage.getItem("tb.consent"),
@@ -240,6 +244,6 @@ test("editing medicines invalidates printable results until matching finishes", 
     await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeDisabled();
     release.resolve();
     await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeEnabled();
-    await expect(page.getByText("warfarin", { exact: true })).toBeVisible();
+    await expect(page.locator("main.summary").getByText("warfarin", { exact: true })).toBeVisible();
   } finally { release.resolve(); }
 });
