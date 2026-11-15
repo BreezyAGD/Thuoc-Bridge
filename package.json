@@ -16,7 +16,8 @@
     "demo:build": "tsx scripts/demo-build.ts",
     "check:demo": "tsx scripts/demo-check.ts",
     "check:eval": "tsx scripts/eval-check.ts",
-    "check:release": "tsx scripts/release-check.ts"
+    "check:release": "tsx scripts/release-check.ts",
+    "check:golden": "tsx scripts/golden-check.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

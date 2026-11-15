@@ -53,3 +53,25 @@ pipeline stays safely unsure instead of guessing from the brand name.
   resolve to. Run `npm run check:normalize` (needs network, or the committed
   RxNorm cache). Add a line whenever a new spelling shows up on a box.
 - `schema.ts`: the exact format of `golden.json`.
+
+## Readiness and live connection
+
+Run `npm run check:golden` before spending API calls on a real-photo evaluation.
+This local-only check rejects an empty set, duplicate IDs/paths, template
+reviewer names, inconsistent unverified labels, invalid strengths/RxCUIs, broken
+images, and files outside `eval/photos/`. It cannot establish label truth or
+privacy; a human must confirm those. Exit 2 means no labeled photos yet.
+
+On the managed cloud environment, use Node 24 with `NODE_USE_ENV_PROXY=1` to
+honor its configured HTTPS proxy (keep TLS verification enabled):
+
+```sh
+NODE_USE_ENV_PROXY=1 npm run extract -- public/demo-assets/1-paracetamol-duplication-0.jpg
+NODE_USE_ENV_PROXY=1 npm run eval
+```
+
+No proxy setting is required for hosts without a configured proxy. Do not copy
+this environment's proxy values or credentials into source or Vercel.
+`live-smoke-results.json` records two successful live synthetic extractions and
+downstream assertions. It is separate from `results.json` and establishes no
+real-photo precision/recall. See `../REVIEW.md` for the human review packet.

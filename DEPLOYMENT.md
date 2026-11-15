@@ -3,7 +3,9 @@
 ## Current status
 
 Milestones 1–5 are implemented. Milestone 6 is **prepared, not deployed**.
-No hosted URL or successful live Anthropic extraction has been verified.
+No hosted URL has been verified. Two live synthetic Anthropic extractions now
+pass with guard, RxNorm, and alert checks (see eval/live-smoke-results.json).
+Real-photo extraction accuracy is still unmeasured.
 The release branch is `build/milestone-6`, based on `build/milestone-5`.
 `main` still contains only the initial README; do not deploy it.
 
@@ -80,7 +82,7 @@ fallback. No real patient data in the demo or repository.
 
 | Milestone / gate | Status and next action |
 | --- | --- |
-| 1. Consent, photo upload, extraction | Implemented; successful live vision remains to be validated |
+| 1. Consent, photo upload, extraction | Implemented; live synthetic vision validated; real-photo validation pending |
 | 2. Provenance guard, RxNorm, clinician table, US medicines | Implemented; 41 normalization fixtures pass |
 | 3. Deterministic alerts and patient messages | Implemented; 11 synthetic scenarios pass; 27 rules await clinical review |
 | 4. Demo cache, evaluation, metrics | Implemented; eight demo variants pass offline logic checks; real-photo metrics unmeasured |
@@ -93,3 +95,7 @@ fallback. No real patient data in the demo or repository.
 The original plan is a hackathon prototype plan. Deployment and synthetic
 regression results do not establish clinical accuracy or readiness for patient
 care. Do not invent photo metrics or reviewer sign-offs.
+
+Validation update: live transport works on this managed environment with Node 24
+and `NODE_USE_ENV_PROXY=1`. See `eval/README.md`, `npm run check:golden`, and
+[REVIEW.md](REVIEW.md) for the next real-photo and human review steps.

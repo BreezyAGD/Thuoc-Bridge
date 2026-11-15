@@ -1,3 +1,17 @@
+# Live validation update
+
+Branch: `validation/live-vision`, based on `build/milestone-6`.
+Anthropic connectivity is resolved: this environment requires Node 24's
+`NODE_USE_ENV_PROXY=1` to honor its existing HTTPS proxy. TLS stays enabled;
+no secrets or proxy values were printed or written to source.
+Two live synthetic calls succeeded using claude-sonnet-5-5. Their outputs passed
+downstream assertions: Paracetamol 650 mg -> guarded name/strength -> RxCUI 161
+and duplication with Norco; no-list herbal sample -> no ingredients ->
+Unverified and unresolved alert. See eval/live-smoke-results.json.
+Real-photo metrics remain unmeasured; do not relabel synthetic results as real.
+Added local-only check:golden readiness check and REVIEW.md human review packet.
+Vercel token deferred by user; deployment remains pending.
+
 # Milestone 6 release preparation
 
 Current branch: `build/milestone-6`. See `DEPLOYMENT.md` for the full plan,

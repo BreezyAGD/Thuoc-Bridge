@@ -121,3 +121,8 @@ execution environment, but a live call using a synthetic demo label returned
 See [DEPLOYMENT.md](DEPLOYMENT.md). Milestone 6 is prepared but awaits Vercel
 access, hosted acceptance checks, and the physical wifi-off rehearsal.
 Run `npm run check:release -- <app-url>` to check a running release over HTTP.
+
+Live Anthropic connectivity is now validated on two synthetic samples; see
+[eval/README.md](eval/README.md) for the environment proxy setting and separate
+smoke report. Real-photo metrics remain unmeasured. Start the next validation
+step with `npm run check:golden` and the [review packet](REVIEW.md).

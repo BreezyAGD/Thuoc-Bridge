@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-11-15T21:33:56.849Z",
+  "scope": "Live Anthropic calls on two committed synthetic demo images. Not real-photo accuracy.",
+  "transport": "NODE_USE_ENV_PROXY=1; existing environment HTTPS proxy; TLS verification enabled",
+  "cases": [
+    {
+      "sample": "synthetic-paracetamol-650",
+      "extraction_status": "ok",
+      "model": "claude-sonnet-5-5",
+      "ms": 5409,
+      "guarded_ingredient_count": 1,
+      "product_status": "resolved",
+      "alert_rules": [
+        "apap-duplicate"
+      ],
+      "passed": true
+    },
+    {
+      "sample": "synthetic-herbal-no-list",
+      "extraction_status": "ok",
+      "model": "claude-sonnet-5-5",
+      "ms": 4673,
+      "guarded_ingredient_count": 0,
+      "product_status": "unverified",
+      "alert_rules": [
+        "unresolved"
+      ],
+      "passed": true
+    }
+  ]
+}
