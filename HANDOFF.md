@@ -1,3 +1,15 @@
+# Automated offline release rehearsal
+
+Latest branch: `validation/offline-release`, based on `validation/live-vision`.
+Added `check:all`, `check:offline-release`, a test-only external-TCP-blocking
+Node preload, key-free GitHub Actions checks, and DEMO-RUNBOOK.md.
+The HTTP rehearsal starts/stops its own loopback-only production server on a
+free port, excludes inherited secrets, and requires missing-key extraction to
+fail safely. It checks every page, sample hash, and synthetic scenario variant.
+This is server/API coverage, not browser automation or a physical wifi-off test.
+Vercel token and real photos are explicitly deferred; human review stays pending.
+Use this latest branch for deployment so the validation additions are included.
+
 # Live validation update
 
 Branch: `validation/live-vision`, based on `build/milestone-6`.

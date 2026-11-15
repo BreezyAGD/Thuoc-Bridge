@@ -17,7 +17,9 @@
     "check:demo": "tsx scripts/demo-check.ts",
     "check:eval": "tsx scripts/eval-check.ts",
     "check:release": "tsx scripts/release-check.ts",
-    "check:golden": "tsx scripts/golden-check.ts"
+    "check:golden": "tsx scripts/golden-check.ts",
+    "check:offline-release": "tsx scripts/offline-release-check.ts",
+    "check:all": "npm run typecheck && npm run lint && npm run check:normalize && npm run check:scenarios && npm run check:demo && npm run check:eval && npm run build && npm run check:offline-release"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

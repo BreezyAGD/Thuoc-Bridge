@@ -126,3 +126,14 @@ Live Anthropic connectivity is now validated on two synthetic samples; see
 [eval/README.md](eval/README.md) for the environment proxy setting and separate
 smoke report. Real-photo metrics remain unmeasured. Start the next validation
 step with `npm run check:golden` and the [review packet](REVIEW.md).
+
+## Repeatable demo checks without keys or real photos
+
+Run `npm run check:all` to build and verify the synthetic demo, including an
+isolated production HTTP rehearsal with external TCP blocked and API credentials
+removed from the child environment. After an existing build,
+`npm run check:offline-release` runs just that rehearsal. GitHub Actions runs
+the same checks on pushes and pull requests. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md)
+for the presentation flow and physical wifi-off rehearsal. The automated check
+covers the server/API; browser interaction and real-photo validation remain
+separate.

@@ -6,15 +6,16 @@ Milestones 1–5 are implemented. Milestone 6 is **prepared, not deployed**.
 No hosted URL has been verified. Two live synthetic Anthropic extractions now
 pass with guard, RxNorm, and alert checks (see eval/live-smoke-results.json).
 Real-photo extraction accuracy is still unmeasured.
-The release branch is `build/milestone-6`, based on `build/milestone-5`.
+The latest release candidate is `validation/offline-release`, which includes
+`validation/live-vision` and `build/milestone-6`.
 `main` still contains only the initial README; do not deploy it.
 
 ## Deploy on Vercel
 
 1. Import GitHub repository `BreezyAGD/Thuoc-Bridge` into the intended Vercel
-   account/team. Choose Next.js, repository root, Node.js 22.x, `npm ci`,
+   account/team. Choose Next.js, repository root, Node.js 24.x, `npm ci`,
    `npm run build`, and the default Next.js output directory.
-2. Set the production branch to `build/milestone-6`. Do not merge or change
+2. Set the production branch to `validation/offline-release`. Do not merge or change
    `main` just to deploy. For a preview instead, select this same branch and
    configure the key for Preview as well.
 3. Add `ANTHROPIC_API_KEY` as a sensitive, server-side environment variable.
@@ -99,3 +100,9 @@ care. Do not invent photo metrics or reviewer sign-offs.
 Validation update: live transport works on this managed environment with Node 24
 and `NODE_USE_ENV_PROXY=1`. See `eval/README.md`, `npm run check:golden`, and
 [REVIEW.md](REVIEW.md) for the next real-photo and human review steps.
+
+The key-free automated production rehearsal is now available as
+`npm run check:offline-release` (requires a completed build), or as part of
+`npm run check:all`. See [DEMO-RUNBOOK.md](DEMO-RUNBOOK.md) for exact coverage,
+its limits, and the judging flow. This does not mark Vercel deployment or a
+physical wifi-off browser rehearsal complete.
