@@ -1,0 +1,53 @@
+{
+  "status": "ok",
+  "extraction": {
+    "is_medicine_package": true,
+    "transcript": [
+      "ASSUMED amoxicillin 500",
+      "Thành phần:",
+      "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg"
+    ],
+    "brand_name": {
+      "value": "ASSUMED amoxicillin 500",
+      "source_text": "ASSUMED amoxicillin 500",
+      "confidence": 0.95
+    },
+    "manufacturer": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "registration_number": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "dosage_form": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "ingredients_section_found": true,
+    "ingredients": [
+      {
+        "name": {
+          "value": "Amoxicilin (dưới dạng Amoxicilin trihydrat)",
+          "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat)",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 500,
+          "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg",
+          "confidence": 0.95
+        }
+      }
+    ]
+  },
+  "model": "synthetic-fixture-not-model-output",
+  "ms": 0
+}

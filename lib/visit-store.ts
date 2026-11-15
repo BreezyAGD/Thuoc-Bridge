@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { prepareImage } from "./image";
 import type { ReconcileResponse } from "./reconcile";
 import type { ExtractResult } from "./schema";
+import { cachedExtraction, extractWithCache, imageHash, demoScenarios, demoEntries } from "./cache";
 
 /**
  * One visit's state, shared by the patient and clinician views on the same
@@ -20,15 +21,17 @@ export type VisitProduct = {
 export type VisitUsMed = { id: string; text: string };
 
 export type Visit = {
+  demoMode: boolean;
+  demoScenario: string | null;
   products: VisitProduct[];
   usMeds: VisitUsMed[];
   recon: ReconcileResponse | null;
   reconState: "idle" | "loading" | "error";
 };
 
-const EMPTY: Visit = { products: [], usMeds: [], recon: null, reconState: "idle" };
+const EMPTY: Visit = { demoMode: false, demoScenario: null, products: [], usMeds: [], recon: null, reconState: "idle" };
 // Bump the suffix whenever the stored shape changes, so stale visits are dropped.
-const STORAGE_KEY = "tb.visit.v3";
+const STORAGE_KEY = "tb.visit.v4";
 
 let visit: Visit = EMPTY;
 let loaded = false;
@@ -44,6 +47,8 @@ function load() {
     if (!raw) return;
     const saved = JSON.parse(raw) as Partial<Visit>;
     visit = {
+      demoMode: saved.demoMode === true,
+      demoScenario: saved.demoScenario ?? null,
       products: (saved.products ?? []).filter((p) => p.state !== "reading"),
       usMeds: saved.usMeds ?? [],
       recon: saved.recon ?? null,
@@ -65,6 +70,8 @@ function set(next: Visit) {
       STORAGE_KEY,
       JSON.stringify({
         products: next.products.filter((p) => p.state !== "reading"),
+        demoMode: next.demoMode,
+        demoScenario: next.demoScenario,
         usMeds: next.usMeds,
         recon: next.recon,
       }),
@@ -92,10 +99,11 @@ export function useVisit(): Visit {
 }
 
 export function getImage(id: string): string | null {
-  return images.get(id) ?? null;
+  return images.get(id) ?? (visit.demoMode ? visit.products.find((p) => p.id === id)?.thumbUrl ?? null : null);
 }
 
 function patchProduct(id: string, patch: Partial<VisitProduct>) {
+  if (!visit.products.some((p) => p.id === id)) return;
   set({ ...visit, products: visit.products.map((p) => (p.id === id ? { ...p, ...patch } : p)) });
 }
 
@@ -104,6 +112,7 @@ let reconTimer: ReturnType<typeof setTimeout> | undefined;
 
 /** Re-run guard + RxNorm normalization for everything in the visit. */
 function scheduleReconcile() {
+  reconSeq++;
   clearTimeout(reconTimer);
   reconTimer = setTimeout(async () => {
     const seq = ++reconSeq;
@@ -134,17 +143,8 @@ function scheduleReconcile() {
   }, 150);
 }
 
-async function callExtract(image: string, mediaType: string): Promise<ExtractResult> {
-  try {
-    const res = await fetch("/api/extract", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ image, mediaType }),
-    });
-    return (await res.json()) as ExtractResult;
-  } catch {
-    return { status: "error", code: "network", message: "Request failed" };
-  }
+async function callExtract(image: string, mediaType: string, originalHash: string): Promise<ExtractResult> {
+  return extractWithCache(image, mediaType, visit.demoMode, originalHash);
 }
 
 /** Each photo is one product. Photos are read in parallel. */
@@ -162,9 +162,12 @@ export async function addPhotos(files: FileList | File[] | null) {
         patchProduct(id, { state: "image_error" });
         return;
       }
+      if (!visit.products.some((p) => p.id === id)) return;
       images.set(id, prepared.dataUrl);
       patchProduct(id, { thumbUrl: prepared.thumbUrl });
-      const result = await callExtract(prepared.base64, prepared.mediaType);
+      const originalHash = await imageHash(await file.arrayBuffer());
+      if (!visit.products.some((p) => p.id === id)) return;
+      const result = await callExtract(prepared.base64, prepared.mediaType, originalHash);
       patchProduct(id, { state: "done", result });
       scheduleReconcile();
     }),
@@ -191,9 +194,25 @@ export function removeUsMed(id: string) {
 }
 
 export function resetVisit() {
+  clearTimeout(reconTimer);
   images.clear();
   reconSeq++;
   set(EMPTY);
+}
+
+/** Loading a demo starts a fresh synthetic visit; no image is sent to the API. */
+export async function loadDemo(scenarioId = demoScenarios[0].id) {
+  const scenario = demoScenarios.find((s) => s.id === scenarioId);
+  if (!scenario) return;
+  resetVisit();
+  const products: VisitProduct[] = scenario.hashes.map((hash, i) => {
+    const entry = demoEntries.find((e) => e.hash === hash)!;
+    const id = `demo-${i}`;
+    images.set(id, entry.photo);
+    return { id, thumbUrl: entry.photo, state: "done", result: cachedExtraction(hash)! };
+  });
+  set({ ...EMPTY, demoMode: true, demoScenario: scenario.id, products, usMeds: scenario.usMeds.map((text, i) => ({ id: `u${i}`, text })) });
+  scheduleReconcile();
 }
 
 export function retryReconcile() {

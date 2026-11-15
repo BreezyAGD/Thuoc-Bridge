@@ -1,0 +1,71 @@
+{
+  "status": "ok",
+  "extraction": {
+    "is_medicine_package": true,
+    "transcript": [
+      "ASSUMED hoạt huyết dưỡng não",
+      "Thành phần:",
+      "Cao đinh lăng ..... 150 mg",
+      "Cao bạch quả ..... 5 mg"
+    ],
+    "brand_name": {
+      "value": "ASSUMED hoạt huyết dưỡng não",
+      "source_text": "ASSUMED hoạt huyết dưỡng não",
+      "confidence": 0.95
+    },
+    "manufacturer": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "registration_number": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "dosage_form": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "ingredients_section_found": true,
+    "ingredients": [
+      {
+        "name": {
+          "value": "Cao đinh lăng",
+          "source_text": "Cao đinh lăng",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 150,
+          "source_text": "Cao đinh lăng ..... 150 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Cao đinh lăng ..... 150 mg",
+          "confidence": 0.95
+        }
+      },
+      {
+        "name": {
+          "value": "Cao bạch quả",
+          "source_text": "Cao bạch quả",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 5,
+          "source_text": "Cao bạch quả ..... 5 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Cao bạch quả ..... 5 mg",
+          "confidence": 0.95
+        }
+      }
+    ]
+  },
+  "model": "synthetic-fixture-not-model-output",
+  "ms": 0
+}

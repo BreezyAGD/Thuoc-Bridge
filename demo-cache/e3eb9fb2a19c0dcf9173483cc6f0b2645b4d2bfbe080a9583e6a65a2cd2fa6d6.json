@@ -1,0 +1,34 @@
+{
+  "status": "ok",
+  "extraction": {
+    "is_medicine_package": true,
+    "transcript": [
+      "ASSUMED herbal product",
+      "Hộp 3 vỉ x 10 viên"
+    ],
+    "brand_name": {
+      "value": "ASSUMED herbal product",
+      "source_text": "ASSUMED herbal product",
+      "confidence": 0.95
+    },
+    "manufacturer": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "registration_number": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "dosage_form": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "ingredients_section_found": false,
+    "ingredients": []
+  },
+  "model": "synthetic-fixture-not-model-output",
+  "ms": 0
+}

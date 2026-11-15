@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "generated_at": "2026-11-15T20:03:05.873Z",
+  "model": "claude-sonnet-5-5",
+  "photo_evaluation": {
+    "status": "not_measured",
+    "labeled": 0,
+    "scored": 0,
+    "errors": 0,
+    "ingredient_precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "ingredient_recall": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "rxnorm_match_rate": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "flagged_unverified": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "unverified_correctness": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "items": []
+  },
+  "synthetic_alert_evaluation": {
+    "exact_scenarios": {
+      "numerator": 11,
+      "denominator": 11,
+      "percent": 100
+    },
+    "precision": {
+      "numerator": 16,
+      "denominator": 16,
+      "percent": 100
+    },
+    "recall": {
+      "numerator": 16,
+      "denominator": 16,
+      "percent": 100
+    },
+    "scenarios": [
+      {
+        "id": "1-paracetamol-duplication",
+        "actual": [
+          "apap-duplicate"
+        ],
+        "expected": [
+          "apap-duplicate"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "1b-paracetamol-plus-tylenol",
+        "actual": [
+          "apap-duplicate"
+        ],
+        "expected": [
+          "apap-duplicate"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "2-ginkgo-warfarin",
+        "actual": [
+          "ginkgo-warfarin",
+          "unresolved"
+        ],
+        "expected": [
+          "ginkgo-warfarin",
+          "unresolved"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "2b-ginkgo-apixaban",
+        "actual": [
+          "ginkgo-doac",
+          "unresolved"
+        ],
+        "expected": [
+          "ginkgo-doac",
+          "unresolved"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "3-cold-medicine-bp",
+        "actual": [
+          "apap-duplicate",
+          "decongestant-antihypertensive"
+        ],
+        "expected": [
+          "apap-duplicate",
+          "decongestant-antihypertensive"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "3b-cold-medicine-ppa",
+        "actual": [
+          "decongestant-antihypertensive",
+          "ppa-present"
+        ],
+        "expected": [
+          "decongestant-antihypertensive",
+          "ppa-present"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "4-otc-antibiotic",
+        "actual": [
+          "beta-lactam-allergy",
+          "otc-antibiotic"
+        ],
+        "expected": [
+          "beta-lactam-allergy",
+          "otc-antibiotic"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "5-herbal-no-ingredient-list",
+        "actual": [
+          "unresolved"
+        ],
+        "expected": [
+          "unresolved"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "negative-no-alert",
+        "actual": [],
+        "expected": [],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "negative-same-product-combination",
+        "actual": [],
+        "expected": [],
+        "passed": true,
+        "rxnav_unavailable": false
+      },
+      {
+        "id": "extra-nsaid-warfarin-steroid",
+        "actual": [
+          "nsaid-anticoagulant",
+          "nsaid-corticosteroid",
+          "systemic-corticosteroid"
+        ],
+        "expected": [
+          "nsaid-anticoagulant",
+          "nsaid-corticosteroid",
+          "systemic-corticosteroid"
+        ],
+        "passed": true,
+        "rxnav_unavailable": false
+      }
+    ]
+  }
+}

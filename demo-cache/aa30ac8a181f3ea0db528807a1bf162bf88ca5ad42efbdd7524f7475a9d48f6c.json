@@ -1,0 +1,53 @@
+{
+  "status": "ok",
+  "extraction": {
+    "is_medicine_package": true,
+    "transcript": [
+      "ASSUMED paracetamol 650",
+      "Thành phần:",
+      "Paracetamol ..... 650 mg"
+    ],
+    "brand_name": {
+      "value": "ASSUMED paracetamol 650",
+      "source_text": "ASSUMED paracetamol 650",
+      "confidence": 0.95
+    },
+    "manufacturer": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "registration_number": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "dosage_form": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "ingredients_section_found": true,
+    "ingredients": [
+      {
+        "name": {
+          "value": "Paracetamol",
+          "source_text": "Paracetamol",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 650,
+          "source_text": "Paracetamol ..... 650 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Paracetamol ..... 650 mg",
+          "confidence": 0.95
+        }
+      }
+    ]
+  },
+  "model": "synthetic-fixture-not-model-output",
+  "ms": 0
+}

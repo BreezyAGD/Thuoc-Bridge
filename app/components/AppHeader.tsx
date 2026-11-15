@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { setLang, useLang } from "@/lib/client-store";
+import { DemoControls } from "./DemoControls";
 
 export function AppHeader() {
   const { lang, t } = useLang();
@@ -11,6 +12,7 @@ export function AppHeader() {
         <Link href="/" className="text-xl font-bold tracking-tight">
           {t.appName}
         </Link>
+        <Link href="/about-metrics" className="text-sm underline">{lang === "vi" ? "Số liệu" : "Metrics"}</Link>
         <button
           type="button"
           lang={lang === "vi" ? "en" : "vi"}
@@ -20,6 +22,7 @@ export function AppHeader() {
           {t.langToggle}
         </button>
       </div>
+      <DemoControls />
     </header>
   );
 }

@@ -94,12 +94,13 @@ function usMedConfidence(r: Resolution): ConfidenceLevel {
 
 async function reconcileProduct(p: ReconcileRequest["products"][number]): Promise<ProductRow> {
   const e = p.extraction;
+  const guard = e ? guardExtraction(e) : null;
   const empty = (reason: string): ProductRow => ({
     id: p.id,
-    brand: e?.brand_name.value ?? null,
-    manufacturer: e?.manufacturer.value ?? null,
-    registration_number: e?.registration_number.value ?? null,
-    dosage_form: e?.dosage_form.value ?? null,
+    brand: guard?.brand_name.ok ? e!.brand_name.value : null,
+    manufacturer: guard?.manufacturer.ok ? e!.manufacturer.value : null,
+    registration_number: guard?.registration_number.ok ? e!.registration_number.value : null,
+    dosage_form: guard?.dosage_form.ok ? e!.dosage_form.value : null,
     status: "unverified",
     unverified_reason: reason,
     field_issues: [],
@@ -112,10 +113,11 @@ async function reconcileProduct(p: ReconcileRequest["products"][number]): Promis
     return empty("No legible ingredient list in this photo.");
   }
 
-  const guard = guardExtraction(e);
+  // e exists on this path, so its metadata and ingredients have been guarded.
+  const checked = guard!;
   const ingredients = await Promise.all(
     e.ingredients.map(async (ing, i): Promise<IngredientRow> => {
-      const g = guard.ingredients[i];
+      const g = checked.ingredients[i];
       const printed = ing.name.value ?? "";
       // A name that fails the guard is not sent for normalization at all.
       const resolution: Resolution = g.name.ok
@@ -145,21 +147,21 @@ async function reconcileProduct(p: ReconcileRequest["products"][number]): Promis
 
   const resolved = ingredients.filter((i) => i.confidence !== "unverified").length;
   const status = resolved === 0 ? "unverified" : resolved === ingredients.length ? "resolved" : "partial";
-  const brandOk = guard.brand_name.ok;
+  const brandOk = checked.brand_name.ok;
   return {
     id: p.id,
     brand: brandOk ? e.brand_name.value : null,
-    manufacturer: guard.manufacturer.ok ? e.manufacturer.value : null,
-    registration_number: guard.registration_number.ok ? e.registration_number.value : null,
-    dosage_form: guard.dosage_form.ok ? e.dosage_form.value : null,
+    manufacturer: checked.manufacturer.ok ? e.manufacturer.value : null,
+    registration_number: checked.registration_number.ok ? e.registration_number.value : null,
+    dosage_form: checked.dosage_form.ok ? e.dosage_form.value : null,
     status,
     unverified_reason:
       status === "unverified" ? "None of the listed ingredients could be matched to RxNorm." : null,
     field_issues: [
-      guard.brand_name.issue,
-      guard.manufacturer.issue,
-      guard.registration_number.issue,
-      guard.dosage_form.issue,
+      checked.brand_name.issue,
+      checked.manufacturer.issue,
+      checked.registration_number.issue,
+      checked.dosage_form.issue,
     ].filter((x): x is string => x !== null),
     ingredients,
   };

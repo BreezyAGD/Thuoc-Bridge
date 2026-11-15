@@ -31,6 +31,24 @@ pipeline stays safely unsure instead of guessing from the brand name.
 
 ## Other files
 
+- `npm run eval` reads `.env.local`, validates `golden.json`, processes each photo
+  through `extractLabel` and `reconcile`, and writes `results.json`. No image,
+  transcript, or full extraction is saved. No demo cache is used in scoring.
+- Precision/recall match guard-checked ingredient names one to one after case
+  and diacritic folding. Strength/unit accuracy is not measured. RxNorm success
+  requires a single concept matching the human ingredient RxCUI, divided by all
+  expected non-null RxCUIs. Missing/failed photos earn no recall or RxNorm credit.
+  Photo errors make the report incomplete and the command exits nonzero.
+- Unverified rate is unverified products / scored products; classification
+  correctness compares each product with `expect_unverified`. Zero denominators
+  are `null` (not measured), never 100%. An empty golden set still runs the 11
+  synthetic alert scenarios, reported separately with exact-set correctness
+  and per-rule precision/recall. Alert failures make the command exit nonzero.
+- Synthetic demo assets are not included in `golden.json`; they cannot establish
+  photo accuracy. Add real photos and human labels before claiming that accuracy.
+- `eval/photos/` is git-ignored. Public sample photos must be reviewed for privacy
+  before any explicit publication. Never include patient information.
+
 - `normalization-cases.json`: ingredient names and the RxCUIs they must
   resolve to. Run `npm run check:normalize` (needs network, or the committed
   RxNorm cache). Add a line whenever a new spelling shows up on a box.

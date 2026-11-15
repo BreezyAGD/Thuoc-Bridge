@@ -1,0 +1,660 @@
+{
+  "provenance": "Synthetic scenario labels; not real box photos or LLM outputs.",
+  "entries": [
+    {
+      "hash": "aa30ac8a181f3ea0db528807a1bf162bf88ca5ad42efbdd7524f7475a9d48f6c",
+      "photo": "/demo-assets/1-paracetamol-duplication-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED paracetamol 650",
+            "Thành phần:",
+            "Paracetamol ..... 650 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED paracetamol 650",
+            "source_text": "ASSUMED paracetamol 650",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Paracetamol",
+                "source_text": "Paracetamol",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 650,
+                "source_text": "Paracetamol ..... 650 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Paracetamol ..... 650 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "ce101f43ea71afe6d86fd10eb211702c3b0e6a91605f91d313d913f659200f8b",
+      "photo": "/demo-assets/1b-paracetamol-plus-tylenol-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED paracetamol 500 sủi",
+            "Thành phần:",
+            "Paracetamol ..... 500 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED paracetamol 500 sủi",
+            "source_text": "ASSUMED paracetamol 500 sủi",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Paracetamol",
+                "source_text": "Paracetamol",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 500,
+                "source_text": "Paracetamol ..... 500 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Paracetamol ..... 500 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778",
+      "photo": "/demo-assets/2-ginkgo-warfarin-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED hoạt huyết dưỡng não",
+            "Thành phần:",
+            "Cao đinh lăng ..... 150 mg",
+            "Cao bạch quả ..... 5 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED hoạt huyết dưỡng não",
+            "source_text": "ASSUMED hoạt huyết dưỡng não",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Cao đinh lăng",
+                "source_text": "Cao đinh lăng",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 150,
+                "source_text": "Cao đinh lăng ..... 150 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Cao đinh lăng ..... 150 mg",
+                "confidence": 0.95
+              }
+            },
+            {
+              "name": {
+                "value": "Cao bạch quả",
+                "source_text": "Cao bạch quả",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 5,
+                "source_text": "Cao bạch quả ..... 5 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Cao bạch quả ..... 5 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778",
+      "photo": "/demo-assets/2b-ginkgo-apixaban-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED hoạt huyết dưỡng não",
+            "Thành phần:",
+            "Cao đinh lăng ..... 150 mg",
+            "Cao bạch quả ..... 5 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED hoạt huyết dưỡng não",
+            "source_text": "ASSUMED hoạt huyết dưỡng não",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Cao đinh lăng",
+                "source_text": "Cao đinh lăng",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 150,
+                "source_text": "Cao đinh lăng ..... 150 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Cao đinh lăng ..... 150 mg",
+                "confidence": 0.95
+              }
+            },
+            {
+              "name": {
+                "value": "Cao bạch quả",
+                "source_text": "Cao bạch quả",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 5,
+                "source_text": "Cao bạch quả ..... 5 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Cao bạch quả ..... 5 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "9eeccb8734354d0fa8c1345a0ff96b73d5315c1f54e87e11866ab2137e8d62ca",
+      "photo": "/demo-assets/3-cold-medicine-bp-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED combination cold tablet",
+            "Thành phần:",
+            "Paracetamol ..... 500 mg",
+            "Phenylephrin HCl ..... 10 mg",
+            "Clorpheniramin maleat ..... 2 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED combination cold tablet",
+            "source_text": "ASSUMED combination cold tablet",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Paracetamol",
+                "source_text": "Paracetamol",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 500,
+                "source_text": "Paracetamol ..... 500 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Paracetamol ..... 500 mg",
+                "confidence": 0.95
+              }
+            },
+            {
+              "name": {
+                "value": "Phenylephrin HCl",
+                "source_text": "Phenylephrin HCl",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 10,
+                "source_text": "Phenylephrin HCl ..... 10 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Phenylephrin HCl ..... 10 mg",
+                "confidence": 0.95
+              }
+            },
+            {
+              "name": {
+                "value": "Clorpheniramin maleat",
+                "source_text": "Clorpheniramin maleat",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 2,
+                "source_text": "Clorpheniramin maleat ..... 2 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Clorpheniramin maleat ..... 2 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "8d7d79741adf87016d96965334a7c1691e05528790b19d7d25276eb454a3ba92",
+      "photo": "/demo-assets/3b-cold-medicine-ppa-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED cold tablet (PPA formulation)",
+            "Thành phần:",
+            "Paracetamol ..... 500 mg",
+            "Phenylpropanolamin HCl ..... 25 mg",
+            "Clorpheniramin maleat ..... 2 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED cold tablet (PPA formulation)",
+            "source_text": "ASSUMED cold tablet (PPA formulation)",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Paracetamol",
+                "source_text": "Paracetamol",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 500,
+                "source_text": "Paracetamol ..... 500 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Paracetamol ..... 500 mg",
+                "confidence": 0.95
+              }
+            },
+            {
+              "name": {
+                "value": "Phenylpropanolamin HCl",
+                "source_text": "Phenylpropanolamin HCl",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 25,
+                "source_text": "Phenylpropanolamin HCl ..... 25 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Phenylpropanolamin HCl ..... 25 mg",
+                "confidence": 0.95
+              }
+            },
+            {
+              "name": {
+                "value": "Clorpheniramin maleat",
+                "source_text": "Clorpheniramin maleat",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 2,
+                "source_text": "Clorpheniramin maleat ..... 2 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Clorpheniramin maleat ..... 2 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "be69147a876896e8058d71618c0aeaff6792215dffb156682e8f1c6ddb4c966b",
+      "photo": "/demo-assets/4-otc-antibiotic-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED amoxicillin 500",
+            "Thành phần:",
+            "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg"
+          ],
+          "brand_name": {
+            "value": "ASSUMED amoxicillin 500",
+            "source_text": "ASSUMED amoxicillin 500",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "Amoxicilin (dưới dạng Amoxicilin trihydrat)",
+                "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat)",
+                "confidence": 0.95
+              },
+              "strength": {
+                "value": 500,
+                "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg",
+                "confidence": 0.95
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg",
+                "confidence": 0.95
+              }
+            }
+          ]
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "e3eb9fb2a19c0dcf9173483cc6f0b2645b4d2bfbe080a9583e6a65a2cd2fa6d6",
+      "photo": "/demo-assets/5-herbal-no-ingredient-list-0.jpg",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "ASSUMED herbal product",
+            "Hộp 3 vỉ x 10 viên"
+          ],
+          "brand_name": {
+            "value": "ASSUMED herbal product",
+            "source_text": "ASSUMED herbal product",
+            "confidence": 0.95
+          },
+          "manufacturer": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": false,
+          "ingredients": []
+        },
+        "model": "synthetic-fixture-not-model-output",
+        "ms": 0
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "1-paracetamol-duplication",
+      "description": "Vietnamese paracetamol product + US hydrocodone/acetaminophen",
+      "hashes": [
+        "aa30ac8a181f3ea0db528807a1bf162bf88ca5ad42efbdd7524f7475a9d48f6c"
+      ],
+      "usMeds": [
+        "Norco"
+      ],
+      "expected": [
+        "apap-duplicate"
+      ]
+    },
+    {
+      "id": "1b-paracetamol-plus-tylenol",
+      "description": "Vietnamese effervescent paracetamol + US Tylenol",
+      "hashes": [
+        "ce101f43ea71afe6d86fd10eb211702c3b0e6a91605f91d313d913f659200f8b"
+      ],
+      "usMeds": [
+        "Tylenol"
+      ],
+      "expected": [
+        "apap-duplicate"
+      ]
+    },
+    {
+      "id": "2-ginkgo-warfarin",
+      "description": "Ginkgo-containing circulation product + warfarin",
+      "hashes": [
+        "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778"
+      ],
+      "usMeds": [
+        "warfarin"
+      ],
+      "expected": [
+        "ginkgo-warfarin",
+        "unresolved"
+      ]
+    },
+    {
+      "id": "2b-ginkgo-apixaban",
+      "description": "Ginkgo-containing circulation product + apixaban",
+      "hashes": [
+        "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778"
+      ],
+      "usMeds": [
+        "Eliquis"
+      ],
+      "expected": [
+        "ginkgo-doac",
+        "unresolved"
+      ]
+    },
+    {
+      "id": "3-cold-medicine-bp",
+      "description": "Combination cold medicine + blood-pressure medicine + US Tylenol (hidden acetaminophen)",
+      "hashes": [
+        "9eeccb8734354d0fa8c1345a0ff96b73d5315c1f54e87e11866ab2137e8d62ca"
+      ],
+      "usMeds": [
+        "amlodipine",
+        "Tylenol"
+      ],
+      "expected": [
+        "apap-duplicate",
+        "decongestant-antihypertensive"
+      ]
+    },
+    {
+      "id": "3b-cold-medicine-ppa",
+      "description": "Older cold formulation with phenylpropanolamine + lisinopril",
+      "hashes": [
+        "8d7d79741adf87016d96965334a7c1691e05528790b19d7d25276eb454a3ba92"
+      ],
+      "usMeds": [
+        "lisinopril"
+      ],
+      "expected": [
+        "ppa-present",
+        "decongestant-antihypertensive"
+      ]
+    },
+    {
+      "id": "4-otc-antibiotic",
+      "description": "Amoxicillin bought over the counter",
+      "hashes": [
+        "be69147a876896e8058d71618c0aeaff6792215dffb156682e8f1c6ddb4c966b"
+      ],
+      "usMeds": [],
+      "expected": [
+        "otc-antibiotic",
+        "beta-lactam-allergy"
+      ]
+    },
+    {
+      "id": "5-herbal-no-ingredient-list",
+      "description": "Herbal product whose photo shows no legible ingredient list",
+      "hashes": [
+        "e3eb9fb2a19c0dcf9173483cc6f0b2645b4d2bfbe080a9583e6a65a2cd2fa6d6"
+      ],
+      "usMeds": [
+        "lisinopril"
+      ],
+      "expected": [
+        "unresolved"
+      ]
+    }
+  ]
+}

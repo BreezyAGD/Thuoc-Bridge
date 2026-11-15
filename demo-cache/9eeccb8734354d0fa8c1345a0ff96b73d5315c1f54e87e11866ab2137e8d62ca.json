@@ -1,0 +1,89 @@
+{
+  "status": "ok",
+  "extraction": {
+    "is_medicine_package": true,
+    "transcript": [
+      "ASSUMED combination cold tablet",
+      "Thành phần:",
+      "Paracetamol ..... 500 mg",
+      "Phenylephrin HCl ..... 10 mg",
+      "Clorpheniramin maleat ..... 2 mg"
+    ],
+    "brand_name": {
+      "value": "ASSUMED combination cold tablet",
+      "source_text": "ASSUMED combination cold tablet",
+      "confidence": 0.95
+    },
+    "manufacturer": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "registration_number": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "dosage_form": {
+      "value": null,
+      "source_text": null,
+      "confidence": 0
+    },
+    "ingredients_section_found": true,
+    "ingredients": [
+      {
+        "name": {
+          "value": "Paracetamol",
+          "source_text": "Paracetamol",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 500,
+          "source_text": "Paracetamol ..... 500 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Paracetamol ..... 500 mg",
+          "confidence": 0.95
+        }
+      },
+      {
+        "name": {
+          "value": "Phenylephrin HCl",
+          "source_text": "Phenylephrin HCl",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 10,
+          "source_text": "Phenylephrin HCl ..... 10 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Phenylephrin HCl ..... 10 mg",
+          "confidence": 0.95
+        }
+      },
+      {
+        "name": {
+          "value": "Clorpheniramin maleat",
+          "source_text": "Clorpheniramin maleat",
+          "confidence": 0.95
+        },
+        "strength": {
+          "value": 2,
+          "source_text": "Clorpheniramin maleat ..... 2 mg",
+          "confidence": 0.95
+        },
+        "unit": {
+          "value": "mg",
+          "source_text": "Clorpheniramin maleat ..... 2 mg",
+          "confidence": 0.95
+        }
+      }
+    ]
+  },
+  "model": "synthetic-fixture-not-model-output",
+  "ms": 0
+}

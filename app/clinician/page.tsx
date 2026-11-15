@@ -1,5 +1,7 @@
 "use client";
 
+import { DemoControls } from "../components/DemoControls";
+
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { AlertsPanel } from "./AlertsPanel";
@@ -193,6 +195,7 @@ export default function ClinicianPage() {
             Patient view
           </Link>
         </div>
+        <DemoControls english />
       </header>
 
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-5 px-4 py-6">

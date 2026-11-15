@@ -92,6 +92,12 @@ export type ExtractResult =
     }
   | { status: "error"; code: ExtractErrorCode; message: string };
 
+export const ExtractResultSchema = z.discriminatedUnion("status", [
+  z.object({ status: z.literal("ok"), extraction: ExtractionSchema, model: z.string(), ms: z.number() }),
+  z.object({ status: z.literal("unverified"), reason: z.enum(["refusal", "unparseable", "truncated"]), ms: z.number() }),
+  z.object({ status: z.literal("error"), code: z.enum(["bad_request", "no_api_key", "auth", "rate_limited", "network", "api_error"]), message: z.string() }),
+]);
+
 export const ExtractRequestSchema = z.object({
   /** Base64 image bytes, no data: prefix. Downscaled in the browser first. */
   image: z.string().min(100).max(7_000_000),

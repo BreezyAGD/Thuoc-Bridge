@@ -50,7 +50,6 @@ function ProductCard({
   lang: string;
 }) {
   const result = item.result;
-  const extraction = result?.status === "ok" ? result.extraction : null;
   // The patient only ever sees values that passed the deterministic guard:
   // names found on the label, and strengths that match their printed text.
   const checked = row ? row.ingredients.filter((i) => i.name_verified) : null;
@@ -90,7 +89,7 @@ function ProductCard({
           {item.state === "done" && result?.status !== "error" && (
             <>
               <h2 className="text-xl font-bold break-words">
-                {(row ? row.brand : extraction?.brand_name.value) ?? t.unknownName}
+                {row?.brand ?? t.unknownName}
               </h2>
 
               {unverified ? (
