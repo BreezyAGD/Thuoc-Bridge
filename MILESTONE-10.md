@@ -1,7 +1,7 @@
 # Milestone 10 — release readiness and next steps
 
-Latest branch: `build/milestone-10`, including milestones 8–9 and the Cloudflare
-adaptation. This adds a read-only presenter/operator page at `/readiness`, linked
+Release branch: `main`, including every milestone and validation branch.
+Milestone 10 was implemented on `build/milestone-10`. This adds a read-only presenter/operator page at `/readiness`, linked
 from metrics and the demo walkthrough. It does not change patient visit data.
 
 The page lists implementation milestones separately from five external gates:

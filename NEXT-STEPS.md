@@ -1,6 +1,6 @@
 # Remaining steps for Thuốc Bridge
 
-Latest release branch: `build/milestone-10`. Milestones 1–5 and 8–10 are
+Release branch: `main` (all milestone and validation branches are included). Milestones 1–5 and 8–10 are
 implemented. Milestone 6 has a tested Cloudflare adaptation but no hosted
 verification; milestone 7 has evaluation tools but no independent real-photo
 study or qualified human review. No additional feature milestone is required

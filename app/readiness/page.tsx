@@ -6,7 +6,7 @@ import { CURATED_RULE_COUNT, VERIFIED_RULE_COUNT } from "@/lib/alerts";
 import { readinessGates, ReleaseEvidenceSchema } from "@/lib/readiness";
 
 const evidence = ReleaseEvidenceSchema.parse(evidenceJson);
-const source = "https://github.com/BreezyAGD/Thuoc-Bridge/blob/build/milestone-10/";
+const source = "https://github.com/BreezyAGD/Thuoc-Bridge/blob/main/";
 const milestones = [
   ["1–5", "Core extraction, reconciliation, alerts, demo, metrics, and print", "Implemented"],
   ["6", "Cloudflare hosting and physical rehearsal", "Adapted locally; external verification pending"],

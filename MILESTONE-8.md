@@ -45,6 +45,6 @@ medicines and results are gone, and the language choice is retained. Opening the
 summary must show no printable result. Repeat during a pending extraction/check.
 New Vietnamese strings still require fluent-speaker review.
 
-The latest release branch is `build/milestone-8`. This does not complete pending
+The implementation branch was `build/milestone-8`; the release branch is now `main`. This does not complete pending
 Cloudflare hosting or the independent validation gates described in milestones
 6 and 7.

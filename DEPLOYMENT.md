@@ -71,8 +71,8 @@ using `WRANGLER_LOG_PATH` and `XDG_CONFIG_HOME`. Do not copy proxy credentials.
 6. Record URL, commit, deployment status, hosted HTTP results, live extraction
    result, and rehearsal evidence before marking milestone 6 complete.
 
-For Workers Builds connected to GitHub, select `build/milestone-10` (includes Cloudflare, visit lifecycle, demo guide, and readiness), not
-`main` (which still holds only the initial README). Use Node 24, build command
+For Workers Builds connected to GitHub, select `main`. All milestone and
+validation work is consolidated there. Use Node 24, build command
 `npm run cf:build`, deploy command `npm run cf:deploy`, root directory `/`.
 Configure runtime secrets separately from build variables; this build needs no
 Anthropic key. No custom domain, DNS change, or paid storage is required by this
@@ -107,3 +107,39 @@ this route too. It remains a synthetic presentation, not a clinical validation.
 [Milestone 10](MILESTONE-10.md) adds `/readiness` to hosted acceptance and a
 read-only evidence summary. See [NEXT-STEPS.md](NEXT-STEPS.md) for the remaining
 sequence. Record actual evidence in data/release-evidence.json; never secrets.
+
+## Integration configuration still required
+
+The repository contains the Workers/OpenNext configuration and both server API
+routes. Tests and dry-runs do not create a Cloudflare account/project or deploy
+the app. The current GitHub Actions workflow runs checks only; merging into
+`main` does not deploy until a deployment integration is connected.
+
+- **Cloudflare account:** provide the intended account ID and a securely scoped
+  Workers deployment API token for CLI deployment, or sign in locally with
+  Wrangler. Neither was configured in this execution environment.
+- **Worker:** publish `thuoc-bridge` using `npm run cf:build` and
+  `npm run cf:deploy`. The ASSETS and WORKER_SELF_REFERENCE bindings are already
+  declared in wrangler.jsonc. No R2/KV/D1 database is required by this app.
+- **Git-based deploys (optional):** connect this GitHub repository to Cloudflare
+  Workers Builds, production branch `main`, root `/`, Node 24, build command
+  `npm run cf:build`, deploy command `npm run cf:deploy`. The existing GitHub CI
+  is verification only. CLI deployment is sufficient if automatic deploys are
+  not wanted. Do not add an Anthropic key to browser/build-public variables.
+- **Anthropic runtime secret:** set `ANTHROPIC_API_KEY` on the deployed Worker
+  through the Cloudflare secret UI or Wrangler's secure secret prompt. The SDK,
+  model, structured extraction, and API route are implemented; the key already
+  worked in two local live synthetic smoke checks. That local environment key
+  is not automatically copied to Cloudflare. For local Workers live preview,
+  use git-ignored `.dev.vars`; demo mode needs no key.
+- **Hosted verification:** use the actual deployed URL for seven-page HTTP
+  checks, browser demo/printing, and an uncached live extraction. Confirm the
+  runtime can reach Anthropic and the deployed key can use `claude-sonnet-5-5`.
+  A cached result is not proof of a successful live API request.
+- **Domain (optional):** a workers.dev URL is sufficient. Custom domain/DNS,
+  Cloudflare storage, and Vercel credentials are not required for this setup.
+
+Do not copy the managed development environment's HTTPS proxy configuration
+into Workers. The local `NODE_USE_ENV_PROXY=1` fix was environment-specific;
+Workers use their own outbound fetch. Keep credentials out of source, chat,
+client bundles, and committed evidence records.

@@ -1,3 +1,18 @@
+# Main consolidation — current
+
+The user explicitly authorized merging every branch into main. All remote
+milestone/validation branch tips were verified as ancestors of milestone 10.
+main was fast-forwarded to include all their commits; branches were retained.
+Canonical release/setup documents and readiness source links now target main.
+The GitHub workflow checks software only; there is no automatic deployment
+integration yet. DEPLOYMENT.md lists the remaining Cloudflare account/token,
+Worker deployment, optional Workers Builds connection, runtime Anthropic secret,
+and hosted verification steps. The Anthropic SDK and local live synthetic API
+smoke checks already work; credentials are not automatically copied to Workers.
+Two milestones remain open: 6 (hosted verification and physical rehearsal),
+7 (real-photo measurement and qualified clinical/language review). Earlier
+entries below are historical and their branch instructions are superseded.
+
 # Milestone 10 — current
 
 Current branch: `build/milestone-10`, based on `build/milestone-9`.

@@ -1,6 +1,6 @@
 # Thuốc Bridge
 
-Latest release branch: `build/milestone-10`. See [NEXT-STEPS.md](NEXT-STEPS.md).
+Release branch: `main` (all milestone and validation work is consolidated here). See [NEXT-STEPS.md](NEXT-STEPS.md).
 
 Medication reconciliation for Vietnamese-speaking patients who use medicines
 bought in Vietnam. A patient photographs a medicine box; a clinician reviews

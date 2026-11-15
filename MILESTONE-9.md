@@ -1,7 +1,8 @@
 # Milestone 9 — guided presentation demo
 
 This extends the prototype with a presenter walkthrough. It requires neither
-hosting credentials nor real boxes. The latest branch is `build/milestone-9`.
+hosting credentials nor real boxes. Its implementation branch was
+`build/milestone-9`; the consolidated release branch is now `main`.
 The independent deployment, photo-evaluation, clinical-review, and language-review
 gates remain open; the walkthrough does not complete those gates.
 
