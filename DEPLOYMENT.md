@@ -143,3 +143,12 @@ Do not copy the managed development environment's HTTPS proxy configuration
 into Workers. The local `NODE_USE_ENV_PROXY=1` fix was environment-specific;
 Workers use their own outbound fetch. Keep credentials out of source, chat,
 client bundles, and committed evidence records.
+
+## Deployed but “No URLs enabled”
+
+A Ready build can exist without a public route. In the Worker dashboard, open
+Domains (or Settings > Domains & Routes), locate the disabled workers.dev row,
+and enable it. Use the actual address displayed there. The repository now
+explicitly sets workers_dev: true so subsequent deployments request the public
+workers.dev route. No custom domain or DNS record is needed for this demo URL.
+This does not verify the app or Anthropic; run the hosted checks after enabling.
