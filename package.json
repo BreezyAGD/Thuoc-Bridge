@@ -9,7 +9,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "extract": "tsx --env-file-if-exists=.env.local scripts/extract-one.ts",
-    "check:normalize": "tsx scripts/normalize-check.ts"
+    "check:normalize": "tsx scripts/normalize-check.ts",
+    "rules:refresh": "tsx scripts/rules-refresh.ts",
+    "check:scenarios": "tsx scripts/scenarios-check.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

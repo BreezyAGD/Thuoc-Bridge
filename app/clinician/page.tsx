@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, useState } from "react";
+import { AlertsPanel } from "./AlertsPanel";
 import type { ConfidenceLevel, IngredientRow, ProductRow } from "@/lib/reconcile";
 import {
   addUsMed,
@@ -453,13 +454,7 @@ export default function ClinicianPage() {
           )}
         </section>
 
-        <section className="rounded-2xl border border-dashed border-slate-400 bg-white p-4">
-          <h2 className="text-xl font-bold">Alerts</h2>
-          <p className="mt-1 text-slate-700">
-            Duplication and interaction checks are not built yet (next milestone). An empty panel
-            here does not mean there are no interactions.
-          </p>
-        </section>
+        <AlertsPanel recon={recon} busy={visit.reconState === "loading" || reading > 0} />
       </main>
     </>
   );

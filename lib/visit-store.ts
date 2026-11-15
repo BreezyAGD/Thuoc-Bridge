@@ -28,7 +28,7 @@ export type Visit = {
 
 const EMPTY: Visit = { products: [], usMeds: [], recon: null, reconState: "idle" };
 // Bump the suffix whenever the stored shape changes, so stale visits are dropped.
-const STORAGE_KEY = "tb.visit.v2";
+const STORAGE_KEY = "tb.visit.v3";
 
 let visit: Visit = EMPTY;
 let loaded = false;

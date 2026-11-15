@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { AppHeader } from "../components/AppHeader";
 import { useConsent, useLang } from "@/lib/client-store";
-import type { Strings } from "@/lib/i18n";
+import type { Alert } from "@/lib/alerts";
+import type { Lang, Strings } from "@/lib/i18n";
 import type { IngredientRow, ProductRow, UsMedRow } from "@/lib/reconcile";
 import { isUnverified } from "@/lib/schema";
 import {
@@ -232,6 +233,41 @@ function UsMeds({
   );
 }
 
+/**
+ * What the patient sees about alerts: which medicines to show, and a fixed,
+ * pre-reviewed sentence. No severity, no mechanism, no dosing advice, and
+ * never an instruction to stop a medicine.
+ */
+function TalkList({ alerts, t, lang }: { alerts: Alert[]; t: Strings; lang: Lang }) {
+  // Several clinician alerts can involve the same medicines; the patient sees each
+  // "show these medicines" message once.
+  const seen = new Set<string>();
+  const shown = alerts
+    .filter((a) => a.kind !== "unresolved" && a.involved.length > 0)
+    .filter((a) => {
+      const key = `${[...new Set(a.involved.map((i) => i.source_label))].sort().join("|")}::${a.patient.vi}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  if (shown.length === 0) return null;
+  return (
+    <section className="rounded-2xl border-2 border-teal-600 bg-teal-50 p-4">
+      <h2 className="text-xl font-bold text-teal-950">{t.talkTitle}</h2>
+      <ul className="mt-3 flex flex-col gap-3">
+        {shown.map((alert) => (
+          <li key={alert.id} className="rounded-xl bg-white p-3 text-lg">
+            <p className="font-semibold break-words">
+              {[...new Set(alert.involved.map((i) => i.source_label))].join(" + ")}
+            </p>
+            <p className="mt-1 text-slate-800">{alert.patient[lang]}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function PatientPage() {
   const { lang, t } = useLang();
   const consented = useConsent();
@@ -330,6 +366,8 @@ export default function PatientPage() {
           loading={visit.reconState === "loading"}
           t={t}
         />
+
+        <TalkList alerts={visit.recon?.alerts ?? []} t={t} lang={lang} />
 
         {hasAnything && (
           <Link

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { buildAlerts, CURATED_RULE_COUNT, VERIFIED_RULE_COUNT, type Alert } from "./alerts";
 import { guardExtraction } from "./guard";
 import { normalizeIngredient, normalizeUsMed, type Resolution } from "./normalize";
 import { ExtractionSchema } from "./schema";
@@ -64,6 +65,11 @@ export type UsMedRow = {
 export type ReconcileResponse = {
   products: ProductRow[];
   usMeds: UsMedRow[];
+  /** Deterministic alerts from the curated rules (Step C), most severe first. */
+  alerts: Alert[];
+  /** How many curated rules were checked, and how many a reviewer has signed off. */
+  rules_checked: number;
+  rules_verified: number;
   /** True if any lookup failed because RxNav was unreachable. */
   rxnav_unavailable: boolean;
 };
@@ -172,5 +178,12 @@ export async function reconcile(request: ReconcileRequest): Promise<ReconcileRes
   const rxnav_unavailable =
     products.some((p) => p.ingredients.some((i) => i.resolution.rxnav_unavailable)) ||
     usMeds.some((m) => m.resolution.rxnav_unavailable);
-  return { products, usMeds, rxnav_unavailable };
+  return {
+    products,
+    usMeds,
+    alerts: buildAlerts(products, usMeds),
+    rules_checked: CURATED_RULE_COUNT,
+    rules_verified: VERIFIED_RULE_COUNT,
+    rxnav_unavailable,
+  };
 }

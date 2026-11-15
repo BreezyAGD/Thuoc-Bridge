@@ -1,0 +1,1218 @@
+{
+  "_comment": "Curated alert rules (Step C). Deterministic: an alert exists only if a rule here matches RxNorm-normalized ingredients. NO rule is clinically verified until a qualified teammate puts their name in verified_by; until then the UI shows 'Pending pharmacist review'. RxCUIs and the evidence blocks are filled by `npm run rules:refresh` (RxNav + the cited source); do not hand-edit them. NLM's own interaction API was discontinued in January 2024 and is not used.",
+  "patient_messages": {
+    "same_ingredient": {
+      "vi": "Hai hoặc nhiều thuốc của bạn có cùng một hoạt chất. Hãy cho điều dưỡng hoặc dược sĩ xem tất cả các thuốc này.",
+      "en": "Two or more of your medicines contain the same active ingredient. Show all of them to your nurse or pharmacist."
+    },
+    "taken_together": {
+      "vi": "Điều dưỡng hoặc dược sĩ cần biết bạn đang dùng các thuốc này cùng nhau. Hãy cho họ xem.",
+      "en": "Your nurse or pharmacist needs to know that you take these medicines together. Please show them."
+    },
+    "tell_about_this": {
+      "vi": "Hãy nói với điều dưỡng hoặc dược sĩ rằng bạn đang dùng thuốc này.",
+      "en": "Tell your nurse or pharmacist that you take this medicine."
+    },
+    "bring_box": {
+      "vi": "Chúng tôi chưa xác minh được thuốc này. Hãy mang hộp thuốc cho dược sĩ xem.",
+      "en": "We could not verify this medicine. Bring the box to your pharmacist."
+    }
+  },
+  "groups": {
+    "acetaminophen": {
+      "label": "acetaminophen (paracetamol)",
+      "ingredients": [
+        {
+          "name": "acetaminophen",
+          "rxcui": "161"
+        }
+      ]
+    },
+    "warfarin": {
+      "label": "warfarin",
+      "ingredients": [
+        {
+          "name": "warfarin",
+          "rxcui": "11289"
+        }
+      ]
+    },
+    "doac": {
+      "label": "direct oral anticoagulants",
+      "atc": [
+        "B01AE",
+        "B01AF"
+      ]
+    },
+    "anticoagulant": {
+      "label": "anticoagulants",
+      "atc": [
+        "B01AA",
+        "B01AB",
+        "B01AE",
+        "B01AF"
+      ]
+    },
+    "antiplatelet": {
+      "label": "antiplatelet agents (incl. aspirin)",
+      "atc": [
+        "B01AC"
+      ]
+    },
+    "nsaid": {
+      "label": "NSAIDs",
+      "atc": [
+        "M01A"
+      ]
+    },
+    "aspirin": {
+      "label": "aspirin",
+      "ingredients": [
+        {
+          "name": "aspirin",
+          "rxcui": "1191"
+        }
+      ]
+    },
+    "antihypertensive": {
+      "label": "blood-pressure medicines",
+      "atc": [
+        "C02",
+        "C03",
+        "C07",
+        "C08",
+        "C09"
+      ]
+    },
+    "raas_diuretic": {
+      "label": "ACE inhibitors, ARBs or diuretics",
+      "atc": [
+        "C03",
+        "C09"
+      ]
+    },
+    "decongestant": {
+      "label": "oral decongestants",
+      "ingredients": [
+        {
+          "name": "phenylephrine",
+          "rxcui": "8163"
+        },
+        {
+          "name": "pseudoephedrine",
+          "rxcui": "8896"
+        },
+        {
+          "name": "phenylpropanolamine",
+          "rxcui": "8175"
+        },
+        {
+          "name": "ephedrine",
+          "rxcui": "3966"
+        }
+      ]
+    },
+    "ppa": {
+      "label": "phenylpropanolamine",
+      "ingredients": [
+        {
+          "name": "phenylpropanolamine",
+          "rxcui": "8175"
+        }
+      ]
+    },
+    "maoi": {
+      "label": "MAO inhibitors",
+      "atc": [
+        "N06AF",
+        "N06AG"
+      ],
+      "ingredients": [
+        {
+          "name": "selegiline",
+          "rxcui": "9639"
+        },
+        {
+          "name": "rasagiline",
+          "rxcui": "134748"
+        },
+        {
+          "name": "linezolid",
+          "rxcui": "190376"
+        }
+      ]
+    },
+    "sedating_antihistamine": {
+      "label": "sedating antihistamines",
+      "ingredients": [
+        {
+          "name": "chlorpheniramine",
+          "rxcui": "2400"
+        },
+        {
+          "name": "dexchlorpheniramine",
+          "rxcui": "22697"
+        },
+        {
+          "name": "diphenhydramine",
+          "rxcui": "3498"
+        },
+        {
+          "name": "promethazine",
+          "rxcui": "8745"
+        },
+        {
+          "name": "brompheniramine",
+          "rxcui": "1767"
+        },
+        {
+          "name": "cyproheptadine",
+          "rxcui": "3013"
+        },
+        {
+          "name": "hydroxyzine",
+          "rxcui": "5553"
+        },
+        {
+          "name": "doxylamine",
+          "rxcui": "3642"
+        }
+      ]
+    },
+    "opioid": {
+      "label": "opioids",
+      "atc": [
+        "N02A"
+      ],
+      "ingredients": [
+        {
+          "name": "codeine",
+          "rxcui": "2670"
+        },
+        {
+          "name": "hydrocodone",
+          "rxcui": "5489"
+        },
+        {
+          "name": "dihydrocodeine",
+          "rxcui": "23088"
+        },
+        {
+          "name": "oxycodone",
+          "rxcui": "7804"
+        },
+        {
+          "name": "morphine",
+          "rxcui": "7052"
+        },
+        {
+          "name": "tramadol",
+          "rxcui": "10689"
+        }
+      ]
+    },
+    "benzodiazepine": {
+      "label": "benzodiazepines",
+      "atc": [
+        "N05BA",
+        "N05CD"
+      ],
+      "ingredients": [
+        {
+          "name": "clonazepam",
+          "rxcui": "2598"
+        }
+      ]
+    },
+    "antibiotic": {
+      "label": "systemic antibacterials",
+      "atc": [
+        "J01"
+      ]
+    },
+    "beta_lactam": {
+      "label": "penicillins and cephalosporins",
+      "atc": [
+        "J01C",
+        "J01D"
+      ]
+    },
+    "fluoroquinolone": {
+      "label": "fluoroquinolones",
+      "atc": [
+        "J01MA"
+      ]
+    },
+    "chloramphenicol": {
+      "label": "chloramphenicol",
+      "ingredients": [
+        {
+          "name": "chloramphenicol",
+          "rxcui": "2348"
+        }
+      ]
+    },
+    "metronidazole": {
+      "label": "metronidazole",
+      "ingredients": [
+        {
+          "name": "metronidazole",
+          "rxcui": "6922"
+        }
+      ]
+    },
+    "sulfamethoxazole": {
+      "label": "sulfamethoxazole",
+      "ingredients": [
+        {
+          "name": "sulfamethoxazole",
+          "rxcui": "10180"
+        }
+      ]
+    },
+    "macrolide_cyp3a4": {
+      "label": "clarithromycin or erythromycin",
+      "ingredients": [
+        {
+          "name": "clarithromycin",
+          "rxcui": "21212"
+        },
+        {
+          "name": "erythromycin",
+          "rxcui": "4053"
+        }
+      ]
+    },
+    "statin_cyp3a4": {
+      "label": "simvastatin or lovastatin",
+      "ingredients": [
+        {
+          "name": "simvastatin",
+          "rxcui": "36567"
+        },
+        {
+          "name": "lovastatin",
+          "rxcui": "6472"
+        }
+      ]
+    },
+    "systemic_corticosteroid": {
+      "label": "corticosteroids",
+      "atc": [
+        "H02AB"
+      ]
+    },
+    "antidiabetic": {
+      "label": "diabetes medicines",
+      "atc": [
+        "A10"
+      ]
+    },
+    "albuterol": {
+      "label": "albuterol (salbutamol)",
+      "ingredients": [
+        {
+          "name": "albuterol",
+          "rxcui": "435"
+        }
+      ]
+    },
+    "beta_blocker": {
+      "label": "beta-blockers",
+      "atc": [
+        "C07"
+      ]
+    },
+    "ginkgo": {
+      "label": "ginkgo",
+      "ingredients": [
+        {
+          "name": "Ginkgo biloba extract",
+          "rxcui": "236809"
+        }
+      ]
+    },
+    "garlic": {
+      "label": "garlic supplement",
+      "ingredients": [
+        {
+          "name": "garlic preparation",
+          "rxcui": "265647"
+        }
+      ]
+    }
+  },
+  "rules": [
+    {
+      "id": "apap-duplicate",
+      "type": "duplicate_ingredient",
+      "a": [
+        "acetaminophen"
+      ],
+      "severity": "high",
+      "title": "Acetaminophen in more than one product",
+      "clinician_en": "Each of these products contains acetaminophen (paracetamol). Add up the total daily intake across all of them; the US OTC label warns of severe liver damage above 4,000 mg in 24 hours or with other acetaminophen-containing drugs.",
+      "mechanism": "Cumulative, dose-dependent hepatotoxicity. Paracetamol is the international name for acetaminophen and is often not recognised as the same drug.",
+      "patient_key": "same_ingredient",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: acetaminophen",
+        "query": "acetaminophen",
+        "terms": [
+          "other drugs containing acetaminophen"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22acetaminophen%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Severe liver damage may occur if you take more than 4,000 mg of acetaminophen in 24 hours with other drugs containing acetaminophen 3 or more alcoholic drinks every day while using this product Allergy alert: Acetaminophen may cause severe skin reactions.",
+        "section": "warnings",
+        "document": "Pain Reliever Extra Strength (ACETAMINOPHEN), label dated 20260102",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0005aafa-08f8-4990-a54d-cc097195708f",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "apap-warfarin",
+      "type": "pair",
+      "a": [
+        "acetaminophen"
+      ],
+      "b": [
+        "warfarin"
+      ],
+      "severity": "moderate",
+      "title": "Acetaminophen with warfarin",
+      "clinician_en": "Regular acetaminophen use has been associated with a raised INR in patients on warfarin. The OTC label says to ask a doctor or pharmacist before use with warfarin; ask how much and how often the patient takes it.",
+      "mechanism": "Not fully established; a dose- and duration-related increase in anticoagulant effect is reported.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: acetaminophen",
+        "query": "acetaminophen",
+        "terms": [
+          "warfarin"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22acetaminophen%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Ask a doctor or pharmacist before use if you are taking the blood thinning drug warfarin.",
+        "section": "warnings",
+        "document": "Pain Reliever Extra Strength (ACETAMINOPHEN), label dated 20260102",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0005aafa-08f8-4990-a54d-cc097195708f",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "ginkgo-warfarin",
+      "type": "pair",
+      "a": [
+        "ginkgo"
+      ],
+      "b": [
+        "warfarin"
+      ],
+      "severity": "moderate",
+      "title": "Ginkgo-containing product with warfarin",
+      "clinician_en": "The warfarin label notes that some botanicals, including Ginkgo biloba, may cause bleeding on their own and may add to the anticoagulant effect. Evidence is mixed; ask about bleeding and consider closer INR monitoring.",
+      "mechanism": "Possible antiplatelet effect of ginkgo constituents, additive to anticoagulation.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: warfarin",
+        "query": "warfarin",
+        "terms": [
+          "Ginkgo biloba"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22warfarin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Some botanicals may cause bleeding events when taken alone (e.g., garlic and Ginkgo biloba) and may have anticoagulant, antiplatelet, and/or fibrinolytic properties.",
+        "section": "drug_interactions",
+        "document": "Warfarin Sodium (WARFARIN SODIUM), label dated 20250617",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0cbce382-9c88-4f58-ae0f-532a841e8f95",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "ginkgo-doac",
+      "type": "pair",
+      "a": [
+        "ginkgo"
+      ],
+      "b": [
+        "doac"
+      ],
+      "severity": "moderate",
+      "title": "Ginkgo-containing product with a direct oral anticoagulant",
+      "clinician_en": "NIH (NCCIH) states that ginkgo may increase the risk of bleeding in people taking anticoagulant drugs. Data specific to direct oral anticoagulants are limited; ask about bleeding and document the herbal product.",
+      "mechanism": "Possible antiplatelet effect of ginkgo constituents, additive to anticoagulation.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "web",
+        "label": "NIH NCCIH: Ginkgo",
+        "url": "https://www.nccih.nih.gov/health/ginkgo",
+        "terms": [
+          "anticoagulant drugs"
+        ]
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Ginkgo may increase the risk of bleeding in people who are taking anticoagulant drugs, such as warfarin.",
+        "section": null,
+        "document": "NIH NCCIH: Ginkgo",
+        "link": "https://www.nccih.nih.gov/health/ginkgo",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "garlic-antithrombotic",
+      "type": "pair",
+      "a": [
+        "garlic"
+      ],
+      "b": [
+        "anticoagulant",
+        "antiplatelet"
+      ],
+      "severity": "low",
+      "title": "Garlic supplement with an anticoagulant or antiplatelet",
+      "clinician_en": "NIH (NCCIH) states that garlic supplements may increase the risk of bleeding, which matters most with anticoagulants or aspirin and before surgery. Applies to supplements, not garlic in food.",
+      "mechanism": "Possible antiplatelet effect of garlic constituents.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "web",
+        "label": "NIH NCCIH: Garlic",
+        "url": "https://www.nccih.nih.gov/health/garlic",
+        "terms": [
+          "anticoagulants or aspirin"
+        ]
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "This is especially important if you are going to have surgery or if you take medicines, such as anticoagulants or aspirin, that may also affect bleeding.",
+        "section": null,
+        "document": "NIH NCCIH: Garlic",
+        "link": "https://www.nccih.nih.gov/health/garlic",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "nsaid-anticoagulant",
+      "type": "pair",
+      "a": [
+        "nsaid"
+      ],
+      "b": [
+        "anticoagulant"
+      ],
+      "severity": "high",
+      "title": "NSAID with an anticoagulant",
+      "clinician_en": "NSAIDs increase bleeding risk with anticoagulants, including gastrointestinal bleeding. The warfarin label lists NSAIDs among drugs that increase bleeding risk.",
+      "mechanism": "Platelet inhibition and gastric mucosal injury, additive to anticoagulation.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: warfarin",
+        "query": "warfarin",
+        "terms": [
+          "Nonsteroidal Anti-Inflammatory"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22warfarin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "…the Risk of Bleeding Drug Class Specific Drugs Anticoagulants argatroban, dabigatran, bivalirudin, desirudin, heparin, lepirudin Antiplatelet Agents aspirin, cilostazol, clopidogrel, dipyridamole, prasugrel, ticlopidine Nonsteroidal Anti-Inflammatory Agents celecoxib, diclofenac, diflunisal, fenoprofen, ibuprofen, indomethacin, ketoprofen, ketorolac, mefenamic acid, naproxen, oxaprozin, piroxicam, sulindac Serotonin Reuptake Inhibitors citalopram, desvenlafaxine, du…",
+        "section": "drug_interactions",
+        "document": "Jantoven (WARFARIN SODIUM), label dated 20261028",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=19a69a72-ac5d-45d5-a94d-a5aaecbe4730",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "antiplatelet-anticoagulant",
+      "type": "pair",
+      "a": [
+        "antiplatelet"
+      ],
+      "b": [
+        "anticoagulant"
+      ],
+      "severity": "high",
+      "title": "Aspirin or another antiplatelet with an anticoagulant",
+      "clinician_en": "Antiplatelet agents, including aspirin in combination pain or cold products, increase bleeding risk with anticoagulants. Confirm whether the combination is intended.",
+      "mechanism": "Additive impairment of haemostasis.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: warfarin",
+        "query": "warfarin",
+        "terms": [
+          "antiplatelet"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22warfarin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Drugs that Can Increase the Risk of Bleeding Drug Class Specific Drugs Anticoagulants argatroban, dabigatran, bivalirudin, desirudin, heparin, lepirudin Antiplatelet Agents aspirin, cilostazol, clopidogrel, dipyridamole, prasugrel, ticlopidine Non-steroidal Anti-Inflammatory Agents celecoxib, diclofenac, diflunisal, fenoprofen, ibuprofen, indomethacin, ketoprofen, ketorolac, mefenam…",
+        "section": "drug_interactions",
+        "document": "Warfarin Sodium (WARFARIN SODIUM), label dated 20250617",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0cbce382-9c88-4f58-ae0f-532a841e8f95",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "nsaid-duplicate",
+      "type": "duplicate_class",
+      "a": [
+        "nsaid",
+        "aspirin"
+      ],
+      "severity": "moderate",
+      "title": "More than one NSAID",
+      "clinician_en": "Two different NSAIDs (or an NSAID plus aspirin) across these products. The OTC ibuprofen label warns that the chance of stomach bleeding is higher when taking other drugs containing NSAIDs.",
+      "mechanism": "Additive gastrointestinal and renal toxicity without added benefit.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: ibuprofen",
+        "query": "ibuprofen",
+        "terms": [
+          "NSAIDs"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22ibuprofen%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "…icoagulant) or steroid drug have had stomach ulcers or bleeding problems have 3 or more alcoholic drinks every day while using this product are age 60 or older take other drugs containing prescription or nonprescription NSAIDs [aspirin, ibuprofen, naproxen, or others] Heart attack and stroke warning: NSAIDs, except aspirin, increase the risk of heart attack, heart failure, and stroke.",
+        "section": "warnings",
+        "document": "Ibuprofen Dye Free (IBUPROFEN), label dated 20260429",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00653b7c-7099-487e-9a01-e89781c21323",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "nsaid-raas-diuretic",
+      "type": "pair",
+      "a": [
+        "nsaid"
+      ],
+      "b": [
+        "raas_diuretic"
+      ],
+      "severity": "moderate",
+      "title": "NSAID with an ACE inhibitor, ARB or diuretic",
+      "clinician_en": "NSAIDs can reduce the antihypertensive effect of ACE inhibitors, ARBs and diuretics and can worsen renal function, especially in older or volume-depleted patients.",
+      "mechanism": "Inhibition of renal prostaglandin synthesis.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: lisinopril",
+        "query": "lisinopril",
+        "terms": [
+          "NSAIDs"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22lisinopril%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "In patients who are elderly, volume-depleted (including those on diuretic therapy), or with compromised renal function, co-administration of NSAIDs, including selective COX-2 inhibitors, with ACE inhibitors, including lisinopril, may result in deterioration of renal function, including possible acute renal failure.",
+        "section": "precautions",
+        "document": "Lisinopril and Hydrochlorothiazide (LISINOPRIL AND HYDROCHLOROTHIAZIDE TABLETS), label dated 20261001",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00b266d9-ac4a-e931-e063-6294a90a6a0b",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "nsaid-corticosteroid",
+      "type": "pair",
+      "a": [
+        "nsaid",
+        "aspirin"
+      ],
+      "b": [
+        "systemic_corticosteroid"
+      ],
+      "severity": "moderate",
+      "title": "NSAID with a corticosteroid",
+      "clinician_en": "The OTC ibuprofen label warns that the chance of severe stomach bleeding is higher in people who take a steroid drug. Applies if the corticosteroid is systemic.",
+      "mechanism": "Additive gastrointestinal mucosal injury.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: ibuprofen",
+        "query": "ibuprofen",
+        "terms": [
+          "steroid drug"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22ibuprofen%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "take more or for a longer time than directed take a blood thinning (anticoagulant) or steroid drug have had stomach ulcers or bleeding problems have 3 or more alcoholic drinks every day while using this product are age 60 or older take other drugs containing prescription or nonprescription NSAIDs [aspirin, ibuprofen,…",
+        "section": "warnings",
+        "document": "Ibuprofen Dye Free (IBUPROFEN), label dated 20260429",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00653b7c-7099-487e-9a01-e89781c21323",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "decongestant-antihypertensive",
+      "type": "pair",
+      "a": [
+        "decongestant"
+      ],
+      "b": [
+        "antihypertensive"
+      ],
+      "severity": "moderate",
+      "title": "Decongestant with a blood-pressure medicine",
+      "clinician_en": "Combination cold products often contain a sympathomimetic decongestant. OTC decongestant labels say to ask a doctor before use with high blood pressure or heart disease; it can raise blood pressure and work against treatment.",
+      "mechanism": "Alpha-adrenergic vasoconstriction.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: phenylephrine",
+        "query": "phenylephrine",
+        "terms": [
+          "high blood pressure"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22phenylephrine%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Ask a doctor before use if you have heart disease diabetes thyroid disease high blood pressure difficulty in urination due to enlargement of the prostate gland When using this product do not exceed recommended dosage.",
+        "section": "warnings",
+        "document": "Nasal Decongestant PE (PHENYLEPHRINE HCL), label dated 20260306",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0153294d-7f52-4d92-8db8-daeca3e29a3b",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "decongestant-maoi",
+      "type": "pair",
+      "a": [
+        "decongestant"
+      ],
+      "b": [
+        "maoi"
+      ],
+      "severity": "high",
+      "title": "Decongestant with an MAO inhibitor",
+      "clinician_en": "OTC decongestant labels say not to use with a monoamine oxidase inhibitor or within 2 weeks of stopping one, because of the risk of a hypertensive crisis.",
+      "mechanism": "Potentiated sympathomimetic pressor response.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: phenylephrine",
+        "query": "phenylephrine",
+        "terms": [
+          "monoamine oxidase inhibitor"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22phenylephrine%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Warnings Do not use if you are now taking a prescription monoamine oxidase inhibitor (MAOI) (certain drugs for depression, psychiatric or emotional conditions, or Parkinson’s disease), or for 2 weeks after stopping the MAOI drug.",
+        "section": "warnings",
+        "document": "Nasal Decongestant PE (PHENYLEPHRINE HCL), label dated 20260306",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0153294d-7f52-4d92-8db8-daeca3e29a3b",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "ppa-present",
+      "type": "flag",
+      "a": [
+        "ppa"
+      ],
+      "severity": "high",
+      "title": "Product contains phenylpropanolamine (PPA)",
+      "clinician_en": "Phenylpropanolamine is no longer marketed for human use in the US: FDA withdrew approval because of an association with haemorrhagic stroke. It is still found in some cold products sold abroad.",
+      "mechanism": "Sympathomimetic; associated with haemorrhagic stroke.",
+      "patient_key": "tell_about_this",
+      "source": {
+        "kind": "web",
+        "label": "Federal Register 2014-03596: phenylpropanolamine, withdrawal of approval",
+        "url": "https://www.federalregister.gov/documents/2014/02/20/2014-03596/phenylpropanolamine-withdrawal-of-approval-of-13-new-drug-applications-and-7-abbreviated-new-drug",
+        "fetch_url": "https://www.federalregister.gov/api/v1/documents/2014-03596.json",
+        "terms": [
+          "hemorrhagic stroke"
+        ]
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "The basis for the withdrawals is that the products are no longer considered safe due to the association of phenylpropanolamine use with increased risk of hemorrhagic stroke.",
+        "section": null,
+        "document": "Federal Register 2014-03596: phenylpropanolamine, withdrawal of approval",
+        "link": "https://www.federalregister.gov/documents/2014/02/20/2014-03596/phenylpropanolamine-withdrawal-of-approval-of-13-new-drug-applications-and-7-abbreviated-new-drug",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "sedating-antihistamine-cns",
+      "type": "pair",
+      "a": [
+        "sedating_antihistamine"
+      ],
+      "b": [
+        "opioid",
+        "benzodiazepine"
+      ],
+      "severity": "moderate",
+      "title": "Sedating antihistamine with an opioid or benzodiazepine",
+      "clinician_en": "Cold and allergy products often contain a sedating antihistamine. OTC labels say to ask before use with sedatives or tranquilizers because drowsiness may increase; consider fall risk.",
+      "mechanism": "Additive central nervous system depression.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA OTC label: chlorpheniramine",
+        "query": "chlorpheniramine",
+        "terms": [
+          "sedatives"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22chlorpheniramine%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Ask a doctor or pharmacist before use if you are taking sedatives or tranquilizers",
+        "section": "ask_doctor_or_pharmacist",
+        "document": "SPRINSOL (CHLORPHENIRAMINE MALEATE), label dated 20260917",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=01a1a91e-04ba-4526-8946-10483932b30c",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "opioid-benzodiazepine",
+      "type": "pair",
+      "a": [
+        "opioid"
+      ],
+      "b": [
+        "benzodiazepine"
+      ],
+      "severity": "high",
+      "title": "Opioid with a benzodiazepine",
+      "clinician_en": "US opioid labels carry a boxed warning: concomitant use with benzodiazepines or other CNS depressants may result in profound sedation, respiratory depression, coma and death.",
+      "mechanism": "Additive respiratory and central nervous system depression.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: hydrocodone",
+        "query": "hydrocodone",
+        "terms": [
+          "benzodiazepines"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22hydrocodone%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Risks From Concomitant Use With Benzodiazepines Or Other CNS Depressants Concomitant use of opioids with benzodiazepines or other central nervous system (CNS) depressants, including alcohol, may result in profound sedation, respiratory depression, coma, and death.",
+        "section": "boxed_warning",
+        "document": "Hydrocodone Bitartrate and Acetaminophen (HYDROCODONE BITARTRATE AND ACETAMINOPHEN), label dated 20240808",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=025eb0f7-d002-4ce0-87b8-71461ab18356",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "opioid-duplicate",
+      "type": "duplicate_class",
+      "a": [
+        "opioid"
+      ],
+      "severity": "high",
+      "title": "More than one opioid",
+      "clinician_en": "Two different opioids across these products. Opioids in cough or pain products bought abroad (for example codeine) add to prescribed opioids.",
+      "mechanism": "Additive respiratory and central nervous system depression.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: hydrocodone",
+        "query": "hydrocodone",
+        "terms": [
+          "other opioids"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22hydrocodone%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "…cetaminophen tablets with benzodiazepines and/or other CNS depressants, including alcohol (e.g., non-benzodiazepine sedatives/hypnotics, anxiolytics, tranquilizers, muscle relaxants, general anesthetics, antipsychotics, other opioids).",
+        "section": "warnings",
+        "document": "Hydrocodone Bitartrate and Acetaminophen (HYDROCODONE BITARTRATE AND ACETAMINOPHEN), label dated 20240808",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=025eb0f7-d002-4ce0-87b8-71461ab18356",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "foreign-opioid",
+      "type": "flag",
+      "a": [
+        "opioid"
+      ],
+      "only_source": "photo",
+      "severity": "moderate",
+      "title": "Photographed product contains an opioid",
+      "clinician_en": "This product was not dispensed through a US pharmacy, so it may be missing from the medication history. Ask about frequency and check for overlap with prescribed opioids and sedatives.",
+      "mechanism": "Opioid: respiratory depression, sedation, dependence.",
+      "patient_key": "tell_about_this",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: codeine",
+        "query": "codeine",
+        "terms": [
+          "respiratory depression"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22codeine%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Life-Threatening Respiratory Depression Serious, life-threatening, or fatal respiratory depression may occur with use of Codeine Sulfate Tablets, especially during initiation or following a dosage increase.",
+        "section": "boxed_warning",
+        "document": "Codeine sulfate (CODEINE SULFATE), label dated 20251222",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=010905f9-3bcb-4b50-9fe8-a3ad0010f14c",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "otc-antibiotic",
+      "type": "flag",
+      "a": [
+        "antibiotic"
+      ],
+      "only_source": "photo",
+      "severity": "moderate",
+      "title": "Antibiotic obtained without a US prescription",
+      "clinician_en": "Ask what it is being taken for, for how long, and whether a course was completed. FDA antibacterial labels state that use without a proven or strongly suspected bacterial infection is unlikely to help and increases the risk of drug-resistant bacteria.",
+      "mechanism": "Antimicrobial stewardship: partial or unnecessary courses select for resistance and can mask infection.",
+      "patient_key": "tell_about_this",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: amoxicillin",
+        "query": "amoxicillin",
+        "terms": [
+          "drug-resistant bacteria"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22amoxicillin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Usage To reduce the development of drug-resistant bacteria and maintain the effectiveness of amoxicillin and clavulanate potassium for oral suspension, 600 mg/42.9 mg per 5 mL and other antibacterial drugs, amoxicillin and clavulanate potassium for oral suspension, 600 mg/42.9…",
+        "section": "indications_and_usage",
+        "document": "amoxicillin and clavulanate potassium (AMOXICILLIN AND CLAVULANATE POTASSIUM), label dated 20260723",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00b86913-50c8-443f-8467-f4f499d358af",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "beta-lactam-allergy",
+      "type": "flag",
+      "a": [
+        "beta_lactam"
+      ],
+      "only_source": "photo",
+      "severity": "low",
+      "title": "Penicillin-class antibiotic: confirm allergy history",
+      "clinician_en": "Confirm and document penicillin or cephalosporin allergy status. The label warns of serious and occasionally fatal hypersensitivity (anaphylactic) reactions.",
+      "mechanism": "IgE-mediated and other hypersensitivity reactions to beta-lactams.",
+      "patient_key": "tell_about_this",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: amoxicillin",
+        "query": "amoxicillin",
+        "terms": [
+          "hypersensitivity"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22amoxicillin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "4 CONTRAINDICATIONS History of a serious hypersensitivity reaction (e.g., anaphylaxis or Stevens-Johnson syndrome) to amoxicillin and clavulanate potassium for oral suspension, 600 mg/42.9 mg per 5 mL or any other beta-lactams (e.g., penicillins or cephalosporins).",
+        "section": "contraindications",
+        "document": "amoxicillin and clavulanate potassium (AMOXICILLIN AND CLAVULANATE POTASSIUM), label dated 20260723",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00b86913-50c8-443f-8467-f4f499d358af",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "chloramphenicol-present",
+      "type": "flag",
+      "a": [
+        "chloramphenicol"
+      ],
+      "severity": "high",
+      "title": "Product contains chloramphenicol",
+      "clinician_en": "Rarely used systemically in the US. The US label carries a boxed warning for serious and fatal blood dyscrasias, including aplastic anemia. Applies to systemic use; confirm the dosage form.",
+      "mechanism": "Bone-marrow suppression (dose-related and idiosyncratic).",
+      "patient_key": "tell_about_this",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: chloramphenicol",
+        "query": "chloramphenicol",
+        "terms": [
+          "aplastic anemia"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22chloramphenicol%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "WARNING Serious and fatal blood dyscrasias (aplastic anemia, hypoplastic anemia, thrombocytopenia and granulocytopenia) are known to occur after the administration of chloramphenicol.",
+        "section": "boxed_warning",
+        "document": "Chloramphenicol Sodium Succinate (CHLORAMPHENICOL SODIUM SUCCINATE), label dated 20241010",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=aed29594-211d-49ef-813f-131975a8d0e3",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "fluoroquinolone-corticosteroid",
+      "type": "pair",
+      "a": [
+        "fluoroquinolone"
+      ],
+      "b": [
+        "systemic_corticosteroid"
+      ],
+      "severity": "moderate",
+      "title": "Fluoroquinolone with a corticosteroid",
+      "clinician_en": "Fluoroquinolone labels carry a boxed warning for tendinitis and tendon rupture; the risk is further increased in patients taking corticosteroids and in older patients.",
+      "mechanism": "Additive tendon toxicity.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: ciprofloxacin",
+        "query": "ciprofloxacin",
+        "terms": [
+          "taking corticosteroid",
+          "tendon rupture"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22ciprofloxacin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "The risk of developing fluoroquinolone-associated tendinitis and tendon rupture is increased in patients over 60 years of age, in patients taking corticosteroid drugs, and in patients with kidney, heart or lung transplants.",
+        "section": "warnings_and_cautions",
+        "document": "ciprofloxacin (CIPROFLOXACIN), label dated 20250306",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0c355077-7361-41d0-9e82-eb31beaf5daa",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "metronidazole-warfarin",
+      "type": "pair",
+      "a": [
+        "metronidazole"
+      ],
+      "b": [
+        "warfarin"
+      ],
+      "severity": "high",
+      "title": "Metronidazole with warfarin",
+      "clinician_en": "The metronidazole label reports potentiation of the anticoagulant effect of warfarin, with prolonged prothrombin time. Check INR.",
+      "mechanism": "Inhibition of warfarin metabolism.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: metronidazole",
+        "query": "metronidazole",
+        "terms": [
+          "warfarin"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22metronidazole%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Warfarin and other Oral Anticoagulants Metronidazole has been reported to potentiate the anticoagulant effect of warfarin and other oral coumarin anticoagulants, resulting in a prolongation of prothrombin time.",
+        "section": "precautions",
+        "document": "Metronidazole (METRONIDAZOLE), label dated 20260318",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=02046a22-a5eb-4bb7-bec7-e5a2aa55e142",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "sulfamethoxazole-warfarin",
+      "type": "pair",
+      "a": [
+        "sulfamethoxazole"
+      ],
+      "b": [
+        "warfarin"
+      ],
+      "severity": "high",
+      "title": "Sulfamethoxazole (co-trimoxazole) with warfarin",
+      "clinician_en": "The sulfamethoxazole-trimethoprim label reports that it may prolong prothrombin time in patients on warfarin. Check INR.",
+      "mechanism": "Inhibition of warfarin metabolism and protein-binding displacement.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: sulfamethoxazole and trimethoprim",
+        "query": "sulfamethoxazole",
+        "terms": [
+          "warfarin"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22sulfamethoxazole%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "It has been reported that sulfamethoxazole and trimethoprim may prolong the prothrombin time in patients who are receiving the anticoagulant warfarin (a CYP2C9 substrate).",
+        "section": "precautions",
+        "document": "Sulfamethoxazole and Trimethoprim (SULFAMETHOXAZOLE AND TRIMETHOPRIM), label dated 20241217",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=079c828c-148f-45b9-966e-d8906043b2a2",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "macrolide-statin",
+      "type": "pair",
+      "a": [
+        "macrolide_cyp3a4"
+      ],
+      "b": [
+        "statin_cyp3a4"
+      ],
+      "severity": "high",
+      "title": "Clarithromycin or erythromycin with simvastatin or lovastatin",
+      "clinician_en": "The clarithromycin label contraindicates use with simvastatin or lovastatin because of the risk of myopathy, including rhabdomyolysis.",
+      "mechanism": "CYP3A4 inhibition raises statin exposure.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: clarithromycin",
+        "query": "clarithromycin",
+        "terms": [
+          "simvastatin"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22clarithromycin%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "…macrolide drug ( 4.1 ) Cisapride and pimozide ( 4.2 ) History of cholestatic jaundice/hepatic dysfunction with use of clarithromycin ( 4.3 ) Colchicine in renal or hepatic impairment ( 4.4 ) Lomitapide, lovastatin, and simvastatin ( 4.5 ) Ergot alkaloids (ergotamine or dihydroergotamine) ( 4.6 ) Lurasidone ( 4.7 ) 4.1 Hypersensitivity Clarithromycin tablets are contraindicated in patients with a known hypersensitivity to clarithromycin, erythromy…",
+        "section": "contraindications",
+        "document": "Clarithromycin (CLARITHROMYCIN), label dated 20261109",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0be243c6-de02-45dd-8210-cab1bbc8dfa7",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "systemic-corticosteroid",
+      "type": "flag",
+      "a": [
+        "systemic_corticosteroid"
+      ],
+      "only_source": "photo",
+      "severity": "moderate",
+      "title": "Corticosteroid obtained without a US prescription",
+      "clinician_en": "Ask about dose and duration. With prolonged systemic use the label warns of adrenocortical insufficiency on withdrawal, so any change should be supervised. Applies to systemic use; confirm the dosage form.",
+      "mechanism": "Hypothalamic-pituitary-adrenal axis suppression; hyperglycaemia; immunosuppression.",
+      "patient_key": "tell_about_this",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: dexamethasone",
+        "query": "dexamethasone",
+        "terms": [
+          "Drug-induced secondary adrenocortical insufficiency"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22dexamethasone%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Endocrine Drug-induced secondary adrenocortical insufficiency may be minimized by gradual reduction of dosage.",
+        "section": "general_precautions",
+        "document": "Dexamethasone (DEXAMETHASONE), label dated 20251029",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=01cfaa3e-5e30-18fa-e063-6394a90a084e",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "corticosteroid-antidiabetic",
+      "type": "pair",
+      "a": [
+        "systemic_corticosteroid"
+      ],
+      "b": [
+        "antidiabetic"
+      ],
+      "severity": "moderate",
+      "title": "Corticosteroid with a diabetes medicine",
+      "clinician_en": "Corticosteroids may increase blood glucose; the label says dosage adjustments of antidiabetic agents may be required. Applies if the corticosteroid is systemic.",
+      "mechanism": "Corticosteroid-induced insulin resistance and gluconeogenesis.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: dexamethasone",
+        "query": "dexamethasone",
+        "terms": [
+          "antidiabetic"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22dexamethasone%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "Antidiabetics: Because corticosteroids may increase blood glucose concentrations, dosage adjustments of antidiabetic agents may be required.",
+        "section": "precautions",
+        "document": "Dexamethasone (DEXAMETHASONE), label dated 20251029",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=01cfaa3e-5e30-18fa-e063-6394a90a084e",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    },
+    {
+      "id": "albuterol-beta-blocker",
+      "type": "pair",
+      "a": [
+        "albuterol"
+      ],
+      "b": [
+        "beta_blocker"
+      ],
+      "severity": "moderate",
+      "title": "Albuterol (salbutamol) with a beta-blocker",
+      "clinician_en": "The albuterol label says beta-blockers block its pulmonary effect and may produce severe bronchospasm in patients with asthma. Oral salbutamol is sold over the counter in some countries.",
+      "mechanism": "Opposing action at beta-2 adrenergic receptors.",
+      "patient_key": "taken_together",
+      "source": {
+        "kind": "openfda",
+        "label": "FDA prescribing information: albuterol",
+        "query": "albuterol",
+        "terms": [
+          "severe bronchospasm"
+        ],
+        "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22albuterol%22&limit=15"
+      },
+      "evidence": {
+        "status": "confirmed",
+        "quote": "May block bronchodilatory effects of beta-agonists and produce severe bronchospasm.",
+        "section": "drug_interactions",
+        "document": "Albuterol Sulfate HFA (ALBUTEROL SULFATE), label dated 20241231",
+        "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=04c8a345-0a0d-5a01-e063-6294a90a40d2",
+        "checked_on": "2026-11-15"
+      },
+      "verified_by": null
+    }
+  ]
+}

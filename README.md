@@ -22,13 +22,21 @@ Between A and B a deterministic guard checks that every extracted value really
 appears in the transcript of the label. Values that fail are dropped and
 flagged; they are never shown to the patient.
 
-Status: steps A and B and the clinician table are built (milestone 2). Step C
-(alerts) is next.
+Status: steps A, B and C are built (milestone 3). Demo cache, eval numbers and
+the printable summary are next.
+
+**None of the 27 rules in `data/interactions.json` is clinically verified yet.**
+Each has a cited source and a machine-fetched quote from it, and shows as
+"Pending pharmacist review" until a qualified reviewer puts their name in its
+`verified_by` field. The rule list is short and curated; it is not a complete
+interaction screen.
 
 ## Checks
 
 ```bash
 npm run check:normalize   # 41 ingredient names -> expected RxCUIs (RxNav or the committed cache)
+npm run check:scenarios   # 11 demo scenarios -> exact expected alert sets
+npm run rules:refresh     # re-fetch RxCUIs and source quotes for every rule (needs network)
 ```
 
 See `eval/README.md` for how to add hand-labeled products to `eval/golden.json`.

@@ -1182,6 +1182,208 @@
    ]
   }
  },
+ "/rxclass/class/byRxcui.json?rxcui=6809&relaSource=ATC": {
+  "rxclassDrugInfoList": {
+   "rxclassDrugInfo": [
+    {
+     "minConcept": {
+      "rxcui": "1043562",
+      "name": "metformin / saxagliptin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "1243019",
+      "name": "linagliptin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "1368384",
+      "name": "alogliptin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "1486436",
+      "name": "dapagliflozin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "1545149",
+      "name": "canagliflozin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "1664314",
+      "name": "empagliflozin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "1992684",
+      "name": "ertugliflozin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "2117292",
+      "name": "dapagliflozin / metformin / saxagliptin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "2281864",
+      "name": "empagliflozin / linagliptin / metformin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "607999",
+      "name": "metformin / pioglitazone",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "614348",
+      "name": "metformin / rosiglitazone",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "6809",
+      "name": "metformin",
+      "tty": "IN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BA",
+      "className": "Biguanides",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "729717",
+      "name": "metformin / sitagliptin",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    },
+    {
+     "minConcept": {
+      "rxcui": "802646",
+      "name": "metformin / repaglinide",
+      "tty": "MIN"
+     },
+     "rxclassMinConceptItem": {
+      "classId": "A10BD",
+      "className": "Combinations of oral blood glucose lowering drugs",
+      "classType": "ATC1-4"
+     },
+     "rela": "",
+     "relaSource": "ATC"
+    }
+   ]
+  }
+ },
  "/rxclass/class/byRxcui.json?rxcui=6922&relaSource=ATC": {
   "rxclassDrugInfoList": {
    "rxclassDrugInfo": [
@@ -1723,6 +1925,20 @@
  "/rxcui.json?name=asdfghjk&search=1": {
   "idGroup": {}
  },
+ "/rxcui.json?name=aspirin&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "1191"
+   ]
+  }
+ },
+ "/rxcui.json?name=brompheniramine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "1767"
+   ]
+  }
+ },
  "/rxcui.json?name=caffeine&search=0": {
   "idGroup": {
    "rxnormId": [
@@ -1741,6 +1957,13 @@
   "idGroup": {
    "rxnormId": [
     "2231"
+   ]
+  }
+ },
+ "/rxcui.json?name=chloramphenicol&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "2348"
    ]
   }
  },
@@ -1771,10 +1994,24 @@
    ]
   }
  },
+ "/rxcui.json?name=clarithromycin&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "21212"
+   ]
+  }
+ },
  "/rxcui.json?name=clavulanate&search=0": {
   "idGroup": {
    "rxnormId": [
     "48203"
+   ]
+  }
+ },
+ "/rxcui.json?name=clonazepam&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "2598"
    ]
   }
  },
@@ -1797,10 +2034,31 @@
    ]
   }
  },
+ "/rxcui.json?name=codeine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "2670"
+   ]
+  }
+ },
+ "/rxcui.json?name=cyproheptadine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "3013"
+   ]
+  }
+ },
  "/rxcui.json?name=dexamethason&search=0": {
   "idGroup": {
    "rxnormId": [
     "3264"
+   ]
+  }
+ },
+ "/rxcui.json?name=dexchlorpheniramine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "22697"
    ]
   }
  },
@@ -1821,10 +2079,52 @@
    ]
   }
  },
+ "/rxcui.json?name=dihydrocodeine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "23088"
+   ]
+  }
+ },
+ "/rxcui.json?name=diphenhydramine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "3498"
+   ]
+  }
+ },
+ "/rxcui.json?name=doxylamine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "3642"
+   ]
+  }
+ },
  "/rxcui.json?name=eliquis&search=0": {
   "idGroup": {
    "rxnormId": [
     "1364436"
+   ]
+  }
+ },
+ "/rxcui.json?name=ephedrine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "3966"
+   ]
+  }
+ },
+ "/rxcui.json?name=erythromycin&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "4053"
+   ]
+  }
+ },
+ "/rxcui.json?name=garlic%20preparation&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "265647"
    ]
   }
  },
@@ -1845,10 +2145,24 @@
    ]
   }
  },
+ "/rxcui.json?name=hydroxyzine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "5553"
+   ]
+  }
+ },
  "/rxcui.json?name=ibuprofen&search=0": {
   "idGroup": {
    "rxnormId": [
     "5640"
+   ]
+  }
+ },
+ "/rxcui.json?name=linezolid&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "190376"
    ]
   }
  },
@@ -1879,10 +2193,38 @@
    ]
   }
  },
+ "/rxcui.json?name=lovastatin&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "6472"
+   ]
+  }
+ },
+ "/rxcui.json?name=metformin&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "6809"
+   ]
+  }
+ },
  "/rxcui.json?name=metronidazol&search=0": {
   "idGroup": {
    "rxnormId": [
     "6922"
+   ]
+  }
+ },
+ "/rxcui.json?name=metronidazole&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "6922"
+   ]
+  }
+ },
+ "/rxcui.json?name=morphine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "7052"
    ]
   }
  },
@@ -1897,6 +2239,13 @@
   "idGroup": {
    "rxnormId": [
     "7646"
+   ]
+  }
+ },
+ "/rxcui.json?name=oxycodone&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "7804"
    ]
   }
  },
@@ -1933,6 +2282,48 @@
    ]
   }
  },
+ "/rxcui.json?name=promethazine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "8745"
+   ]
+  }
+ },
+ "/rxcui.json?name=pseudoephedrine&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "8896"
+   ]
+  }
+ },
+ "/rxcui.json?name=rasagiline&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "134748"
+   ]
+  }
+ },
+ "/rxcui.json?name=selegiline&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "9639"
+   ]
+  }
+ },
+ "/rxcui.json?name=simvastatin&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "36567"
+   ]
+  }
+ },
+ "/rxcui.json?name=sulfamethoxazole&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "10180"
+   ]
+  }
+ },
  "/rxcui.json?name=ta%20duoc%20bi%20mat&search=0": {
   "idGroup": {}
  },
@@ -1952,6 +2343,13 @@
  "/rxcui.json?name=thuc%20dia&search=1": {
   "idGroup": {}
  },
+ "/rxcui.json?name=tramadol&search=0": {
+  "idGroup": {
+   "rxnormId": [
+    "10689"
+   ]
+  }
+ },
  "/rxcui.json?name=tylenal&search=0": {
   "idGroup": {}
  },
@@ -1970,6 +2368,17 @@
    "rxnormId": [
     "11289"
    ]
+  }
+ },
+ "/rxcui/10180/properties.json": {
+  "properties": {
+   "rxcui": "10180",
+   "name": "sulfamethoxazole",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
   }
  },
  "/rxcui/102490/properties.json": {
@@ -2015,6 +2424,17 @@
    "umlscui": ""
   }
  },
+ "/rxcui/10689/properties.json": {
+  "properties": {
+   "rxcui": "10689",
+   "name": "tramadol",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/11289/properties.json": {
   "properties": {
    "rxcui": "11289",
@@ -2048,10 +2468,32 @@
    "umlscui": ""
   }
  },
+ "/rxcui/1191/properties.json": {
+  "properties": {
+   "rxcui": "1191",
+   "name": "aspirin",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/1307866/properties.json": {
   "properties": {
    "rxcui": "1307866",
    "name": "Angelica sinensis root extract",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/134748/properties.json": {
+  "properties": {
+   "rxcui": "134748",
+   "name": "rasagiline",
    "synonym": "",
    "tty": "IN",
    "language": "ENG",
@@ -2102,6 +2544,17 @@
    "umlscui": ""
   }
  },
+ "/rxcui/1767/properties.json": {
+  "properties": {
+   "rxcui": "1767",
+   "name": "brompheniramine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/17767/properties.json": {
   "properties": {
    "rxcui": "17767",
@@ -2117,6 +2570,17 @@
   "properties": {
    "rxcui": "1886",
    "name": "caffeine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/190376/properties.json": {
+  "properties": {
+   "rxcui": "190376",
+   "name": "linezolid",
    "synonym": "",
    "tty": "IN",
    "language": "ENG",
@@ -2154,6 +2618,17 @@
      ]
     }
    ]
+  }
+ },
+ "/rxcui/21212/properties.json": {
+  "properties": {
+   "rxcui": "21212",
+   "name": "clarithromycin",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
   }
  },
  "/rxcui/218772/properties.json": {
@@ -2203,6 +2678,39 @@
    "rxcui": "2231",
    "name": "cephalexin",
    "synonym": "cefalexin",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/22697/properties.json": {
+  "properties": {
+   "rxcui": "22697",
+   "name": "dexchlorpheniramine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/23088/properties.json": {
+  "properties": {
+   "rxcui": "23088",
+   "name": "dihydrocodeine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/2348/properties.json": {
+  "properties": {
+   "rxcui": "2348",
+   "name": "chloramphenicol",
+   "synonym": "",
    "tty": "IN",
    "language": "ENG",
    "suppress": "N",
@@ -2265,6 +2773,28 @@
    "umlscui": ""
   }
  },
+ "/rxcui/2598/properties.json": {
+  "properties": {
+   "rxcui": "2598",
+   "name": "clonazepam",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/265647/properties.json": {
+  "properties": {
+   "rxcui": "265647",
+   "name": "garlic preparation",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/2670/properties.json": {
   "properties": {
    "rxcui": "2670",
@@ -2298,6 +2828,17 @@
    "umlscui": ""
   }
  },
+ "/rxcui/3013/properties.json": {
+  "properties": {
+   "rxcui": "3013",
+   "name": "cyproheptadine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/3264/properties.json": {
   "properties": {
    "rxcui": "3264",
@@ -2320,7 +2861,62 @@
    "umlscui": ""
   }
  },
+ "/rxcui/3498/properties.json": {
+  "properties": {
+   "rxcui": "3498",
+   "name": "diphenhydramine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/353549/properties.json": {},
+ "/rxcui/3642/properties.json": {
+  "properties": {
+   "rxcui": "3642",
+   "name": "doxylamine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/36567/properties.json": {
+  "properties": {
+   "rxcui": "36567",
+   "name": "simvastatin",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/3966/properties.json": {
+  "properties": {
+   "rxcui": "3966",
+   "name": "ephedrine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/4053/properties.json": {
+  "properties": {
+   "rxcui": "4053",
+   "name": "erythromycin",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/435/properties.json": {
   "properties": {
    "rxcui": "435",
@@ -2354,6 +2950,17 @@
    "umlscui": ""
   }
  },
+ "/rxcui/5553/properties.json": {
+  "properties": {
+   "rxcui": "5553",
+   "name": "hydroxyzine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/5640/properties.json": {
   "properties": {
    "rxcui": "5640",
@@ -2378,10 +2985,43 @@
    "umlscui": ""
   }
  },
+ "/rxcui/6472/properties.json": {
+  "properties": {
+   "rxcui": "6472",
+   "name": "lovastatin",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/6809/properties.json": {
+  "properties": {
+   "rxcui": "6809",
+   "name": "metformin",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
  "/rxcui/6922/properties.json": {
   "properties": {
    "rxcui": "6922",
    "name": "metronidazole",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/7052/properties.json": {
+  "properties": {
+   "rxcui": "7052",
+   "name": "morphine",
    "synonym": "",
    "tty": "IN",
    "language": "ENG",
@@ -2404,6 +3044,17 @@
   "properties": {
    "rxcui": "7646",
    "name": "omeprazole",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/7804/properties.json": {
+  "properties": {
+   "rxcui": "7804",
+   "name": "oxycodone",
    "synonym": "",
    "tty": "IN",
    "language": "ENG",
@@ -2437,6 +3088,39 @@
   "properties": {
    "rxcui": "8638",
    "name": "prednisolone",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/8745/properties.json": {
+  "properties": {
+   "rxcui": "8745",
+   "name": "promethazine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/8896/properties.json": {
+  "properties": {
+   "rxcui": "8896",
+   "name": "pseudoephedrine",
+   "synonym": "",
+   "tty": "IN",
+   "language": "ENG",
+   "suppress": "N",
+   "umlscui": ""
+  }
+ },
+ "/rxcui/9639/properties.json": {
+  "properties": {
+   "rxcui": "9639",
+   "name": "selegiline",
    "synonym": "",
    "tty": "IN",
    "language": "ENG",

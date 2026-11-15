@@ -47,6 +47,7 @@ const vi = {
   toClinician: "Đưa máy cho điều dưỡng / dược sĩ",
   navPatient: "Bệnh nhân",
   navClinician: "Điều dưỡng / Dược sĩ",
+  talkTitle: "Điều cần nói với điều dưỡng hoặc dược sĩ",
   disclaimer: "Không thay thế cho dược sĩ.",
 };
 
@@ -92,6 +93,7 @@ const en: typeof vi = {
   toClinician: "Hand the device to your nurse / pharmacist",
   navPatient: "Patient",
   navClinician: "Nurse / Pharmacist",
+  talkTitle: "Things to tell your nurse or pharmacist",
   disclaimer: "Not a substitute for a pharmacist.",
 };
 
