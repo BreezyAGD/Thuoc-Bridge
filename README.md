@@ -1,5 +1,7 @@
 # Thuốc Bridge
 
+Latest release branch: `build/milestone-10`. See [NEXT-STEPS.md](NEXT-STEPS.md).
+
 Medication reconciliation for Vietnamese-speaking patients who use medicines
 bought in Vietnam. A patient photographs a medicine box; a clinician reviews
 guard-checked ingredients mapped to RxNorm and deterministic, cited alerts.
@@ -29,7 +31,7 @@ with personal details.
 ## Checks and judging
 
 - `npm run check:all`: typecheck, lint, normalization, alerts, demo cache, scorer,
-  production build, and key-free offline server/API checks.
+  readiness-evidence checks, production build, and key-free offline server/API checks.
 - `npx playwright install chromium` once, then `npm run check:browser`: Chromium
   consent, demo, responsive layout, error/retry, and PDF checks after a build.
 - `npm run check:golden`: readiness of independently labeled real photos.
@@ -59,9 +61,13 @@ and qualified reviewer sign-offs remain pending.
 
 Milestone 8 adds [visit management](MILESTONE-8.md): Start new visit clears
 local visit data, cancels pending work, and requires fresh consent while keeping
-the language preference. Downloaded PDFs remain. Latest branch: `build/milestone-8`.
+the language preference. Downloaded PDFs remain.
 
 Milestone 9 adds a [guided presentation demo](MILESTONE-9.md) at `/demo-guide`,
 linked from the patient and clinician controls. It walks through five synthetic
 cases, checks expected findings, and links to source review and summaries.
-Latest branch: `build/milestone-9`.
+
+
+Milestone 10 adds [project readiness](MILESTONE-10.md) at `/readiness`, with
+evidence-based open gates and next steps. It is read-only and preserves visits.
+`npm run check:readiness` checks the evidence/status logic without API calls.

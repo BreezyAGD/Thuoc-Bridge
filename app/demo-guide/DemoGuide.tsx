@@ -27,7 +27,7 @@ export function DemoGuide({ steps }: { steps: DemoStep[] }) {
 
   return <main lang="en" className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6">
     <nav aria-label="Demo navigation" className="flex flex-wrap gap-4 text-teal-800 underline">
-      <Link href="/">Thuốc Bridge</Link><Link href="/patient">Patient view</Link><Link href="/clinician">Clinician view</Link><Link href="/about-metrics">Metrics</Link>
+      <Link href="/">Thuốc Bridge</Link><Link href="/patient">Patient view</Link><Link href="/clinician">Clinician view</Link><Link href="/about-metrics">Metrics</Link><Link href="/readiness">Readiness and next steps</Link>
     </nav>
     <header>
       <h1 className="text-3xl font-bold">Demo walkthrough</h1>

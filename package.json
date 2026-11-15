@@ -19,13 +19,14 @@
     "check:release": "tsx scripts/release-check.ts",
     "check:golden": "tsx scripts/golden-check.ts",
     "check:offline-release": "tsx scripts/offline-release-check.ts",
-    "check:all": "npm run typecheck && npm run lint && npm run check:normalize && npm run check:scenarios && npm run check:demo && npm run check:eval && npm run build && npm run check:offline-release",
+    "check:all": "npm run typecheck && npm run lint && npm run check:normalize && npm run check:scenarios && npm run check:demo && npm run check:eval && npm run check:readiness && npm run build && npm run check:offline-release",
     "check:browser": "playwright test",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare deploy",
     "cf:dry-run": "wrangler deploy --dry-run",
-    "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "check:readiness": "tsx scripts/readiness-check.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

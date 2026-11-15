@@ -336,3 +336,40 @@ test("walkthrough distinguishes a fixture mismatch from a passed demo", async ({
   await expect(page.getByRole("link", { name: "Open printable summary", exact: true })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Review clinician findings", exact: true })).toBeVisible();
 });
+
+test("readiness shows open evidence gates and historical software checks", async ({ page }) => {
+  let calls = 0;
+  page.on("request", request => { if (["/api/extract", "/api/reconcile"].includes(new URL(request.url()).pathname)) calls++; });
+  await page.goto("/readiness");
+  await expect(page.getByRole("heading", { name: "Project readiness and next steps", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "5 external gates open", exact: true })).toBeVisible();
+  const gates = page.getByRole("list", { name: "Readiness gates", exact: true });
+  await expect(gates.getByRole("listitem")).toHaveCount(5);
+  await expect(gates.getByText("Pending evidence", { exact: true })).toHaveCount(5);
+  await expect(gates.getByText("0 human-labeled photos; 0 scored; 0 errors.", { exact: false })).toBeVisible();
+  await expect(gates.getByText("0/27 curated rules", { exact: false })).toBeVisible();
+  await expect(page.getByText("Milestone 9 baseline: passed.", { exact: false })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Recorded CI run", exact: true })).toHaveAttribute("href", "https://github.com/BreezyAGD/Thuoc-Bridge/actions/runs/43768923275");
+  await expect(page.getByRole("textbox")).toHaveCount(0);
+  await expect(page.locator("form")).toHaveCount(0);
+  for (const width of [320, 768, 1280]) { await page.setViewportSize({ width, height: 844 }); await noOverflow(page); }
+  expect(calls).toBe(0);
+  await page.goto("/about-metrics");
+  await page.getByRole("link", { name: "Readiness and next steps", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "5 external gates open", exact: true })).toBeVisible();
+});
+
+test("readiness preserves the current synthetic visit and performs no API checks", async ({ page }) => {
+  await page.goto("/demo-guide");
+  await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Expected demo findings reproduced.");
+  const before = await page.evaluate(() => sessionStorage.getItem("tb.visit.v4"));
+  let calls = 0;
+  page.on("request", request => { if (["/api/extract", "/api/reconcile"].includes(new URL(request.url()).pathname)) calls++; });
+  await page.getByRole("link", { name: "Readiness and next steps", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Project readiness and next steps", exact: true })).toBeVisible();
+  expect(await page.evaluate(() => sessionStorage.getItem("tb.visit.v4"))).toBe(before);
+  await page.getByRole("link", { name: "Open demo walkthrough", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Expected demo findings reproduced.");
+  expect(calls).toBe(0);
+});

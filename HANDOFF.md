@@ -1,3 +1,16 @@
+# Milestone 10 — current
+
+Current branch: `build/milestone-10`, based on `build/milestone-9`.
+Added read-only /readiness with implementation milestones, five external gates,
+actual photo/rule counts, explicitly historical software evidence, and next steps.
+No credential probes or visit writes. data/release-evidence.json contains the
+verified milestone 9 CI baseline; hosted/rehearsal/human-review records stay null.
+Schema and pure status checks are included in check:all. Two browser regressions
+bring the suite to 25 against Node and local Workers; HTTP acceptance covers
+seven pages. NEXT-STEPS.md is the remaining action sequence.
+Milestones 6 (hosting/rehearsal) and 7 (real photos/human review) remain open.
+Earlier handoff sections below are historical.
+
 # Milestone 9 — current
 
 Branch: `build/milestone-9`, based on `build/milestone-8`.

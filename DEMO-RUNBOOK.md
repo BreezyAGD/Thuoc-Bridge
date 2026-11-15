@@ -83,7 +83,7 @@ reach the laptop. Do not claim either behavior from Demo mode.
 
 ## Remaining external inputs
 
-Vercel access enables hosted deployment. Independent real-box photos and labels
+Cloudflare access enables hosted deployment. Independent real-box photos and labels
 enable measured photo evaluation. A pharmacist and fluent Vietnamese reviewer
 enable clinical/language sign-off. None is claimed complete by this rehearsal.
 
@@ -96,7 +96,7 @@ npx playwright install chromium
 npm run check:browser
 ```
 
-The 23 Chromium tests cover consent, bilingual navigation, patient messages,
+The 25 Chromium tests cover consent, bilingual navigation, patient messages,
 empty/error print states, all eight demo variants, source-photo/transcript
 panels, Letter PDFs, responsive layouts at 320/390/768 px, and reconciliation
 retry, plus honest real-photo strength/unit metrics. They block external browser requests and start a separate production
@@ -124,3 +124,11 @@ provides the five-step English presenter flow, expected synthetic findings,
 loading/error/mismatch status, and source-review/summary links. Loading asks
 before replacing a non-demo visit. Step navigation alone preserves the visit.
 Read [MILESTONE-9.md](MILESTONE-9.md) for coverage and limits.
+
+## Readiness and final steps
+
+Open **Readiness and next steps** from the walkthrough or metrics. `/readiness`
+shows recorded evidence, pending external gates, and the release sequence. It
+does not call services or change the current visit. The software baseline shown
+there has an explicit historical commit/date. See NEXT-STEPS.md for completing
+hosted verification, physical rehearsal, real-photo evaluation, and human review.

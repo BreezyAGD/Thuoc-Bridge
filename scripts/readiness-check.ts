@@ -1,0 +1,34 @@
+import assert from "node:assert/strict";
+import evidenceJson from "../data/release-evidence.json";
+import results from "../eval/results.json";
+import { readinessGates, ReleaseEvidenceSchema, type ReadinessInput } from "../lib/readiness";
+
+const evidence = ReleaseEvidenceSchema.parse(evidenceJson);
+const baseline: ReadinessInput = { photo: { ...results.photo_evaluation, generated_at: results.generated_at }, rules: { total: 27, reviewed: 0 }, evidence };
+const state = (input: ReadinessInput, id: string) => readinessGates(input).find(g => g.id === id)!.state;
+// These records are internal test fixtures only; they are never written to data.
+const record = { checked_by: "Internal test fixture", checked_at: "2026-11-15T00:00:00Z", commit: "a".repeat(40), reference: "https://example.com/evidence", outcome: "passed" as const };
+const empty: ReadinessInput = { ...baseline, photo: { generated_at: results.generated_at, status: "not_measured", labeled: 0, scored: 0, errors: 0 }, evidence: { ...evidence, deployment: null, physical_rehearsal: null, photo_review: null, language_review: null } };
+assert(readinessGates(empty).every(g => g.state === "pending"));
+assert.deepEqual(readinessGates({ ...empty, evidence: { ...empty.evidence, regression: { ...evidence.regression, outcome: "needs_work" } } }), readinessGates(empty), "software CI cannot sign off external gates");
+const measured: ReadinessInput = { ...empty, photo: { ...empty.photo, status: "measured", labeled: 1, scored: 1 } };
+assert.equal(state({ ...measured, photo: { ...measured.photo, labeled: 0, scored: 0 } }, "photos"), "pending");
+assert.equal(state({ ...measured, photo: { ...measured.photo, scored: 0 } }, "photos"), "pending");
+assert.equal(state(measured, "photos"), "needs_review");
+const reviewed = { ...measured, evidence: { ...measured.evidence, photo_review: { ...record, report_generated_at: measured.photo.generated_at } } };
+assert.equal(state(reviewed, "photos"), "recorded");
+assert.equal(state({ ...reviewed, photo: { ...reviewed.photo, errors: 1 } }, "photos"), "pending");
+assert.equal(state({ ...reviewed, photo: { ...reviewed.photo, generated_at: "2026-11-16T00:00:00Z" } }, "photos"), "needs_review", "a later report invalidates old photo-review evidence");
+const deployed = { ...empty, evidence: { ...empty.evidence, deployment: { ...record, url: "https://example.com", pages_and_apis_checked: true, live_extraction_checked: true } } };
+assert.equal(state(deployed, "hosting"), "recorded");
+assert.equal(state({ ...deployed, evidence: { ...deployed.evidence, deployment: { ...deployed.evidence.deployment, live_extraction_checked: false } } }, "hosting"), "pending");
+assert.equal(state({ ...empty, rules: { total: 0, reviewed: 0 } }, "clinical"), "pending");
+assert.equal(state({ ...empty, rules: { total: 27, reviewed: 27 } }, "clinical"), "recorded");
+const rehearsed = { ...empty, evidence: { ...empty.evidence, physical_rehearsal: { ...record, wifi_disabled: true, all_five_scenarios: true, sources_and_pdf_checked: true } } };
+assert.equal(state(rehearsed, "rehearsal"), "recorded");
+assert.equal(state({ ...rehearsed, evidence: { ...rehearsed.evidence, physical_rehearsal: { ...rehearsed.evidence.physical_rehearsal, wifi_disabled: false } } }, "rehearsal"), "pending");
+assert.equal(state({ ...empty, evidence: { ...empty.evidence, language_review: record } }, "language"), "recorded");
+assert.equal(ReleaseEvidenceSchema.safeParse({ ...deployed.evidence, deployment: { ...deployed.evidence.deployment, checked_by: " " } }).success, false);
+assert.equal(ReleaseEvidenceSchema.safeParse({ ...deployed.evidence, deployment: { ...deployed.evidence.deployment, url: "https://example.com/?token=fixture" } }).success, false);
+assert.equal(ReleaseEvidenceSchema.safeParse({ ...evidence, regression: { ...evidence.regression, reference: "not a URL" } }).success, false);
+console.log("PASS readiness: empty/incomplete evidence, nonempty measurements, report-specific review, hosted live checks, physical rehearsal, reviewer fields, zero rules, and CI separation");

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "regression": {
+    "scope": "Milestone 9 baseline",
+    "commit": "c4ce1ccdb5d712c520807df50356031418be39b6",
+    "checked_at": "2026-11-15T22:25:16Z",
+    "reference": "https://github.com/BreezyAGD/Thuoc-Bridge/actions/runs/43768923275",
+    "outcome": "passed",
+    "node_browser_cases": 23,
+    "workers_browser_cases": 23
+  },
+  "deployment": null,
+  "physical_rehearsal": null,
+  "photo_review": null,
+  "language_review": null
+}
