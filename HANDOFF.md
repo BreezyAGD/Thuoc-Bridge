@@ -1,3 +1,14 @@
+# Milestone 7 started (current)
+
+Branch: `build/milestone-7`, based on `build/cloudflare-milestone-6`.
+Milestone 7 is newly defined as validation/review readiness; see MILESTONE-7.md.
+Implemented separate printed strength/unit correctness in report schema v2,
+with tests for wrong/missing/rejected values, decimals, duplicates, and zero
+counts. The metrics page displays the separate rate. Real-photo data remain
+empty and rates unmeasured. Human clinical/language sign-offs remain pending.
+Cloudflare migration is included. Use this latest branch for eventual hosting.
+No Cloudflare credentials are available; hosted deployment remains incomplete.
+
 # Cloudflare migration (current)
 
 Cloudflare Workers replaces Vercel by user request. Branch:

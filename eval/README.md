@@ -35,7 +35,7 @@ pipeline stays safely unsure instead of guessing from the brand name.
   through `extractLabel` and `reconcile`, and writes `results.json`. No image,
   transcript, or full extraction is saved. No demo cache is used in scoring.
 - Precision/recall match guard-checked ingredient names one to one after case
-  and diacritic folding. Strength/unit accuracy is not measured. RxNorm success
+  and diacritic folding. Printed strength + unit correctness is measured separately: a matched guarded name, exact numeric amount, and unit must agree. Unit case/outer whitespace are ignored; no unit conversion is performed. The denominator includes all human-labeled ingredients with printed amounts, even when extraction fails. Unlabeled amounts are excluded. RxNorm success
   requires a single concept matching the human ingredient RxCUI, divided by all
   expected non-null RxCUIs. Missing/failed photos earn no recall or RxNorm credit.
   Photo errors make the report incomplete and the command exits nonzero.
@@ -75,3 +75,6 @@ this environment's proxy values or credentials into source or Vercel.
 `live-smoke-results.json` records two successful live synthetic extractions and
 downstream assertions. It is separate from `results.json` and establishes no
 real-photo precision/recall. See `../REVIEW.md` for the human review packet.
+
+Milestone 7 adds printed strength/unit scoring to report version 2; see
+`../MILESTONE-7.md`. Zero real-photo counts remain Not measured.

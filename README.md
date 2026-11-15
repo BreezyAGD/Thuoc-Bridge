@@ -52,3 +52,7 @@ visit data and uploaded images are not persisted there. Anthropic is a Worker
 runtime secret. `.dev.vars.example` documents local Wrangler secrets.
 See [DEPLOYMENT.md](DEPLOYMENT.md) for setup, commands, acceptance gates, and
 current milestone status. Deployment stays pending Cloudflare account access.
+
+Milestone 7 has started: [validation and review readiness](MILESTONE-7.md),
+including separate exact printed strength/unit scoring. Real-photo collection
+and qualified reviewer sign-offs remain pending.

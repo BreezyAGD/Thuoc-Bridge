@@ -117,3 +117,11 @@ test("reconciliation error disables stale summary and retry recovers", async ({ 
   await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeEnabled();
   await expect(page.getByRole("heading", { name: "Alerts requiring review (1)" })).toBeVisible();
 });
+
+
+test("real-photo amount/unit metric stays unmeasured without labels", async ({ page }) => {
+  await page.goto("/about-metrics");
+  const metric = page.locator("dl > div").filter({ has: page.locator("dt", { hasText: "Printed strength + unit correctness" }) });
+  await expect(metric.locator("dd")).toHaveText("0/0 · Not measured");
+  await expect(page.getByText("0 human-labeled photos", { exact: false })).toBeVisible();
+});

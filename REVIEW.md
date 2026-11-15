@@ -68,8 +68,9 @@ reads the original box and labels eval/golden.json before viewing model output.
 Record salts/spelling, per-unit strengths/units, ingredient RxCUIs, and labeler.
 Do not treat synthetic demo labels or repeated photos as independent real data.
 Run npm run check:golden before npm run eval. Investigate every mismatch; report
-the actual sample count. The existing scorer does not measure strength/unit
-accuracy, so review those manually and do not claim a measured strength score.
+the actual sample count. The scorer now reports exact printed strength/unit correctness separately;
+review disagreements against the physical box. With no real photos this metric
+is unmeasured. It does not validate dosing, frequency, or daily intake.
 
 Reviewer: ____________________ Role: ____________________ Date: __________
 

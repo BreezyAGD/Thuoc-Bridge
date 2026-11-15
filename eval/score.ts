@@ -12,15 +12,21 @@ export function scoreProduct(gold: GoldenItem, product: ProductRow) {
   const remaining = new Set(gold.ingredients.map((_, i) => i));
   let correct = 0;
   let rxCorrect = 0;
+  let strengthCorrect = 0;
   for (const p of predicted) {
     const index = [...remaining].find((i) => fold(gold.ingredients[i].name_printed) === fold(p.printed_name));
     if (index === undefined) continue;
     remaining.delete(index);
     correct++;
-    const expected = gold.ingredients[index].rxcui;
+    const labeled = gold.ingredients[index];
+    // Exact printed amount/unit only; no dose arithmetic or unit conversion.
+    if (labeled.strength !== null && p.strength === labeled.strength &&
+      (p.unit?.trim().toLowerCase() ?? null) === (labeled.unit?.trim().toLowerCase() ?? null)) strengthCorrect++;
+    const expected = labeled.rxcui;
     if (expected && p.resolution.concepts.length === 1 && p.resolution.concepts[0].rxcui === expected) rxCorrect++;
   }
   return { correct, predicted: predicted.length, expected: gold.ingredients.length,
+    strengthCorrect, strengthExpected: gold.ingredients.filter((i) => i.strength !== null).length,
     rxCorrect, rxExpected: gold.ingredients.filter((i) => i.rxcui !== null).length,
     unverified: product.status === "unverified",
     unverifiedCorrect: (product.status === "unverified") === gold.expect_unverified };

@@ -71,7 +71,7 @@ using `WRANGLER_LOG_PATH` and `XDG_CONFIG_HOME`. Do not copy proxy credentials.
 6. Record URL, commit, deployment status, hosted HTTP results, live extraction
    result, and rehearsal evidence before marking milestone 6 complete.
 
-For Workers Builds connected to GitHub, select the latest release branch, not
+For Workers Builds connected to GitHub, select `build/milestone-7` (includes the Cloudflare migration), not
 `main` (which still holds only the initial README). Use Node 24, build command
 `npm run cf:build`, deploy command `npm run cf:deploy`, root directory `/`.
 Configure runtime secrets separately from build variables; this build needs no
@@ -86,7 +86,7 @@ verified locally, but hosted deployment and the physical wifi-off rehearsal
 remain open. Automated offline Node and browser regression already exist.
 Two live synthetic Anthropic calls passed; real-photo metrics remain unmeasured.
 
-Milestone 7 starts validation and review readiness: precise evaluation of
+Milestone 7 has started; see [MILESTONE-7.md](MILESTONE-7.md). It covers precise evaluation of
 printed names, strength/unit pairs, RxCUIs, and Unverified behavior, plus human
 clinical and language review. It cannot be called clinically validated without
 real independent labels and qualified reviewer sign-off.

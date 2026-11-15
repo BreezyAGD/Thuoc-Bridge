@@ -30,18 +30,19 @@ async function main() {
     }
   }
   const scored = items.filter((i) => "correct" in i);
-  const sum = (key: "correct" | "predicted" | "expected" | "rxCorrect" | "rxExpected") => scored.reduce((n, i) => n + (i[key] ?? 0), 0);
+  const sum = (key: "correct" | "predicted" | "expected" | "rxCorrect" | "rxExpected" | "strengthCorrect") => scored.reduce((n, i) => n + (i[key] ?? 0), 0);
   const scenarios = await runScenarios();
   const alertCorrect = scenarios.reduce((n, r) => n + r.actual.filter((a) => r.expected.includes(a)).length, 0);
   const errors = items.filter((i) => "error" in i).length;
   const report = {
-    version: 1, generated_at: new Date().toISOString(), model: EXTRACTION_MODEL,
+    version: 2, generated_at: new Date().toISOString(), model: EXTRACTION_MODEL,
     photo_evaluation: {
       status: golden.items.length === 0 ? "not_measured" : errors ? "incomplete" : "measured",
       labeled: golden.items.length, scored: scored.length, errors,
       ingredient_precision: metric(sum("correct"), sum("predicted")),
       ingredient_recall: metric(sum("correct"), golden.items.reduce((n, i) => n + i.ingredients.length, 0)),
       rxnorm_match_rate: metric(sum("rxCorrect"), golden.items.reduce((n, i) => n + i.ingredients.filter((g) => g.rxcui !== null).length, 0)),
+      strength_unit_correctness: metric(sum("strengthCorrect"), golden.items.reduce((n, i) => n + i.ingredients.filter((g) => g.strength !== null).length, 0)),
       flagged_unverified: metric(scored.filter((i) => i.unverified).length, scored.length),
       unverified_correctness: metric(scored.filter((i) => i.unverifiedCorrect).length, golden.items.length),
       items,
