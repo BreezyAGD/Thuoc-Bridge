@@ -189,7 +189,7 @@ export default function ClinicianPage() {
   return (
     <>
       <header className="bg-slate-800 text-white print:hidden">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <span className="text-xl font-bold">Thuốc Bridge · Medication reconciliation</span>
           <Link href="/patient" className="min-h-10 rounded-full border border-white/60 px-4 py-2 font-medium">
             Patient view
@@ -198,7 +198,7 @@ export default function ClinicianPage() {
         <DemoControls english />
       </header>
 
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-5 px-4 py-6">
+      <main lang="en" className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-5 px-4 py-6">
         <p className="rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-700">
           Prototype decision support. Not a substitute for a pharmacist. Ingredients are read from
           photos of the packaging and matched to RxNorm; verify each row against the box.
@@ -226,7 +226,7 @@ export default function ClinicianPage() {
         )}
 
         <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <h1 className="px-4 pt-4 text-xl font-bold">Products photographed by the patient</h1>
+          <div className="flex flex-wrap items-center justify-between gap-3 px-4 pt-4"><h1 className="text-xl font-bold">Products photographed by the patient</h1><Link href="/summary" className="min-h-11 rounded-lg border border-teal-700 px-3 py-2 font-semibold text-teal-800">Printable English summary</Link></div><p className="px-4 pt-2 text-sm text-slate-600 sm:hidden">Swipe the table sideways to review all ingredient details.</p>
           {visit.products.length === 0 ? (
             <p className="p-4 text-slate-600">
               No photos yet. Use the patient view to photograph the medicine boxes.

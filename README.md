@@ -95,3 +95,23 @@ npm run extract -- path/to/photo.jpg
 - Photos are downscaled in the browser, sent to `/api/extract`, forwarded to
   the Anthropic API, and discarded. They are never written to disk or logged.
 - `.env.local` is git-ignored. Never commit an API key.
+
+## Printable English summary (milestone 5)
+
+From `/clinician`, choose **Printable English summary**, then **Print / Save PDF**.
+The summary includes guard-checked label values, US medicine names, RxCUIs,
+confidence, unresolved items, and cited clinician alerts with review status.
+Printing is disabled until the current reconciliation finishes successfully.
+Choose Letter or A4 portrait and disable browser headers and footers. Each of
+the eight demo variants fits one Letter page; longer real visits can continue
+onto additional pages without dropping findings. The PDF is generated locally
+by the browser; there is no summary upload or server-side persistence.
+
+Verified on Chromium: 320/390/768 px layouts, empty and ready summary states,
+all eight demo variants with external browser requests blocked, and one-page
+Letter PDFs for each variant. The local Next server must remain running for
+the offline demo; a cold start of a hosted site without internet is not supported.
+
+Deployment remains pending. The Anthropic key is available in the current
+execution environment, but a live call using a synthetic demo label returned
+`network`; real-photo accuracy remains unmeasured without labeled box photos.

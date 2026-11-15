@@ -1,3 +1,29 @@
+# Current handoff — milestone 5 completed
+
+The original milestone-3 handoff below is historical. Current work is on
+`build/milestone-5`, based on remote `build/milestone-4` at `08fd58f`.
+
+- Milestone 4 exists and its checks pass. Photo evaluation remains
+  `not_measured`: zero labeled real photos. Synthetic checks are not photo accuracy.
+- Milestone 5 adds `/summary`, linked from `/clinician`, with a browser print/PDF
+  action and English guarded ingredients, RxCUIs, confidence, US medicines,
+  unresolved findings, cited alerts, review status, and clinician sign-off line.
+- Mobile header wrapping, table swipe guidance, and keyboard focus styling added.
+- Verified: typecheck, lint, 41 normalization cases, 11 alert scenarios, offline
+  demo checks, evaluation scoring checks, eval, production build, Chromium mobile
+  widths 320/390/768, empty/ready print states, no browser errors, all eight demo
+  variants with external browser requests blocked. Each generated Letter PDF
+  has one page. Local server is still required; no cold-start offline hosting.
+- ANTHROPIC_API_KEY is present in the environment; it was never printed or saved.
+  A live extraction smoke check against a synthetic sample returned `network`.
+  No successful real-photo extraction is claimed.
+- Milestone 6: Vercel deployment is pending. No Vercel token or CLI found here.
+  Configure hosting, set ANTHROPIC_API_KEY as a server environment secret, then
+  verify the hosted app and repeat the demo dry-run. Never put the key in Git.
+- No clinical reviewer has signed off rules; no real patient photos supplied.
+
+---
+
 # HANDOFF: Thuốc Bridge
 
 ## Current state

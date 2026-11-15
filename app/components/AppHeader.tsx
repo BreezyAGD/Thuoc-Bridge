@@ -8,7 +8,7 @@ export function AppHeader() {
   const { lang, t } = useLang();
   return (
     <header className="bg-teal-700 text-white">
-      <div className="mx-auto flex w-full max-w-2xl items-center justify-between gap-3 px-4 py-3">
+      <div className="mx-auto flex w-full max-w-2xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <Link href="/" className="text-xl font-bold tracking-tight">
           {t.appName}
         </Link>
