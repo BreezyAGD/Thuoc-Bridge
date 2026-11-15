@@ -1,0 +1,77 @@
+export type Lang = "vi" | "en";
+
+/**
+ * Bilingual UI strings.
+ * NEEDS REVIEW: the Vietnamese strings were drafted without a native-speaker
+ * check. Have a fluent reader review them before the demo.
+ */
+const vi = {
+  appName: "Thuốc Bridge",
+  tagline: "Giúp điều dưỡng và dược sĩ hiểu rõ thuốc bạn đang dùng",
+  langToggle: "English",
+  consentTitle: "Trước khi bắt đầu",
+  consentPoints: [
+    "Ứng dụng này không thay thế dược sĩ hay bác sĩ.",
+    "Ứng dụng không đưa ra lời khuyên về liều dùng. Đừng tự ý ngừng hoặc đổi thuốc.",
+    "Ảnh hộp thuốc sẽ được gửi đến dịch vụ AI (Anthropic) để đọc chữ trên bao bì. Chúng tôi không lưu ảnh trên máy chủ.",
+    "Đây là bản thử nghiệm. Vui lòng không chụp giấy tờ có tên hoặc thông tin cá nhân.",
+  ],
+  consentAgree: "Tôi hiểu và đồng ý",
+  start: "Bắt đầu",
+  needConsent: "Vui lòng đọc và đồng ý trước khi tiếp tục.",
+  backHome: "Quay lại trang đầu",
+  patientTitle: "Thuốc của bạn",
+  takePhoto: "Chụp ảnh hộp thuốc",
+  choosePhoto: "Chọn ảnh có sẵn",
+  photoHint: "Chụp rõ mặt hộp có ghi “Thành phần”. Bạn có thể chụp nhiều thuốc.",
+  reading: "Đang đọc nhãn thuốc…",
+  unknownName: "Chưa rõ tên thuốc",
+  contains: "Thuốc này có chứa:",
+  tellNurse: "Hãy cho điều dưỡng hoặc dược sĩ của bạn xem thông tin này.",
+  unverified: "Chưa xác minh được",
+  unverifiedHelp:
+    "Chúng tôi không đọc được thành phần trên ảnh này. Hãy mang hộp thuốc cho dược sĩ xem.",
+  errorGeneric: "Có lỗi xảy ra. Vui lòng thử lại.",
+  errorImage: "Không mở được ảnh này. Vui lòng thử ảnh khác.",
+  remove: "Xóa",
+  details: "Chi tiết kỹ thuật",
+  empty: "Chưa có thuốc nào. Hãy chụp ảnh hộp thuốc đầu tiên.",
+  disclaimer: "Không thay thế cho dược sĩ.",
+};
+
+const en: typeof vi = {
+  appName: "Thuốc Bridge",
+  tagline: "Helping nurses and pharmacists understand the medicines you take",
+  langToggle: "Tiếng Việt",
+  consentTitle: "Before you start",
+  consentPoints: [
+    "This app is not a substitute for a pharmacist or doctor.",
+    "It does not give dosing advice. Do not stop or change a medicine on your own.",
+    "Photos of medicine boxes are sent to an AI service (Anthropic) to read the printed text. We do not store photos on our server.",
+    "This is a prototype. Please do not photograph documents with names or personal details.",
+  ],
+  consentAgree: "I understand and agree",
+  start: "Start",
+  needConsent: "Please read and agree before continuing.",
+  backHome: "Back to the first page",
+  patientTitle: "Your medicines",
+  takePhoto: "Take a photo of the box",
+  choosePhoto: "Choose an existing photo",
+  photoHint: "Capture the side that lists the ingredients (“Thành phần”). You can add several medicines.",
+  reading: "Reading the label…",
+  unknownName: "Name not read",
+  contains: "This medicine contains:",
+  tellNurse: "Show this to your nurse or pharmacist.",
+  unverified: "Unverified",
+  unverifiedHelp:
+    "We could not read the ingredients in this photo. Bring the box to your pharmacist.",
+  errorGeneric: "Something went wrong. Please try again.",
+  errorImage: "This photo could not be opened. Please try another one.",
+  remove: "Remove",
+  details: "Technical details",
+  empty: "No medicines yet. Take a photo of the first box.",
+  disclaimer: "Not a substitute for a pharmacist.",
+};
+
+export const dict: Record<Lang, typeof vi> = { vi, en };
+export type Strings = typeof vi;
