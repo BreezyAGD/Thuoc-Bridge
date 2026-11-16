@@ -3,12 +3,28 @@
   "extraction": {
     "is_medicine_package": true,
     "transcript": [
-      "ASSUMED herbal product",
+      "Cao thảo dược",
       "Hộp 3 vỉ x 10 viên"
     ],
+    "line_boxes": [
+      {
+        "line": 0,
+        "x": 26,
+        "y": 172,
+        "w": 176,
+        "h": 52
+      },
+      {
+        "line": 1,
+        "x": 26,
+        "y": 280,
+        "w": 235,
+        "h": 53
+      }
+    ],
     "brand_name": {
-      "value": "ASSUMED herbal product",
-      "source_text": "ASSUMED herbal product",
+      "value": "Cao thảo dược",
+      "source_text": "Cao thảo dược",
       "confidence": 0.95
     },
     "manufacturer": {

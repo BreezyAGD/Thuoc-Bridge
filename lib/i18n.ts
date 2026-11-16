@@ -54,6 +54,13 @@ const vi = {
   newVisitHelp: "Xóa thuốc, ảnh và kết quả của lượt này khỏi tab này rồi quay lại màn hình đồng ý. Các tệp đã tải xuống vẫn còn.",
   clearVisit: "Xóa lượt này và tiếp tục",
   cancel: "Hủy",
+  handoutTitle: "Thông tin thuốc của bạn",
+  handoutIntro: "Điều dưỡng hoặc dược sĩ đã xem các thuốc bạn mang theo. Đây là những gì đọc được trên hộp thuốc.",
+  handoutBring: "Hãy mang theo hộp thuốc mỗi lần đi khám. Đừng tự ý ngừng hoặc đổi thuốc.",
+  handoutUsMeds: "Thuốc ở Mỹ bạn đang dùng",
+  handoutReviewed: "Nhân viên y tế đã xem:",
+  handoutDate: "Ngày:",
+  handoutEmpty: "Chưa có thuốc nào trong lượt khám này.",
 };
 
 const en: typeof vi = {
@@ -102,9 +109,16 @@ const en: typeof vi = {
   disclaimer: "Not a substitute for a pharmacist.",
   newVisit: "Start new visit",
   newVisitTitle: "Start a new visit?",
-  newVisitHelp: "Clear this visit’s medicines, photos, and results from this tab and return to consent. Downloaded files remain.",
+  newVisitHelp: "Clear this visit’s medicines, photos, and results from this tab. Scanning needs a fresh confirmation. Downloaded files remain.",
   clearVisit: "Clear visit and continue",
   cancel: "Cancel",
+  handoutTitle: "Your medicine information",
+  handoutIntro: "Your nurse or pharmacist reviewed the medicines you brought. This is what was read from the packages.",
+  handoutBring: "Bring your medicine boxes to every visit. Do not stop or change a medicine on your own.",
+  handoutUsMeds: "US medicines you take",
+  handoutReviewed: "Reviewed by:",
+  handoutDate: "Date:",
+  handoutEmpty: "No medicines in this visit yet.",
 };
 
 export const dict: Record<Lang, typeof vi> = { vi, en };

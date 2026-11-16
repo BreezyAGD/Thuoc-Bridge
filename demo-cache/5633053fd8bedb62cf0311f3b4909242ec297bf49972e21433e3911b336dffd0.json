@@ -3,13 +3,36 @@
   "extraction": {
     "is_medicine_package": true,
     "transcript": [
-      "ASSUMED paracetamol 650",
+      "Paracetamol 500 sủi",
       "Thành phần:",
-      "Paracetamol ..... 650 mg"
+      "Paracetamol ..... 500 mg"
+    ],
+    "line_boxes": [
+      {
+        "line": 0,
+        "x": 27,
+        "y": 172,
+        "w": 250,
+        "h": 47
+      },
+      {
+        "line": 1,
+        "x": 26,
+        "y": 270,
+        "w": 145,
+        "h": 63
+      },
+      {
+        "line": 2,
+        "x": 27,
+        "y": 388,
+        "w": 318,
+        "h": 53
+      }
     ],
     "brand_name": {
-      "value": "ASSUMED paracetamol 650",
-      "source_text": "ASSUMED paracetamol 650",
+      "value": "Paracetamol 500 sủi",
+      "source_text": "Paracetamol 500 sủi",
       "confidence": 0.95
     },
     "manufacturer": {
@@ -36,13 +59,13 @@
           "confidence": 0.95
         },
         "strength": {
-          "value": 650,
-          "source_text": "Paracetamol ..... 650 mg",
+          "value": 500,
+          "source_text": "Paracetamol ..... 500 mg",
           "confidence": 0.95
         },
         "unit": {
           "value": "mg",
-          "source_text": "Paracetamol ..... 650 mg",
+          "source_text": "Paracetamol ..... 500 mg",
           "confidence": 0.95
         }
       }

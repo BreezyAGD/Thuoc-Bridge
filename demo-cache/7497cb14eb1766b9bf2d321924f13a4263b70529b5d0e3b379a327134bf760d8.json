@@ -3,14 +3,44 @@
   "extraction": {
     "is_medicine_package": true,
     "transcript": [
-      "ASSUMED hoạt huyết dưỡng não",
+      "Hoạt huyết dưỡng não",
       "Thành phần:",
       "Cao đinh lăng ..... 150 mg",
       "Cao bạch quả ..... 5 mg"
     ],
+    "line_boxes": [
+      {
+        "line": 0,
+        "x": 26,
+        "y": 162,
+        "w": 266,
+        "h": 63
+      },
+      {
+        "line": 1,
+        "x": 26,
+        "y": 270,
+        "w": 145,
+        "h": 63
+      },
+      {
+        "line": 2,
+        "x": 26,
+        "y": 388,
+        "w": 343,
+        "h": 53
+      },
+      {
+        "line": 3,
+        "x": 26,
+        "y": 497,
+        "w": 303,
+        "h": 53
+      }
+    ],
     "brand_name": {
-      "value": "ASSUMED hoạt huyết dưỡng não",
-      "source_text": "ASSUMED hoạt huyết dưỡng não",
+      "value": "Hoạt huyết dưỡng não",
+      "source_text": "Hoạt huyết dưỡng não",
       "confidence": 0.95
     },
     "manufacturer": {

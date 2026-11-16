@@ -1,21 +1,382 @@
 {
-  "provenance": "Synthetic scenario labels; not real box photos or LLM outputs.",
+  "provenance": "Synthetic scenario labels plus hand-labeled real photos; none are LLM outputs.",
   "entries": [
     {
-      "hash": "aa30ac8a181f3ea0db528807a1bf162bf88ca5ad42efbdd7524f7475a9d48f6c",
-      "photo": "/demo-assets/1-paracetamol-duplication-0.jpg",
+      "hash": "94ac0075134ada868aa62247ed17df65b76c573c34bcf9bc4d557505876c6224",
+      "photo": "/demo-assets/real-panadol-blister-0.jpg",
+      "source": "real_photo_hand_labeled",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED paracetamol 650",
+            "Panadol",
+            "500 mg PARACETAMOL",
+            "Giảm đau – Hạ sốt",
+            "Không hại dạ dày",
+            "Không gây buồn ngủ",
+            "CHỈ ĐỊNH",
+            "a) Điều trị đau nhẹ đến vừa bao gồm:",
+            "Đau đầu, đau nửa đầu, đau cơ, đau bụng kinh, đau",
+            "họng, đau cơ xương, sốt và đau sau khi tiêm vacxin,",
+            "đau sau khi nhổ răng hoặc sau các thủ thuật nha khoa,",
+            "đau răng, đau do viêm xương khớp.",
+            "b) Hạ sốt",
+            "LIỀU LƯỢNG & CÁCH DÙNG",
+            "Chỉ dùng đường uống. Không dùng quá liều chỉ định.",
+            "Không dùng với các thuốc khác có chứa paracetamol.",
+            "Khoảng cách liều tối thiểu: 4 giờ.",
+            "• Người lớn (kể cả người cao tuổi) và trẻ em từ 12 tuổi",
+            "trở lên: Dùng 500 mg đến 1g paracetamol (1-2",
+            "viên/lần), sau mỗi 4-6 giờ nếu cần. Liều tối đa hàng",
+            "ngày: 4000 mg (8 viên)",
+            "• Trẻ em từ 6-11 tuổi: Dùng 250-500 mg sau mỗi 4 đến",
+            "6 giờ nếu cần. Liều tối đa hàng ngày: 60 mg/kg cân",
+            "nặng chia thành nhiều lần dùng trong 24 giờ, mỗi lần",
+            "10-15 mg/kg cân nặng. Không dùng quá 4 liều trong 24",
+            "giờ. Thời gian tối đa dùng thuốc không có tư vấn của",
+            "bác sĩ: 3 ngày.",
+            "• Không khuyến nghị dùng thuốc cho trẻ em dưới 6 tuổi.",
+            "CHỐNG CHỈ ĐỊNH",
+            "Chống chỉ định paracetamol cho những bệnh nhân có",
+            "tiền sử quá mẫn với paracetamol hoặc với bất kỳ tá",
+            "dược nào của thuốc.",
+            "Sản xuất bởi: STERLING DRUG (M) SDN. BHD.",
+            "909583",
+            "GlaxoSmithKline",
+            "FOA1702 AAAG-513(V)"
+          ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 305,
+              "y": 272,
+              "w": 162,
+              "h": 33
+            },
+            {
+              "line": 1,
+              "x": 558,
+              "y": 309,
+              "w": 204,
+              "h": 20
+            },
+            {
+              "line": 2,
+              "x": 333,
+              "y": 364,
+              "w": 194,
+              "h": 21
+            },
+            {
+              "line": 3,
+              "x": 333,
+              "y": 382,
+              "w": 186,
+              "h": 20
+            },
+            {
+              "line": 4,
+              "x": 333,
+              "y": 399,
+              "w": 222,
+              "h": 21
+            },
+            {
+              "line": 5,
+              "x": 329,
+              "y": 423,
+              "w": 88,
+              "h": 17
+            },
+            {
+              "line": 6,
+              "x": 331,
+              "y": 445,
+              "w": 325,
+              "h": 17
+            },
+            {
+              "line": 7,
+              "x": 331,
+              "y": 460,
+              "w": 442,
+              "h": 16
+            },
+            {
+              "line": 8,
+              "x": 331,
+              "y": 474,
+              "w": 442,
+              "h": 16
+            },
+            {
+              "line": 9,
+              "x": 331,
+              "y": 488,
+              "w": 442,
+              "h": 16
+            },
+            {
+              "line": 10,
+              "x": 331,
+              "y": 500,
+              "w": 294,
+              "h": 16
+            },
+            {
+              "line": 11,
+              "x": 331,
+              "y": 513,
+              "w": 73,
+              "h": 14
+            },
+            {
+              "line": 12,
+              "x": 329,
+              "y": 534,
+              "w": 248,
+              "h": 18
+            },
+            {
+              "line": 13,
+              "x": 331,
+              "y": 558,
+              "w": 443,
+              "h": 17
+            },
+            {
+              "line": 14,
+              "x": 331,
+              "y": 574,
+              "w": 443,
+              "h": 17
+            },
+            {
+              "line": 15,
+              "x": 331,
+              "y": 590,
+              "w": 286,
+              "h": 16
+            },
+            {
+              "line": 16,
+              "x": 331,
+              "y": 605,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 17,
+              "x": 331,
+              "y": 622,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 18,
+              "x": 331,
+              "y": 638,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 19,
+              "x": 331,
+              "y": 653,
+              "w": 188,
+              "h": 17
+            },
+            {
+              "line": 20,
+              "x": 331,
+              "y": 670,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 21,
+              "x": 331,
+              "y": 687,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 22,
+              "x": 331,
+              "y": 703,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 23,
+              "x": 331,
+              "y": 719,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 24,
+              "x": 331,
+              "y": 735,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 25,
+              "x": 331,
+              "y": 752,
+              "w": 119,
+              "h": 17
+            },
+            {
+              "line": 26,
+              "x": 331,
+              "y": 768,
+              "w": 452,
+              "h": 17
+            },
+            {
+              "line": 27,
+              "x": 329,
+              "y": 790,
+              "w": 159,
+              "h": 17
+            },
+            {
+              "line": 28,
+              "x": 331,
+              "y": 813,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 29,
+              "x": 331,
+              "y": 828,
+              "w": 445,
+              "h": 17
+            },
+            {
+              "line": 30,
+              "x": 331,
+              "y": 844,
+              "w": 169,
+              "h": 16
+            },
+            {
+              "line": 31,
+              "x": 329,
+              "y": 864,
+              "w": 395,
+              "h": 18
+            },
+            {
+              "line": 32,
+              "x": 713,
+              "y": 888,
+              "w": 64,
+              "h": 14
+            },
+            {
+              "line": 33,
+              "x": 364,
+              "y": 901,
+              "w": 110,
+              "h": 14
+            },
+            {
+              "line": 34,
+              "x": 569,
+              "y": 904,
+              "w": 208,
+              "h": 17
+            }
+          ],
+          "brand_name": {
+            "value": "Panadol",
+            "source_text": "Panadol",
+            "confidence": 0.98
+          },
+          "manufacturer": {
+            "value": "STERLING DRUG (M) SDN. BHD.",
+            "source_text": "Sản xuất bởi: STERLING DRUG (M) SDN. BHD.",
+            "confidence": 0.86
+          },
+          "registration_number": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "dosage_form": {
+            "value": null,
+            "source_text": null,
+            "confidence": 0
+          },
+          "ingredients_section_found": true,
+          "ingredients": [
+            {
+              "name": {
+                "value": "PARACETAMOL",
+                "source_text": "500 mg PARACETAMOL",
+                "confidence": 0.97
+              },
+              "strength": {
+                "value": 500,
+                "source_text": "500 mg PARACETAMOL",
+                "confidence": 0.97
+              },
+              "unit": {
+                "value": "mg",
+                "source_text": "500 mg PARACETAMOL",
+                "confidence": 0.97
+              }
+            }
+          ]
+        },
+        "model": "hand-labeled-fixture-not-model-output",
+        "ms": 0
+      }
+    },
+    {
+      "hash": "eb08e9e89c418c8f5945acd28ceeb39172642690a07c4a13e4bbe0037d87380d",
+      "photo": "/demo-assets/1-paracetamol-duplication-0.jpg",
+      "source": "synthetic",
+      "result": {
+        "status": "ok",
+        "extraction": {
+          "is_medicine_package": true,
+          "transcript": [
+            "Paracetamol 650",
             "Thành phần:",
             "Paracetamol ..... 650 mg"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 27,
+              "y": 172,
+              "w": 201,
+              "h": 47
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 270,
+              "w": 145,
+              "h": 63
+            },
+            {
+              "line": 2,
+              "x": 27,
+              "y": 388,
+              "w": 318,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED paracetamol 650",
-            "source_text": "ASSUMED paracetamol 650",
+            "value": "Paracetamol 650",
+            "source_text": "Paracetamol 650",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -59,20 +420,44 @@
       }
     },
     {
-      "hash": "ce101f43ea71afe6d86fd10eb211702c3b0e6a91605f91d313d913f659200f8b",
+      "hash": "5633053fd8bedb62cf0311f3b4909242ec297bf49972e21433e3911b336dffd0",
       "photo": "/demo-assets/1b-paracetamol-plus-tylenol-0.jpg",
+      "source": "synthetic",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED paracetamol 500 sủi",
+            "Paracetamol 500 sủi",
             "Thành phần:",
             "Paracetamol ..... 500 mg"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 27,
+              "y": 172,
+              "w": 250,
+              "h": 47
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 270,
+              "w": 145,
+              "h": 63
+            },
+            {
+              "line": 2,
+              "x": 27,
+              "y": 388,
+              "w": 318,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED paracetamol 500 sủi",
-            "source_text": "ASSUMED paracetamol 500 sủi",
+            "value": "Paracetamol 500 sủi",
+            "source_text": "Paracetamol 500 sủi",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -116,96 +501,52 @@
       }
     },
     {
-      "hash": "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778",
-      "photo": "/demo-assets/2-ginkgo-warfarin-0.jpg",
-      "result": {
-        "status": "ok",
-        "extraction": {
-          "is_medicine_package": true,
-          "transcript": [
-            "ASSUMED hoạt huyết dưỡng não",
-            "Thành phần:",
-            "Cao đinh lăng ..... 150 mg",
-            "Cao bạch quả ..... 5 mg"
-          ],
-          "brand_name": {
-            "value": "ASSUMED hoạt huyết dưỡng não",
-            "source_text": "ASSUMED hoạt huyết dưỡng não",
-            "confidence": 0.95
-          },
-          "manufacturer": {
-            "value": null,
-            "source_text": null,
-            "confidence": 0
-          },
-          "registration_number": {
-            "value": null,
-            "source_text": null,
-            "confidence": 0
-          },
-          "dosage_form": {
-            "value": null,
-            "source_text": null,
-            "confidence": 0
-          },
-          "ingredients_section_found": true,
-          "ingredients": [
-            {
-              "name": {
-                "value": "Cao đinh lăng",
-                "source_text": "Cao đinh lăng",
-                "confidence": 0.95
-              },
-              "strength": {
-                "value": 150,
-                "source_text": "Cao đinh lăng ..... 150 mg",
-                "confidence": 0.95
-              },
-              "unit": {
-                "value": "mg",
-                "source_text": "Cao đinh lăng ..... 150 mg",
-                "confidence": 0.95
-              }
-            },
-            {
-              "name": {
-                "value": "Cao bạch quả",
-                "source_text": "Cao bạch quả",
-                "confidence": 0.95
-              },
-              "strength": {
-                "value": 5,
-                "source_text": "Cao bạch quả ..... 5 mg",
-                "confidence": 0.95
-              },
-              "unit": {
-                "value": "mg",
-                "source_text": "Cao bạch quả ..... 5 mg",
-                "confidence": 0.95
-              }
-            }
-          ]
-        },
-        "model": "synthetic-fixture-not-model-output",
-        "ms": 0
-      }
-    },
-    {
-      "hash": "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778",
+      "hash": "7497cb14eb1766b9bf2d321924f13a4263b70529b5d0e3b379a327134bf760d8",
       "photo": "/demo-assets/2b-ginkgo-apixaban-0.jpg",
+      "source": "synthetic",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED hoạt huyết dưỡng não",
+            "Hoạt huyết dưỡng não",
             "Thành phần:",
             "Cao đinh lăng ..... 150 mg",
             "Cao bạch quả ..... 5 mg"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 26,
+              "y": 162,
+              "w": 266,
+              "h": 63
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 270,
+              "w": 145,
+              "h": 63
+            },
+            {
+              "line": 2,
+              "x": 26,
+              "y": 388,
+              "w": 343,
+              "h": 53
+            },
+            {
+              "line": 3,
+              "x": 26,
+              "y": 497,
+              "w": 303,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED hoạt huyết dưỡng não",
-            "source_text": "ASSUMED hoạt huyết dưỡng não",
+            "value": "Hoạt huyết dưỡng não",
+            "source_text": "Hoạt huyết dưỡng não",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -266,22 +607,60 @@
       }
     },
     {
-      "hash": "9eeccb8734354d0fa8c1345a0ff96b73d5315c1f54e87e11866ab2137e8d62ca",
+      "hash": "c080e1921a6b057da49e3fab1963df8d6a639ab6a698d77f559d8e45159538b7",
       "photo": "/demo-assets/3-cold-medicine-bp-0.jpg",
+      "source": "synthetic",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED combination cold tablet",
+            "Viên cảm cúm",
             "Thành phần:",
             "Paracetamol ..... 500 mg",
             "Phenylephrin HCl ..... 10 mg",
             "Clorpheniramin maleat ..... 2 mg"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 26,
+              "y": 172,
+              "w": 162,
+              "h": 47
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 270,
+              "w": 145,
+              "h": 63
+            },
+            {
+              "line": 2,
+              "x": 27,
+              "y": 388,
+              "w": 318,
+              "h": 53
+            },
+            {
+              "line": 3,
+              "x": 27,
+              "y": 497,
+              "w": 370,
+              "h": 53
+            },
+            {
+              "line": 4,
+              "x": 26,
+              "y": 605,
+              "w": 423,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED combination cold tablet",
-            "source_text": "ASSUMED combination cold tablet",
+            "value": "Viên cảm cúm",
+            "source_text": "Viên cảm cúm",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -359,22 +738,60 @@
       }
     },
     {
-      "hash": "8d7d79741adf87016d96965334a7c1691e05528790b19d7d25276eb454a3ba92",
+      "hash": "7b7a64786bbabf732b6fd6384bc2723ffc534323e27fb20446484fabfbcc9824",
       "photo": "/demo-assets/3b-cold-medicine-ppa-0.jpg",
+      "source": "synthetic",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED cold tablet (PPA formulation)",
+            "Viên cảm cúm PPA",
             "Thành phần:",
             "Paracetamol ..... 500 mg",
             "Phenylpropanolamin HCl ..... 25 mg",
             "Clorpheniramin maleat ..... 2 mg"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 26,
+              "y": 172,
+              "w": 214,
+              "h": 47
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 270,
+              "w": 145,
+              "h": 63
+            },
+            {
+              "line": 2,
+              "x": 27,
+              "y": 388,
+              "w": 318,
+              "h": 53
+            },
+            {
+              "line": 3,
+              "x": 27,
+              "y": 497,
+              "w": 448,
+              "h": 53
+            },
+            {
+              "line": 4,
+              "x": 26,
+              "y": 605,
+              "w": 423,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED cold tablet (PPA formulation)",
-            "source_text": "ASSUMED cold tablet (PPA formulation)",
+            "value": "Viên cảm cúm PPA",
+            "source_text": "Viên cảm cúm PPA",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -452,20 +869,44 @@
       }
     },
     {
-      "hash": "be69147a876896e8058d71618c0aeaff6792215dffb156682e8f1c6ddb4c966b",
+      "hash": "1d1c73419b43f135bb0677ccb796180269a2de92ed283f91c27d27b7c95406a0",
       "photo": "/demo-assets/4-otc-antibiotic-0.jpg",
+      "source": "synthetic",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED amoxicillin 500",
+            "Amoxicilin 500",
             "Thành phần:",
             "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 26,
+              "y": 172,
+              "w": 189,
+              "h": 47
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 270,
+              "w": 145,
+              "h": 63
+            },
+            {
+              "line": 2,
+              "x": 26,
+              "y": 388,
+              "w": 735,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED amoxicillin 500",
-            "source_text": "ASSUMED amoxicillin 500",
+            "value": "Amoxicilin 500",
+            "source_text": "Amoxicilin 500",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -509,19 +950,36 @@
       }
     },
     {
-      "hash": "e3eb9fb2a19c0dcf9173483cc6f0b2645b4d2bfbe080a9583e6a65a2cd2fa6d6",
+      "hash": "d81cec74611368242959fbd213f0d50358cd5b1baa770a6d12574ad0efaa7ee0",
       "photo": "/demo-assets/5-herbal-no-ingredient-list-0.jpg",
+      "source": "synthetic",
       "result": {
         "status": "ok",
         "extraction": {
           "is_medicine_package": true,
           "transcript": [
-            "ASSUMED herbal product",
+            "Cao thảo dược",
             "Hộp 3 vỉ x 10 viên"
           ],
+          "line_boxes": [
+            {
+              "line": 0,
+              "x": 26,
+              "y": 172,
+              "w": 176,
+              "h": 52
+            },
+            {
+              "line": 1,
+              "x": 26,
+              "y": 280,
+              "w": 235,
+              "h": 53
+            }
+          ],
           "brand_name": {
-            "value": "ASSUMED herbal product",
-            "source_text": "ASSUMED herbal product",
+            "value": "Cao thảo dược",
+            "source_text": "Cao thảo dược",
             "confidence": 0.95
           },
           "manufacturer": {
@@ -549,10 +1007,27 @@
   ],
   "scenarios": [
     {
+      "id": "real-panadol-blister",
+      "description": "Real photo: Panadol blister (Vietnamese foil) + US Norco + warfarin",
+      "source": "real_photo_hand_labeled",
+      "hashes": [
+        "94ac0075134ada868aa62247ed17df65b76c573c34bcf9bc4d557505876c6224"
+      ],
+      "usMeds": [
+        "Norco",
+        "warfarin"
+      ],
+      "expected": [
+        "apap-duplicate",
+        "apap-warfarin"
+      ]
+    },
+    {
       "id": "1-paracetamol-duplication",
       "description": "Vietnamese paracetamol product + US hydrocodone/acetaminophen",
+      "source": "synthetic",
       "hashes": [
-        "aa30ac8a181f3ea0db528807a1bf162bf88ca5ad42efbdd7524f7475a9d48f6c"
+        "eb08e9e89c418c8f5945acd28ceeb39172642690a07c4a13e4bbe0037d87380d"
       ],
       "usMeds": [
         "Norco"
@@ -564,8 +1039,9 @@
     {
       "id": "1b-paracetamol-plus-tylenol",
       "description": "Vietnamese effervescent paracetamol + US Tylenol",
+      "source": "synthetic",
       "hashes": [
-        "ce101f43ea71afe6d86fd10eb211702c3b0e6a91605f91d313d913f659200f8b"
+        "5633053fd8bedb62cf0311f3b4909242ec297bf49972e21433e3911b336dffd0"
       ],
       "usMeds": [
         "Tylenol"
@@ -577,8 +1053,9 @@
     {
       "id": "2-ginkgo-warfarin",
       "description": "Ginkgo-containing circulation product + warfarin",
+      "source": "synthetic",
       "hashes": [
-        "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778"
+        "7497cb14eb1766b9bf2d321924f13a4263b70529b5d0e3b379a327134bf760d8"
       ],
       "usMeds": [
         "warfarin"
@@ -591,8 +1068,9 @@
     {
       "id": "2b-ginkgo-apixaban",
       "description": "Ginkgo-containing circulation product + apixaban",
+      "source": "synthetic",
       "hashes": [
-        "64cdc2d37099830948da550f9c808712e6de23cb3c066441ebdb076dcf89e778"
+        "7497cb14eb1766b9bf2d321924f13a4263b70529b5d0e3b379a327134bf760d8"
       ],
       "usMeds": [
         "Eliquis"
@@ -605,8 +1083,9 @@
     {
       "id": "3-cold-medicine-bp",
       "description": "Combination cold medicine + blood-pressure medicine + US Tylenol (hidden acetaminophen)",
+      "source": "synthetic",
       "hashes": [
-        "9eeccb8734354d0fa8c1345a0ff96b73d5315c1f54e87e11866ab2137e8d62ca"
+        "c080e1921a6b057da49e3fab1963df8d6a639ab6a698d77f559d8e45159538b7"
       ],
       "usMeds": [
         "amlodipine",
@@ -620,8 +1099,9 @@
     {
       "id": "3b-cold-medicine-ppa",
       "description": "Older cold formulation with phenylpropanolamine + lisinopril",
+      "source": "synthetic",
       "hashes": [
-        "8d7d79741adf87016d96965334a7c1691e05528790b19d7d25276eb454a3ba92"
+        "7b7a64786bbabf732b6fd6384bc2723ffc534323e27fb20446484fabfbcc9824"
       ],
       "usMeds": [
         "lisinopril"
@@ -634,8 +1114,9 @@
     {
       "id": "4-otc-antibiotic",
       "description": "Amoxicillin bought over the counter",
+      "source": "synthetic",
       "hashes": [
-        "be69147a876896e8058d71618c0aeaff6792215dffb156682e8f1c6ddb4c966b"
+        "1d1c73419b43f135bb0677ccb796180269a2de92ed283f91c27d27b7c95406a0"
       ],
       "usMeds": [],
       "expected": [
@@ -646,8 +1127,9 @@
     {
       "id": "5-herbal-no-ingredient-list",
       "description": "Herbal product whose photo shows no legible ingredient list",
+      "source": "synthetic",
       "hashes": [
-        "e3eb9fb2a19c0dcf9173483cc6f0b2645b4d2bfbe080a9583e6a65a2cd2fa6d6"
+        "d81cec74611368242959fbd213f0d50358cd5b1baa770a6d12574ad0efaa7ee0"
       ],
       "usMeds": [
         "lisinopril"

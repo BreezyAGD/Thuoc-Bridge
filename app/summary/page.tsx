@@ -11,11 +11,11 @@ export default function SummaryPage() {
   return (
     <main lang="en" className="summary mx-auto w-full max-w-4xl p-4 sm:p-8">
       <nav className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
-        <Link href="/clinician" className="min-h-11 py-2 text-teal-800 underline">Back to clinician view</Link>
+        <Link href="/" className="min-h-11 py-2 text-teal-800 underline">Back to workspace</Link>
         <button type="button" disabled={!ready} onClick={() => window.print()} className="min-h-11 rounded-lg bg-teal-700 px-4 font-semibold text-white disabled:bg-slate-400">Print / Save PDF</button>
       </nav>
       <h1 className="text-2xl font-bold">Thuốc Bridge · Medication summary</h1>
-      <p className="mt-1 text-sm">For pharmacist / clinician review · {visit.demoMode ? "DEMO — synthetic samples" : "Current visit"}</p>
+      <p className="mt-1 text-sm">For pharmacist / clinician review · {visit.demoMode ? "DEMO — sample labels, not live AI reads" : "Current visit"}</p>
       <p className="my-3 rounded border border-slate-400 p-2 text-sm">Prototype. Verify against the original boxes and medication history. This is not a prescription or a complete interaction screen. Do not change medicines based on this summary alone.</p>
       {!ready ? <p role="status">{busy ? "Reading labels and matching ingredients. Please wait before printing." : "No current summary available. Return to the clinician view to add medicines or retry reconciliation."}</p> : <>
         <section>

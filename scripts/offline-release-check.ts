@@ -4,6 +4,7 @@ import { once } from "node:events";
 import { createServer } from "node:net";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 async function freePort() {
   const server = createServer();
@@ -29,7 +30,8 @@ async function main() {
     ANTHROPIC_API_KEY: "", // Also prevents Next from loading a key from .env.local.
     ANTHROPIC_AUTH_TOKEN: "",
   };
-  const preload = resolve("scripts/offline-network.mjs");
+  // --import needs a file:// URL on Windows (an absolute C: path is rejected).
+  const preload = pathToFileURL(resolve("scripts/offline-network.mjs")).href;
   // Verify the block before launching the app. No request leaves the process.
   const probe = spawn(process.execPath, ["--import", preload, "-e", `
     fetch('https://example.invalid').then(() => process.exit(1)).catch(error => {

@@ -35,6 +35,20 @@ export const IngredientSchema = z.object({
   unit: field(z.string(), "Unit as printed, e.g. mg, g, mcg, ml, IU, mg/5ml"),
 });
 
+/**
+ * Where a transcript line was read, as a box in a 0–1000 grid over the photo
+ * (x right, y down). Reported by the model, so it is approximate: the UI shows
+ * it as "AI-reported location", never as proof of what is printed.
+ */
+export const LineBoxSchema = z.object({
+  line: z.number().describe("0-based index into transcript"),
+  x: z.number().describe("Left edge, 0-1000 across the photo width"),
+  y: z.number().describe("Top edge, 0-1000 down the photo height"),
+  w: z.number().describe("Width, 0-1000"),
+  h: z.number().describe("Height, 0-1000"),
+});
+export type LineBox = z.infer<typeof LineBoxSchema>;
+
 export const ExtractionSchema = z.object({
   is_medicine_package: z
     .boolean()
@@ -43,6 +57,11 @@ export const ExtractionSchema = z.object({
     .array(z.string())
     .describe(
       "Every legible printed line, verbatim, in reading order, with diacritics preserved.",
+    ),
+  line_boxes: z
+    .array(LineBoxSchema)
+    .describe(
+      "Where each transcript line sits in the photo, one entry per transcript line you can locate.",
     ),
   brand_name: field(z.string(), "Product/brand name as printed"),
   manufacturer: field(z.string(), "Manufacturer name as printed"),
@@ -57,7 +76,7 @@ export const ExtractionSchema = z.object({
   ingredients_section_found: z
     .boolean()
     .describe(
-      "true only if an ingredients/composition section (Thành phần, Công thức, Hoạt chất, Composition) is visible and legible in this photo",
+      "true only if an ingredients/composition section (Thành phần, Công thức, Hoạt chất, Composition), or a printed active-ingredient-and-strength statement such as '500 mg PARACETAMOL', is visible and legible in this photo",
     ),
   ingredients: z
     .array(IngredientSchema)

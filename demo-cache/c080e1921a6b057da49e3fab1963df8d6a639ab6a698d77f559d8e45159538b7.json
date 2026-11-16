@@ -3,15 +3,52 @@
   "extraction": {
     "is_medicine_package": true,
     "transcript": [
-      "ASSUMED combination cold tablet",
+      "Viên cảm cúm",
       "Thành phần:",
       "Paracetamol ..... 500 mg",
       "Phenylephrin HCl ..... 10 mg",
       "Clorpheniramin maleat ..... 2 mg"
     ],
+    "line_boxes": [
+      {
+        "line": 0,
+        "x": 26,
+        "y": 172,
+        "w": 162,
+        "h": 47
+      },
+      {
+        "line": 1,
+        "x": 26,
+        "y": 270,
+        "w": 145,
+        "h": 63
+      },
+      {
+        "line": 2,
+        "x": 27,
+        "y": 388,
+        "w": 318,
+        "h": 53
+      },
+      {
+        "line": 3,
+        "x": 27,
+        "y": 497,
+        "w": 370,
+        "h": 53
+      },
+      {
+        "line": 4,
+        "x": 26,
+        "y": 605,
+        "w": 423,
+        "h": 53
+      }
+    ],
     "brand_name": {
-      "value": "ASSUMED combination cold tablet",
-      "source_text": "ASSUMED combination cold tablet",
+      "value": "Viên cảm cúm",
+      "source_text": "Viên cảm cúm",
       "confidence": 0.95
     },
     "manufacturer": {
