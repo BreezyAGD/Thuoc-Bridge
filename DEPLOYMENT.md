@@ -155,43 +155,45 @@ This does not verify the app or Anthropic; run the hosted checks after enabling.
 
 ## PR preview deployment configuration
 
-Cloudflare's default non-production command, `npx wrangler preview`, uses the
-new isolated Worker Previews system. It fails for this repository with
-“Your Wrangler configuration needs a previews block.” Adding an empty block
-alone also leaves the service binding excluded, as the log warns.
-
-For this OpenNext application, configure Workers Builds to upload a Worker
-version using the adapter's supported command instead:
+This Worker uses the native Worker Previews model. Cloudflare documents that
+custom commands in this model must invoke `wrangler preview` (or the supported
+`cf previews deploy` CLI). The earlier version-upload recommendation does not
+apply to this mode; changing its field to `npm run cf:upload` did not change the
+command executed by Builds, even after a fresh commit.
 
 | Cloudflare setting | Value |
 | --- | --- |
 | Build command | `npm run cf:build` |
 | Production branch | `main` |
 | Production deploy command | `npm run cf:deploy` |
-| Non-production / Preview command | `npm run cf:upload` |
+| Preview command | `npx wrangler preview` |
 | Root | `/` |
 
-Edit the Preview command under the Worker's Settings > Build(s) configuration.
-The script `cf:upload` runs `opennextjs-cloudflare upload`: it prepares the
-static cache assets and invokes `wrangler versions upload`. It does not switch
-production traffic to the uploaded PR version. `preview_urls: true` enables
-Version URLs in Wrangler configuration. This mode needs no `previews` block.
+The required `previews` block is now in `wrangler.jsonc`. Assets and compatibility
+settings remain at the top level and are inherited. Preview observability is
+explicitly disabled. Production's `WORKER_SELF_REFERENCE` service is deliberately
+not copied: a Preview service binding calls the target's production deployment.
+This application has no ISR or on-demand revalidation and uses a read-only static
+cache, so preview demo flows do not need that revalidation service. Revisit this
+configuration if revalidation is introduced.
 
-Version URLs use that version's Worker bindings/secrets; they are not isolated
-branch resource environments. In particular, live extraction there can use the
-Worker's runtime Anthropic secret. Synthetic demo checks need no key. This app
-has no shared visit database, R2, KV, or D1 data store. Do not use production
-deploy as the PR Preview command, and do not add secrets to source.
+Secrets do not inherit from production. To test live extraction, add
+`ANTHROPIC_API_KEY` as a runtime Secret under Settings > Variables and secrets >
+Previews Base before creating a new Preview. Never add it to source or build
+variables. Synthetic demo flows need no Anthropic key. Existing Previews do not
+receive later Base secret updates automatically; configure their secret directly
+when needed.
 
-After updating the dashboard, run the latest PR build containing these scripts.
-Retrying the original ebb6a4d build cannot run cf:upload because that old commit
-does not contain it. A new push creates a build using the updated source.
+A fresh PR build should now pass the missing-previews-block validation. Check
+its actual logs and URL before claiming hosted success. Test synthetic demos,
+API routes, and printing on that URL; local build checks do not establish native
+remote Preview runtime behavior.
 
-`npm run cf:upload:dry-run` checks adapter asset preparation and the version
-upload bundle without credentials or publishing; CI runs it after cf:build.
-Actual remote preview upload still requires Cloudflare's authorized build token
-and the dashboard command change. A token's display name alone does not establish
-its permissions; investigate that only if a subsequent error reports access denial.
+`cf:upload` and `cf:upload:dry-run` remain available for manual version uploads.
+They create a version of the production Worker, not an isolated native Preview,
+and are not the Preview command for this Builds project.
 
-References: https://opennext.js.org/cloudflare/cli and
-https://developers.cloudflare.com/workers/ci-cd/builds/configuration/ .
+References:
+- https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/
+- https://developers.cloudflare.com/workers/previews/configuration/
+- https://opennext.js.org/cloudflare/cli
