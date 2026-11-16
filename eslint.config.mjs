@@ -15,6 +15,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Locally installed agent skills and their working files are not part of the app.
+    ".claude/**",
+    ".taste-skill/**",
   ]),
 ]);
 

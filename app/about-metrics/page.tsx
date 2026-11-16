@@ -9,8 +9,8 @@ export default function AboutMetrics() {
   const photo = results.photo_evaluation;
   const alerts = results.synthetic_alert_evaluation;
   return <main lang="en" className="mx-auto flex max-w-2xl flex-col gap-5 px-4 py-8 text-slate-900">
-    <Link href="/" className="text-teal-800 underline">Thuốc Bridge</Link>
-    <Link href="/readiness" className="text-teal-800 underline">Readiness and next steps</Link>
+    <Link href="/" className="text-[var(--terra)] underline">Thuốc Bridge</Link>
+    <Link href="/readiness" className="text-[var(--terra)] underline">Readiness and next steps</Link>
     <h1 className="text-3xl font-bold">About the metrics</h1>
     <p>Generated {results.generated_at}. Extraction model: {results.model}.</p>
     <p>Real-photo evaluation: {photo.status.replaceAll("_", " ")}. {photo.labeled} human-labeled photos, {photo.scored} scored, {photo.errors} errors.</p>

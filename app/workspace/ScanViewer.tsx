@@ -5,9 +5,9 @@ import type { Extraction } from "@/lib/schema";
 import { ROLE_LABEL, type Mark, type ReadSource } from "./model";
 
 const TONE = {
-  verified: { box: "border-emerald-400 bg-emerald-400/10", tag: "bg-emerald-400 text-emerald-950" },
-  review: { box: "border-amber-400 bg-amber-400/15", tag: "bg-amber-400 text-amber-950" },
-  info: { box: "border-sky-400 bg-sky-400/10", tag: "bg-sky-400 text-sky-950" },
+  verified: { box: "border-[var(--ok)] bg-[var(--saffron)]/20", tag: "bg-[var(--ok)] text-[var(--ink)]" },
+  review: { box: "border-[var(--saffron)] bg-[var(--saffron)]/25", tag: "bg-[var(--saffron)] text-[var(--ink)]" },
+  info: { box: "border-[var(--info)] bg-[var(--info)]/10", tag: "bg-[var(--info)] text-[var(--ink)]" },
 } as const;
 
 export function ScanViewer({
@@ -47,21 +47,21 @@ export function ScanViewer({
               type="button"
               aria-pressed={showAll === o.v}
               onClick={() => setShowAll(o.v)}
-              className={`min-h-9 rounded-md px-3 font-medium ${showAll === o.v ? "bg-slate-100 text-slate-900" : "text-slate-300 hover:text-white"}`}
+              className={`min-h-9 rounded-md px-3 font-medium ${showAll === o.v ? "bg-[var(--ink)] text-[var(--card)]" : "text-[var(--ink-2)] hover:bg-[var(--hover)]"}`}
             >
               {o.label}
             </button>
           ))}
         </div>
-        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-300" aria-label="Legend">
-          <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border-2 border-emerald-400" />Verified ingredient</li>
-          <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border-2 border-amber-400" />Needs review</li>
-          <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border-2 border-sky-400" />Product details</li>
-          {showAll && <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border border-dashed border-slate-500 shadow-[0_0_0_1px_rgba(255,255,255,0.55)]" />Other text read</li>}
+        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--ink-2)]" aria-label="Legend">
+          <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border-2 border-[var(--ok)]" />Verified ingredient</li>
+          <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border-2 border-[var(--saffron)]" />Needs review</li>
+          <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border-2 border-[var(--info)]" />Product details</li>
+          {showAll && <li className="flex items-center gap-1.5"><span className="size-3 rounded-sm border border-dashed border-[var(--muted)] shadow-[0_0_0_1px_rgba(255,255,255,0.55)]" />Other text read</li>}
         </ul>
       </div>
 
-      <div className="rounded-xl bg-black/40 p-2">
+      <div className="rounded-xl bg-[var(--hover)] p-2">
         {image ? (
           <div className="relative mx-auto w-fit">
             {/* eslint-disable-next-line @next/next/no-img-element -- local data URL or bundled sample */}
@@ -91,8 +91,8 @@ export function ScanViewer({
                   className={`absolute rounded-[3px] transition ${
                     tone
                       ? `border-2 ${tone.box}`
-                      : "border border-dashed border-slate-500 shadow-[0_0_0_1px_rgba(255,255,255,0.55)] hover:border-sky-500 hover:bg-sky-400/15"
-                  } ${selected ? "z-10 ring-2 ring-white ring-offset-1 ring-offset-black/50" : ""}`}
+                      : "border border-dashed border-[var(--muted)] shadow-[0_0_0_1px_rgba(255,255,255,0.55)] hover:border-[var(--terra)] hover:bg-[var(--saffron)]/20"
+                  } ${selected ? "z-10 ring-2 ring-[var(--terra)] ring-offset-1" : ""}`}
                 >
                   {primary && (
                     <span
@@ -108,10 +108,10 @@ export function ScanViewer({
             })}
           </div>
         ) : (
-          <p className="p-8 text-center text-slate-300">Photo not available.</p>
+          <p className="p-8 text-center text-[var(--ink-2)]">Photo not available.</p>
         )}
       </div>
-      <p className="text-xs text-slate-400">
+      <p className="text-xs text-[var(--muted)]">
         {source ? `${source.boxes}. ` : ""}Tap a box to see what was read there and how it was checked. The photo is
         the source of truth.
         {extraction && boxes.length < extraction.transcript.length &&

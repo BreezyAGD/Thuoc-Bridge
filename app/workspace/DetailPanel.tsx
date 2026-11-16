@@ -14,10 +14,10 @@ import {
 } from "./model";
 
 export const CONFIDENCE: Record<ConfidenceLevel, { label: string; chip: string; dot: string }> = {
-  high: { label: "High confidence", chip: "border-emerald-400/50 bg-emerald-400/10 text-emerald-300", dot: "bg-emerald-400" },
-  medium: { label: "Medium confidence", chip: "border-sky-400/50 bg-sky-400/10 text-sky-300", dot: "bg-sky-400" },
-  low: { label: "Low confidence", chip: "border-orange-400/50 bg-orange-400/10 text-orange-300", dot: "bg-orange-400" },
-  unverified: { label: "Unverified", chip: "border-amber-400/60 bg-amber-400/15 text-amber-200", dot: "bg-amber-400" },
+  high: { label: "High confidence", chip: "border-[var(--ok)]/40 bg-[var(--ok-bg)] text-[var(--ok)]", dot: "bg-[var(--ok)]" },
+  medium: { label: "Medium confidence", chip: "border-[var(--info)]/40 bg-[var(--info-bg)] text-[var(--info)]", dot: "bg-[var(--info)]" },
+  low: { label: "Low confidence", chip: "border-[var(--warn)]/40 bg-[var(--warn-bg)] text-[var(--warn)]", dot: "bg-[var(--warn)]" },
+  unverified: { label: "Unverified", chip: "border-[var(--warn)]/50 bg-[var(--warn-bg)] text-[var(--warn)]", dot: "bg-[var(--saffron)]" },
 };
 
 export function ConfidenceChip({ level, read }: { level: ConfidenceLevel; read?: number }) {
@@ -32,17 +32,17 @@ export function ConfidenceChip({ level, read }: { level: ConfidenceLevel; read?:
 }
 
 const BY_STYLE: Record<Step["by"], string> = {
-  AI: "bg-violet-400/15 text-violet-200 border-violet-400/40",
-  Code: "bg-slate-400/15 text-slate-200 border-slate-400/40",
-  RxNorm: "bg-sky-400/15 text-sky-200 border-sky-400/40",
-  Rules: "bg-teal-400/15 text-teal-200 border-teal-400/40",
+  AI: "bg-[var(--saffron)]/25 text-[var(--ink)] border-[var(--saffron)]",
+  Code: "bg-[var(--hover)] text-[var(--ink)] border-[var(--line)]",
+  RxNorm: "bg-[var(--info-bg)] text-[var(--info)] border-[var(--info)]/30",
+  Rules: "bg-[var(--clay)]/40 text-[var(--terra-2)] border-[var(--clay)]",
 };
 
 const STATE_ICON: Record<Step["state"], { icon: string; className: string; sr: string }> = {
-  pass: { icon: "✓", className: "bg-emerald-400 text-emerald-950", sr: "Passed" },
-  warn: { icon: "!", className: "bg-orange-400 text-orange-950", sr: "Check" },
-  fail: { icon: "✕", className: "bg-red-400 text-red-950", sr: "Failed" },
-  skip: { icon: "–", className: "bg-slate-500 text-slate-100", sr: "Not applicable" },
+  pass: { icon: "✓", className: "bg-[var(--ok)] text-[var(--ink)]", sr: "Passed" },
+  warn: { icon: "!", className: "bg-[var(--saffron)] text-[var(--ink)]", sr: "Check" },
+  fail: { icon: "✕", className: "bg-[var(--alert)] text-[var(--ink)]", sr: "Failed" },
+  skip: { icon: "–", className: "bg-[var(--line)] text-[var(--ink-2)]", sr: "Not applicable" },
 };
 
 /** The printed region the value came from, cut out of the photo. */
@@ -80,13 +80,13 @@ function Trail({ steps }: { steps: Step[] }) {
               <span className="sr-only">{st.sr}</span>
             </span>
             <div className="min-w-0 text-sm">
-              <p className="text-slate-100">
+              <p className="text-[var(--ink)]">
                 <span className={`mr-2 inline-block rounded border px-1.5 text-[11px] font-semibold tracking-wide uppercase ${BY_STYLE[s.by]}`}>
                   {s.by}
                 </span>
                 {s.title}
               </p>
-              {s.detail && <p className="mt-0.5 break-words text-slate-400">{s.detail}</p>}
+              {s.detail && <p className="mt-0.5 break-words text-[var(--muted)]">{s.detail}</p>}
             </div>
           </li>
         );
@@ -99,7 +99,7 @@ function Matches({ ing }: { ing: IngredientRow }) {
   const concepts = ing.resolution.concepts;
   if (ing.confidence === "unverified" || concepts.length === 0) {
     return (
-      <p className="rounded-lg border border-amber-400/50 bg-amber-400/10 p-3 text-sm text-amber-100">
+      <p className="rounded-lg border border-[var(--saffron)]/50 bg-[var(--warn-bg)] p-3 text-sm text-[var(--warn)]">
         <strong>Unverified: ask the pharmacist or check the box.</strong> No US equivalent is shown because nothing
         matched safely. The app never guesses.
       </p>
@@ -108,28 +108,28 @@ function Matches({ ing }: { ing: IngredientRow }) {
   return (
     <ul className="flex flex-col gap-2">
       {concepts.map((c, i) => (
-        <li key={c.rxcui} className="rounded-lg border border-[var(--line)] bg-black/20 p-3">
+        <li key={c.rxcui} className="rounded-lg border border-[var(--line)] bg-[var(--paper)] p-3">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="font-semibold text-white">
-              <span className="mr-2 text-xs text-slate-400">#{i + 1}</span>
+            <p className="font-semibold text-[var(--ink)]">
+              <span className="mr-2 text-xs text-[var(--muted)]">#{i + 1}</span>
               {c.name}
             </p>
             <a
               href={`https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&searchTerm=${c.rxcui}`}
               target="_blank"
               rel="noreferrer"
-              className="font-mono text-xs text-sky-300 underline"
+              className="font-mono text-xs text-[var(--terra)] underline"
             >
               RxCUI {c.rxcui}
             </a>
           </div>
           <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
-            <dt className="text-slate-400">Printed as</dt>
-            <dd className="text-slate-200">{ing.printed_name}</dd>
-            <dt className="text-slate-400">How matched</dt>
-            <dd className="text-slate-200">{matchExplain(ing.resolution.match)}</dd>
-            <dt className="text-slate-400">Drug class</dt>
-            <dd className="text-slate-200">
+            <dt className="text-[var(--muted)]">Printed as</dt>
+            <dd className="text-[var(--ink)]">{ing.printed_name}</dd>
+            <dt className="text-[var(--muted)]">How matched</dt>
+            <dd className="text-[var(--ink)]">{matchExplain(ing.resolution.match)}</dd>
+            <dt className="text-[var(--muted)]">Drug class</dt>
+            <dd className="text-[var(--ink)]">
               {c.atc.length === 0 ? "none listed" : c.atc.slice(0, 3).map((a) => `${a.id} ${a.name}`).join(" · ")}
               {c.atc.length > 3 && ` · +${c.atc.length - 3} more`}
             </dd>
@@ -169,31 +169,31 @@ export function DetailPanel({
 
   if (!extraction) {
     return (
-      <p className="text-sm text-slate-300">
+      <p className="text-sm text-[var(--ink-2)]">
         No text was read from this photo, so there is nothing to trace. Ask the patient for the box or a clearer photo.
       </p>
     );
   }
 
   if (line === null || text === undefined) {
-    return <p className="text-sm text-slate-300">Select a highlighted box on the photo or a line in the transcript.</p>;
+    return <p className="text-sm text-[var(--ink-2)]">Select a highlighted box on the photo or a line in the transcript.</p>;
   }
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
+          <p className="text-xs font-semibold tracking-wide text-[var(--muted)] uppercase">
             Line {line + 1} of {extraction.transcript.length}
             {lineMarks.length > 0 && ` · ${[...new Set(lineMarks.map((m) => ROLE_LABEL[m.role]))].join(", ")}`}
           </p>
-          <h3 className="mt-0.5 text-lg font-bold break-words text-white">
+          <h3 className="mt-0.5 text-lg font-bold break-words text-[var(--ink)]">
             {ing ? (
               <>
-                <span className="mr-2 rounded border border-white/30 px-1.5 text-sm">#{ingMark!.ingredient! + 1}</span>
+                <span className="mr-2 rounded border border-[var(--ink)]/30 px-1.5 text-sm">#{ingMark!.ingredient! + 1}</span>
                 {ing.printed_name}
                 {ing.confidence !== "unverified" && ing.resolution.concepts.length > 0 && (
-                  <span className="text-emerald-300"> → {ing.resolution.concepts.map((c) => c.name).join(" + ")}</span>
+                  <span className="text-[var(--ok)]"> → {ing.resolution.concepts.map((c) => c.name).join(" + ")}</span>
                 )}
               </>
             ) : (
@@ -208,14 +208,14 @@ export function DetailPanel({
         {image && box ? (
           <RegionCrop image={image} box={box} size={size} />
         ) : (
-          <p className="rounded-lg border border-dashed border-[var(--line)] p-3 text-xs text-slate-400">
+          <p className="rounded-lg border border-dashed border-[var(--line)] p-3 text-xs text-[var(--muted)]">
             No position reported for this line. Find it on the photo by its text.
           </p>
         )}
-        <p className="rounded-lg bg-black/30 px-3 py-2 font-mono text-sm break-words text-slate-100" lang="vi">
+        <p className="rounded-lg bg-[var(--paper)] px-3 py-2 font-mono text-sm break-words text-[var(--ink)]" lang="vi">
           “{text}”
         </p>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-[var(--muted)]">
           Verbatim text read from the label{source ? ` · ${source.label}` : ""}
           {box && ` · region x${Math.round(box.x)} y${Math.round(box.y)} (0–1000 grid)`}
         </p>
@@ -224,34 +224,34 @@ export function DetailPanel({
       {ing ? (
         <>
           <section aria-label="Verification trail">
-            <h4 className="mb-2 text-sm font-bold text-white">How this was checked</h4>
+            <h4 className="mb-2 text-sm font-bold text-[var(--ink)]">How this was checked</h4>
             <Trail steps={trailFor(ing, ing.transcript_line, recon)} />
-            <p className="mt-3 rounded-lg border border-[var(--line)] bg-black/20 p-2.5 text-xs text-slate-300">
-              <strong className="text-white">Why this confidence:</strong> {confidenceReason(ing)}
+            <p className="mt-3 rounded-lg border border-[var(--line)] bg-[var(--paper)] p-2.5 text-xs text-[var(--ink-2)]">
+              <strong className="text-[var(--ink)]">Why this confidence:</strong> {confidenceReason(ing)}
             </p>
           </section>
           <section aria-label="Identification matches">
-            <h4 className="mb-2 text-sm font-bold text-white">
+            <h4 className="mb-2 text-sm font-bold text-[var(--ink)]">
               US identification{ing.resolution.concepts.length > 0 ? ` (${ing.resolution.concepts.length})` : ""}
             </h4>
             <Matches ing={ing} />
           </section>
         </>
       ) : lineMarks.length > 0 ? (
-        <ul className="flex flex-col gap-1 text-sm text-slate-200">
+        <ul className="flex flex-col gap-1 text-sm text-[var(--ink)]">
           {lineMarks.map((m, i) => (
             <li key={i}>
-              <span className="text-slate-400">{ROLE_LABEL[m.role]}:</span> {m.label}{" "}
+              <span className="text-[var(--muted)]">{ROLE_LABEL[m.role]}:</span> {m.label}{" "}
               {m.status === "review" ? (
-                <span className="text-amber-300">(not found in the printed text, so it is ignored)</span>
+                <span className="text-[var(--warn)]">(not found in the printed text, so it is ignored)</span>
               ) : (
-                <span className="text-emerald-300">(found in the printed text)</span>
+                <span className="text-[var(--ok)]">(found in the printed text)</span>
               )}
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-[var(--muted)]">
           Read from the label but not used for identification (for example indications or dosing text). It is shown so
           you can see everything the AI read.
         </p>
@@ -266,7 +266,7 @@ export function DetailPanel({
                 type="button"
                 onClick={() => onSelectLine(r.transcript_line!)}
                 aria-pressed={r.transcript_line === line}
-                className="min-h-9 rounded-lg border border-[var(--line)] px-3 text-sm text-slate-200 hover:bg-white/10 aria-pressed:bg-white aria-pressed:text-slate-900"
+                className="min-h-9 rounded-lg border border-[var(--line)] px-3 text-sm text-[var(--ink)] hover:bg-[var(--hover)] aria-pressed:bg-[var(--ink)] aria-pressed:text-[var(--card)]"
               >
                 #{i + 1} {r.printed_name}
               </button>
