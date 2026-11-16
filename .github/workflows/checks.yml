@@ -25,6 +25,7 @@ jobs:
       - run: npm run check:browser
       - run: npm run cf:build
       - run: npm run cf:dry-run
+      - run: npm run cf:upload:dry-run
       - run: npm run check:browser
         env:
           TEST_SERVER: cloudflare

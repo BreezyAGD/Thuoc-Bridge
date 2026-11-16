@@ -152,3 +152,46 @@ and enable it. Use the actual address displayed there. The repository now
 explicitly sets workers_dev: true so subsequent deployments request the public
 workers.dev route. No custom domain or DNS record is needed for this demo URL.
 This does not verify the app or Anthropic; run the hosted checks after enabling.
+
+## PR preview deployment configuration
+
+Cloudflare's default non-production command, `npx wrangler preview`, uses the
+new isolated Worker Previews system. It fails for this repository with
+“Your Wrangler configuration needs a previews block.” Adding an empty block
+alone also leaves the service binding excluded, as the log warns.
+
+For this OpenNext application, configure Workers Builds to upload a Worker
+version using the adapter's supported command instead:
+
+| Cloudflare setting | Value |
+| --- | --- |
+| Build command | `npm run cf:build` |
+| Production branch | `main` |
+| Production deploy command | `npm run cf:deploy` |
+| Non-production / Preview command | `npm run cf:upload` |
+| Root | `/` |
+
+Edit the Preview command under the Worker's Settings > Build(s) configuration.
+The script `cf:upload` runs `opennextjs-cloudflare upload`: it prepares the
+static cache assets and invokes `wrangler versions upload`. It does not switch
+production traffic to the uploaded PR version. `preview_urls: true` enables
+Version URLs in Wrangler configuration. This mode needs no `previews` block.
+
+Version URLs use that version's Worker bindings/secrets; they are not isolated
+branch resource environments. In particular, live extraction there can use the
+Worker's runtime Anthropic secret. Synthetic demo checks need no key. This app
+has no shared visit database, R2, KV, or D1 data store. Do not use production
+deploy as the PR Preview command, and do not add secrets to source.
+
+After updating the dashboard, run the latest PR build containing these scripts.
+Retrying the original ebb6a4d build cannot run cf:upload because that old commit
+does not contain it. A new push creates a build using the updated source.
+
+`npm run cf:upload:dry-run` checks adapter asset preparation and the version
+upload bundle without credentials or publishing; CI runs it after cf:build.
+Actual remote preview upload still requires Cloudflare's authorized build token
+and the dashboard command change. A token's display name alone does not establish
+its permissions; investigate that only if a subsequent error reports access denial.
+
+References: https://opennext.js.org/cloudflare/cli and
+https://developers.cloudflare.com/workers/ci-cd/builds/configuration/ .
