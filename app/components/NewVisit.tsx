@@ -27,7 +27,7 @@ export function NewVisit() {
           resetVisit();
           clearConsent();
           router.replace("/");
-        }} className="min-h-11 rounded-lg bg-teal-700 px-4 py-2 font-semibold text-white">{t.clearVisit}</button>
+        }} className="min-h-11 rounded-lg bg-[var(--terra)] px-4 py-2 font-semibold text-white">{t.clearVisit}</button>
       </div>
     </dialog>
   </>;

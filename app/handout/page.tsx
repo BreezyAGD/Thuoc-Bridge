@@ -47,12 +47,12 @@ export default function HandoutPage() {
   return (
     <main className="summary mx-auto w-full max-w-3xl p-4 sm:p-8">
       <nav lang="en" className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
-        <Link href="/" className="min-h-11 py-2 text-teal-800 underline">Back to workspace</Link>
+        <Link href="/" className="min-h-11 py-2 text-[var(--terra)] underline">Back to workspace</Link>
         <button
           type="button"
           disabled={!ready}
           onClick={() => window.print()}
-          className="min-h-11 rounded-lg bg-teal-700 px-4 font-semibold text-white disabled:bg-slate-400"
+          className="min-h-11 rounded-lg bg-[var(--terra)] px-4 font-semibold text-white disabled:bg-slate-400"
         >
           Print patient handout
         </button>

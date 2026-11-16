@@ -18,7 +18,7 @@ export function DemoGuide({ steps }: { steps: DemoStep[] }) {
   const expected = step.expected.map(f => f.id).sort();
   const matched = ready && !visit.recon!.rxnav_unavailable && JSON.stringify(actual) === JSON.stringify(expected);
   const hasRealVisit = !visit.demoMode && (visit.products.length > 0 || visit.usMeds.length > 0);
-  const button = "min-h-11 rounded-lg border border-teal-700 px-4 py-2 font-semibold text-teal-800 disabled:border-slate-300 disabled:text-slate-400";
+  const button = "min-h-11 rounded-lg border border-[var(--terra)] px-4 py-2 font-semibold text-[var(--terra)] disabled:border-slate-300 disabled:text-slate-400";
 
   function load() {
     if (hasRealVisit) dialog.current?.showModal();
@@ -26,7 +26,7 @@ export function DemoGuide({ steps }: { steps: DemoStep[] }) {
   }
 
   return <main lang="en" className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6">
-    <nav aria-label="Demo navigation" className="flex flex-wrap gap-4 text-teal-800 underline">
+    <nav aria-label="Demo navigation" className="flex flex-wrap gap-4 text-[var(--terra)] underline">
       <Link href="/">Clinician workspace</Link><Link href="/about-metrics">Metrics</Link><Link href="/readiness">Readiness and next steps</Link>
     </nav>
     <header>
@@ -35,20 +35,20 @@ export function DemoGuide({ steps }: { steps: DemoStep[] }) {
     </header>
     <p className="rounded-xl border border-amber-400 bg-amber-50 p-3 text-sm text-amber-950">Synthetic sample images and cached ingredient lists. This walkthrough loads samples without calling the extraction service. Reproducing a fixture does not establish photo accuracy or clinical validation; rules still require pharmacist review.</p>
     <section aria-labelledby="step-heading" className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm sm:p-6">
-      <p className="font-semibold text-teal-800">Step {index + 1} of {steps.length}</p>
+      <p className="font-semibold text-[var(--terra)]">Step {index + 1} of {steps.length}</p>
       <h2 id="step-heading" className="mt-1 text-2xl font-bold">{step.title}</h2>
       <p className="mt-2 text-slate-700">{step.description}</p>
       <p className="mt-3 rounded-lg bg-slate-100 p-3"><strong>Show the audience:</strong> {step.presenterNote}</p>
       <h3 className="mt-4 text-lg font-bold">Expected demo findings</h3>
       <ul aria-label="Expected demo findings" className="mt-2 list-disc space-y-1 pl-5">
-        {step.expected.map(f => <li key={f.id}>{f.title}{ready && actual.includes(f.id) && <span className="ml-2 font-semibold text-teal-800">· Observed</span>}</li>)}
+        {step.expected.map(f => <li key={f.id}>{f.title}{ready && actual.includes(f.id) && <span className="ml-2 font-semibold text-[var(--terra)]">· Observed</span>}</li>)}
       </ul>
-      <button type="button" onClick={load} className="mt-4 min-h-12 rounded-lg bg-teal-700 px-4 py-2 font-semibold text-white">Load synthetic scenario</button>
+      <button type="button" onClick={load} className="mt-4 min-h-12 rounded-lg bg-[var(--terra)] px-4 py-2 font-semibold text-white">Load synthetic scenario</button>
       <div role="status" aria-live="polite" className="mt-3 text-sm">
         {!selected && <p>{hasRealVisit ? "A current visit is present. Loading this demo will ask before replacing it." : "Choose Load synthetic scenario to check this step. Changing steps does not replace the current visit."}</p>}
         {selected && visit.reconState === "loading" && <p>Checking the synthetic scenario…</p>}
-        {selected && visit.reconState === "error" && <p>Could not check this demo. <button type="button" onClick={retryReconcile} className="min-h-11 px-2 font-semibold text-teal-800 underline">Retry scenario check</button></p>}
-        {matched && <p className="font-bold text-teal-800">Expected demo findings reproduced.</p>}
+        {selected && visit.reconState === "error" && <p>Could not check this demo. <button type="button" onClick={retryReconcile} className="min-h-11 px-2 font-semibold text-[var(--terra)] underline">Retry scenario check</button></p>}
+        {matched && <p className="font-bold text-[var(--terra)]">Expected demo findings reproduced.</p>}
         {ready && !matched && <p className="font-semibold text-amber-900">Demo output differs from the fixture. Review the clinician view before presenting.</p>}
       </div>
       {ready && <div className="mt-3 flex flex-wrap gap-3">
@@ -56,7 +56,7 @@ export function DemoGuide({ steps }: { steps: DemoStep[] }) {
         {matched && <Link href="/summary" className={button}>Open printable summary</Link>}
       </div>}
       {ready && <p className="mt-2 text-sm text-slate-600">In the workspace, tap a highlighted box on the photo to see what was read there and how it was checked.</p>}
-      {matched && index === steps.length - 1 && <p className="mt-4 rounded-lg bg-teal-50 p-3 font-semibold text-teal-950">Final step ready. Review Unverified, show the printable summary, and use Start new visit before the next participant.</p>}
+      {matched && index === steps.length - 1 && <p className="mt-4 rounded-lg bg-[var(--hover)] p-3 font-semibold text-[var(--ink)]">Final step ready. Review Unverified, show the printable summary, and use Start new visit before the next participant.</p>}
     </section>
     <nav aria-label="Walkthrough steps" className="flex flex-wrap items-center justify-between gap-3">
       <button type="button" disabled={index === 0} onClick={() => setIndex(i => i - 1)} className={button}>Previous step</button>
@@ -69,7 +69,7 @@ export function DemoGuide({ steps }: { steps: DemoStep[] }) {
       <p className="mt-3">This clears the current visit’s local medicines, photos, and results and loads a synthetic sample. Downloaded files remain.</p>
       <div className="mt-5 flex flex-wrap justify-end gap-3">
         <button type="button" autoFocus onClick={() => dialog.current?.close()} className={button}>Cancel</button>
-        <button type="button" onClick={() => { dialog.current?.close(); void loadDemo(step.scenarioId); }} className="min-h-11 rounded-lg bg-teal-700 px-4 py-2 font-semibold text-white">Replace with synthetic demo</button>
+        <button type="button" onClick={() => { dialog.current?.close(); void loadDemo(step.scenarioId); }} className="min-h-11 rounded-lg bg-[var(--terra)] px-4 py-2 font-semibold text-white">Replace with synthetic demo</button>
       </div>
     </dialog>
   </main>;

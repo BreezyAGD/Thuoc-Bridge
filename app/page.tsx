@@ -1,5 +1,5 @@
-import { Workspace } from "./workspace/Workspace";
+import { Landing } from "./workspace/Landing";
 
 export default function Home() {
-  return <Workspace />;
+  return <Landing />;
 }

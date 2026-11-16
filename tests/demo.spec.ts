@@ -15,14 +15,15 @@ test.beforeEach(async ({ context, page }) => {
 test.afterEach(async ({ page }) => {
   expect(browserErrors.get(page), "Unexpected browser runtime errors").toEqual([]);
 });
-const NOTICE = "Before you scan a real label";
+const consentBox = (page: Page) => page.getByRole("checkbox", { name: /The patient agreed to the packaging being photographed/ });
+const takePhoto = (page: Page) => page.getByRole("button", { name: "Take photo", exact: true });
 async function consent(page: Page) {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: NOTICE })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Scan label", exact: true })).toHaveCount(0);
-  await page.getByRole("button", { name: "Confirm and enable scanning", exact: true }).click();
-  await expect(page.getByRole("heading", { name: NOTICE })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Scan label", exact: true })).toBeEnabled();
+  await expect(consentBox(page)).not.toBeChecked();
+  await expect(takePhoto(page)).toBeDisabled();
+  await consentBox(page).check();
+  await expect(consentBox(page)).toBeChecked();
+  await expect(takePhoto(page)).toBeEnabled();
 }
 async function demo(page: Page, id = manifest.scenarios[0].id) {
   await page.goto("/");
@@ -42,7 +43,7 @@ test("old patient and clinician URLs open the workspace; handout shows only fixe
   for (const path of ["/patient", "/clinician"]) {
     await page.goto(path);
     await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByRole("heading", { name: NOTICE })).toBeVisible();
+    await expect(consentBox(page)).not.toBeChecked();
   }
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await demo(page, "1-paracetamol-duplication");
@@ -146,7 +147,7 @@ async function confirmNewVisit(page: Page) {
   await expect(page.getByRole("dialog", { name: "Start a new visit?" })).toBeVisible();
   await page.getByRole("button", { name: "Clear visit and continue", exact: true }).click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole("heading", { name: NOTICE })).toBeVisible();
+  await expect(consentBox(page)).not.toBeChecked();
 }
 
 test("new visit can be canceled, then clears only app visit data and consent", async ({ page }) => {
@@ -165,7 +166,7 @@ test("new visit can be canceled, then clears only app visit data and consent", a
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await expect(page.getByText("Paracetamol 650", { exact: true }).first()).toBeVisible();
   await confirmNewVisit(page);
-  await expect(page.getByRole("button", { name: "Scan label", exact: true })).toHaveCount(0);
+  await expect(takePhoto(page)).toBeDisabled();
   const saved = await page.evaluate(() => ({
     visits: Object.keys(sessionStorage).filter(k => k.startsWith("tb.visit.")),
     consent: sessionStorage.getItem("tb.consent"),
@@ -174,10 +175,10 @@ test("new visit can be canceled, then clears only app visit data and consent", a
   }));
   expect(saved).toEqual({ visits: [], consent: null, unrelated: "keep", lang: null });
   await page.reload();
-  await expect(page.getByRole("heading", { name: NOTICE })).toBeVisible();
-  await expect(page.getByText("No labels yet.", { exact: false })).toBeVisible();
+  await expect(consentBox(page)).not.toBeChecked();
+  await expect(page.getByRole("heading", { name: "This visit" })).toHaveCount(0);
   await expect(page.getByText("Norco", { exact: true })).toHaveCount(0);
-  await summaryLink(page).click();
+  await page.goto("/summary");
   await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeDisabled();
 });
 
@@ -201,9 +202,9 @@ test("new visit cancels pending extraction without reviving an old product", asy
     release.resolve();
     await finished.promise;
     await page.goto("/");
-    await expect(page.getByText("No labels yet.", { exact: false })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "This visit" })).toHaveCount(0);
     await expect(page.getByText("AI is reading the printed text…", { exact: true })).toHaveCount(0);
-    await summaryLink(page).click();
+    await page.goto("/summary");
     await expect(page.getByRole("button", { name: "Print / Save PDF" })).toBeDisabled();
   } finally { release.resolve(); }
 });
@@ -308,7 +309,7 @@ test("walkthrough asks before replacing a current non-demo visit", async ({ page
   await page.getByRole("textbox", { name: "Add a US medicine" }).fill("Tylenol");
   await page.getByRole("button", { name: "Add", exact: true }).click();
   await expect(page.getByText(/27 curated rules · 0 pharmacist-reviewed/)).toBeVisible();
-  await page.getByRole("link", { name: "Walkthrough", exact: true }).click();
+  await page.getByRole("link", { name: "Demo walkthrough", exact: true }).click();
   await page.getByRole("button", { name: "Load synthetic scenario", exact: true }).click();
   await expect(page.getByRole("dialog", { name: "Replace the current visit?" })).toBeVisible();
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
@@ -384,4 +385,29 @@ test("readiness preserves the current synthetic visit and performs no API checks
   await page.getByRole("link", { name: "Open demo walkthrough", exact: true }).click();
   await expect(page.getByRole("status")).toContainText("Expected demo findings reproduced.");
   expect(calls).toBe(0);
+});
+
+test("landing explains the steps; a returning device opens on the scanner", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Medicines from home");
+  await expect(page.getByRole("heading", { name: "Four steps, one photo each" })).toBeVisible();
+  await expect(page.locator("#how ol > li")).toHaveCount(4);
+  await page.getByRole("button", { name: "Try a sample", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "This visit" })).toBeVisible();
+  await expect(page.getByText(/27 curated rules · 0 pharmacist-reviewed/)).toBeVisible();
+  await page.goto("/");
+  await expect.poll(() => page.evaluate(() => Math.round(document.getElementById("scan")!.getBoundingClientRect().top))).toBeLessThan(120);
+});
+
+test("findings are sorted most severe first and copy as a chart note", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: "http://127.0.0.1:3100" });
+  await demo(page, "real-panadol-blister");
+  const badges = page.locator('section[aria-labelledby="findings-heading"] > ul > li > div:first-child > span:first-child');
+  await expect(badges).toHaveText(["High", "Moderate"]);
+  await page.getByRole("button", { name: "Copy for chart" }).click();
+  await expect(page.getByRole("button", { name: "Copied ✓" })).toBeVisible();
+  const note = await page.evaluate(() => navigator.clipboard.readText());
+  expect(note).toContain("Panadol: PARACETAMOL 500 mg = acetaminophen (RxCUI 161) [high]");
+  expect(note).toContain("HIGH: Acetaminophen in more than one product");
+  expect(note).toContain("- warfarin: warfarin (RxCUI 11289)");
 });

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Be_Vietnam_Pro, Fraunces } from "next/font/google";
 import "./globals.css";
 
 // Labels are mostly Vietnamese. Be Vietnam Pro is designed for Vietnamese: stacked diacritics (ế, ữ, ặ)
@@ -11,21 +11,30 @@ const beVietnam = Be_Vietnam_Pro({
   display: "swap",
 });
 
+// Display serif for headings. Variable, with an italic for the accent phrase in each heading.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["vietnamese", "latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Thuốc Bridge",
   description:
-    "Clinician workspace for identifying medicines bought abroad: reads the label, verifies every value against the printed text, maps to RxNorm and checks cited rules. Not a substitute for a pharmacist.",
+    "Photograph a Vietnamese medicine label: Thuốc Bridge reads the printed ingredients, matches them to US drug names, and flags duplicates with the patient's current medicines. Not a substitute for a pharmacist.",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0a1020",
+  themeColor: "#fbf3ea",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${beVietnam.variable} h-full antialiased`}>
+    <html lang="en" className={`${beVietnam.variable} ${fraunces.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -268,3 +268,40 @@ export function trailFor(ing: IngredientRow, lineNo: number | null, recon: Recon
   }
   return steps;
 }
+
+/**
+ * Plain-text medication reconciliation note for pasting into the chart.
+ * Only guard-checked values and deterministic findings; unresolved items say so.
+ */
+export function chartNote(visit: Visit): string {
+  const recon = visit.recon;
+  if (!recon) return "";
+  const lines: string[] = ["Medications brought from abroad (Thuốc Bridge, prototype; verify against the packaging):"];
+  if (recon.products.length === 0) lines.push("- None photographed.");
+  for (const p of recon.products) {
+    const name = p.brand ?? "Name not read";
+    if (p.ingredients.length === 0) {
+      lines.push(`- ${name}: UNVERIFIED (${p.unverified_reason ?? "no ingredients read"}). Ask pharmacist / bring the box.`);
+      continue;
+    }
+    const ings = p.ingredients.map((i) => {
+      const strength = i.strength !== null ? ` ${i.strength}${i.unit ? ` ${i.unit}` : ""}` : "";
+      if (i.confidence === "unverified") return `${i.printed_name}${strength} = UNVERIFIED`;
+      const us = i.resolution.concepts.map((c) => `${c.name} (RxCUI ${c.rxcui})`).join(" + ");
+      return `${i.printed_name}${strength} = ${us} [${i.confidence}]`;
+    });
+    lines.push(`- ${name}: ${ings.join("; ")}`);
+  }
+  lines.push("", "Current US medications as entered:");
+  if (recon.usMeds.length === 0) lines.push("- None entered.");
+  for (const m of recon.usMeds) {
+    const us = m.confidence === "unverified" ? "UNVERIFIED" : m.resolution.concepts.map((c) => `${c.name} (RxCUI ${c.rxcui})`).join(" + ");
+    lines.push(`- ${m.text}: ${us}`);
+  }
+  lines.push("", `Findings (${recon.alerts.length}; ${recon.rules_checked} curated rules, ${recon.rules_verified} pharmacist-reviewed):`);
+  if (recon.alerts.length === 0) lines.push("- No curated rule matched. Absence of an alert is not evidence of safety.");
+  for (const a of recon.alerts) {
+    lines.push(`- ${a.severity.toUpperCase()}: ${a.title}. ${a.rationale}${a.source ? ` Source: ${a.source.label}.` : ""}`);
+  }
+  return lines.join("\n");
+}
