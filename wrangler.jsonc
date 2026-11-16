@@ -2,10 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "thuoc-bridge",
   "workers_dev": true,
+  "preview_urls": true,
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-13",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "thuoc-bridge" }],
+  // Native Worker Previews require this block. Do not bind previews back to
+  // production: this app uses a read-only static cache, with no ISR/revalidation.
+  "previews": { "observability": { "enabled": false } },
   "observability": { "enabled": false }
 }

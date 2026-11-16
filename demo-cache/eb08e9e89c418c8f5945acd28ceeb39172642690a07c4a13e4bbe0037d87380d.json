@@ -3,13 +3,36 @@
   "extraction": {
     "is_medicine_package": true,
     "transcript": [
-      "ASSUMED amoxicillin 500",
+      "Paracetamol 650",
       "Thành phần:",
-      "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg"
+      "Paracetamol ..... 650 mg"
+    ],
+    "line_boxes": [
+      {
+        "line": 0,
+        "x": 27,
+        "y": 172,
+        "w": 201,
+        "h": 47
+      },
+      {
+        "line": 1,
+        "x": 26,
+        "y": 270,
+        "w": 145,
+        "h": 63
+      },
+      {
+        "line": 2,
+        "x": 27,
+        "y": 388,
+        "w": 318,
+        "h": 53
+      }
     ],
     "brand_name": {
-      "value": "ASSUMED amoxicillin 500",
-      "source_text": "ASSUMED amoxicillin 500",
+      "value": "Paracetamol 650",
+      "source_text": "Paracetamol 650",
       "confidence": 0.95
     },
     "manufacturer": {
@@ -31,18 +54,18 @@
     "ingredients": [
       {
         "name": {
-          "value": "Amoxicilin (dưới dạng Amoxicilin trihydrat)",
-          "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat)",
+          "value": "Paracetamol",
+          "source_text": "Paracetamol",
           "confidence": 0.95
         },
         "strength": {
-          "value": 500,
-          "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg",
+          "value": 650,
+          "source_text": "Paracetamol ..... 650 mg",
           "confidence": 0.95
         },
         "unit": {
           "value": "mg",
-          "source_text": "Amoxicilin (dưới dạng Amoxicilin trihydrat) ..... 500 mg",
+          "source_text": "Paracetamol ..... 650 mg",
           "confidence": 0.95
         }
       }

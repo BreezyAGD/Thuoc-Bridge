@@ -1,11 +1,11 @@
 {
-  "_comment": "Demo scenarios for the alert engine. Each lists what a label is ASSUMED to print (placeholders until the team verifies the real box), any typed US medicines, and the exact set of alert rule ids that must fire: no more, no fewer. Run with `npm run check:scenarios`. Replace the assumed ingredients with the real ones once each box has been read by a person.",
+  "_comment": "Demo scenarios for the alert engine. Each lists what a synthetic label prints (fictional sample names and assumed ingredients, placeholders until the team verifies the real box), any typed US medicines, and the exact set of alert rule ids that must fire: no more, no fewer. Run with `npm run check:scenarios`. Replace the assumed ingredients with the real ones once each box has been read by a person.",
   "scenarios": [
     {
       "id": "1-paracetamol-duplication",
       "description": "Vietnamese paracetamol product + US hydrocodone/acetaminophen",
       "products": [
-        { "brand": "ASSUMED paracetamol 650", "ingredients": [{ "name": "Paracetamol", "strength": 650, "unit": "mg" }] }
+        { "brand": "Paracetamol 650", "ingredients": [{ "name": "Paracetamol", "strength": 650, "unit": "mg" }] }
       ],
       "us_meds": ["Norco"],
       "expect": ["apap-duplicate"]
@@ -14,7 +14,7 @@
       "id": "1b-paracetamol-plus-tylenol",
       "description": "Vietnamese effervescent paracetamol + US Tylenol",
       "products": [
-        { "brand": "ASSUMED paracetamol 500 sủi", "ingredients": [{ "name": "Paracetamol", "strength": 500, "unit": "mg" }] }
+        { "brand": "Paracetamol 500 sủi", "ingredients": [{ "name": "Paracetamol", "strength": 500, "unit": "mg" }] }
       ],
       "us_meds": ["Tylenol"],
       "expect": ["apap-duplicate"]
@@ -24,7 +24,7 @@
       "description": "Ginkgo-containing circulation product + warfarin",
       "products": [
         {
-          "brand": "ASSUMED hoạt huyết dưỡng não",
+          "brand": "Hoạt huyết dưỡng não",
           "ingredients": [
             { "name": "Cao đinh lăng", "strength": 150, "unit": "mg" },
             { "name": "Cao bạch quả", "strength": 5, "unit": "mg" }
@@ -39,7 +39,7 @@
       "description": "Ginkgo-containing circulation product + apixaban",
       "products": [
         {
-          "brand": "ASSUMED hoạt huyết dưỡng não",
+          "brand": "Hoạt huyết dưỡng não",
           "ingredients": [
             { "name": "Cao đinh lăng", "strength": 150, "unit": "mg" },
             { "name": "Cao bạch quả", "strength": 5, "unit": "mg" }
@@ -54,7 +54,7 @@
       "description": "Combination cold medicine + blood-pressure medicine + US Tylenol (hidden acetaminophen)",
       "products": [
         {
-          "brand": "ASSUMED combination cold tablet",
+          "brand": "Viên cảm cúm",
           "ingredients": [
             { "name": "Paracetamol", "strength": 500, "unit": "mg" },
             { "name": "Phenylephrin HCl", "strength": 10, "unit": "mg" },
@@ -70,7 +70,7 @@
       "description": "Older cold formulation with phenylpropanolamine + lisinopril",
       "products": [
         {
-          "brand": "ASSUMED cold tablet (PPA formulation)",
+          "brand": "Viên cảm cúm PPA",
           "ingredients": [
             { "name": "Paracetamol", "strength": 500, "unit": "mg" },
             { "name": "Phenylpropanolamin HCl", "strength": 25, "unit": "mg" },
@@ -85,7 +85,7 @@
       "id": "4-otc-antibiotic",
       "description": "Amoxicillin bought over the counter",
       "products": [
-        { "brand": "ASSUMED amoxicillin 500", "ingredients": [{ "name": "Amoxicilin (dưới dạng Amoxicilin trihydrat)", "strength": 500, "unit": "mg" }] }
+        { "brand": "Amoxicilin 500", "ingredients": [{ "name": "Amoxicilin (dưới dạng Amoxicilin trihydrat)", "strength": 500, "unit": "mg" }] }
       ],
       "us_meds": [],
       "expect": ["otc-antibiotic", "beta-lactam-allergy"]
@@ -93,7 +93,7 @@
     {
       "id": "5-herbal-no-ingredient-list",
       "description": "Herbal product whose photo shows no legible ingredient list",
-      "products": [{ "brand": "ASSUMED herbal product", "ingredients": [] }],
+      "products": [{ "brand": "Cao thảo dược", "ingredients": [] }],
       "us_meds": ["lisinopril"],
       "expect": ["unresolved"]
     },
@@ -101,7 +101,7 @@
       "id": "negative-no-alert",
       "description": "Unrelated medicines: nothing should fire",
       "products": [
-        { "brand": "ASSUMED loratadin 10", "ingredients": [{ "name": "Loratadin", "strength": 10, "unit": "mg" }] }
+        { "brand": "Loratadin 10", "ingredients": [{ "name": "Loratadin", "strength": 10, "unit": "mg" }] }
       ],
       "us_meds": ["metformin"],
       "expect": []
@@ -111,7 +111,7 @@
       "description": "Ingredients formulated together in one product are not flagged against each other",
       "products": [
         {
-          "brand": "ASSUMED ibuprofen + paracetamol",
+          "brand": "Ibuprofen + Paracetamol",
           "ingredients": [
             { "name": "Ibuprofen", "strength": 200, "unit": "mg" },
             { "name": "Paracetamol", "strength": 325, "unit": "mg" }
@@ -125,8 +125,8 @@
       "id": "extra-nsaid-warfarin-steroid",
       "description": "OTC diclofenac + OTC dexamethasone + warfarin",
       "products": [
-        { "brand": "ASSUMED diclofenac 50", "ingredients": [{ "name": "Diclofenac natri", "strength": 50, "unit": "mg" }] },
-        { "brand": "ASSUMED dexamethason 0,5", "ingredients": [{ "name": "Dexamethason", "strength": 0.5, "unit": "mg" }] }
+        { "brand": "Diclofenac 50", "ingredients": [{ "name": "Diclofenac natri", "strength": 50, "unit": "mg" }] },
+        { "brand": "Dexamethason 0,5", "ingredients": [{ "name": "Dexamethason", "strength": 0.5, "unit": "mg" }] }
       ],
       "us_meds": ["warfarin"],
       "expect": ["nsaid-anticoagulant", "nsaid-corticosteroid", "systemic-corticosteroid"]

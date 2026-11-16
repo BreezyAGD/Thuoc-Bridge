@@ -3,15 +3,52 @@
   "extraction": {
     "is_medicine_package": true,
     "transcript": [
-      "ASSUMED cold tablet (PPA formulation)",
+      "Viên cảm cúm PPA",
       "Thành phần:",
       "Paracetamol ..... 500 mg",
       "Phenylpropanolamin HCl ..... 25 mg",
       "Clorpheniramin maleat ..... 2 mg"
     ],
+    "line_boxes": [
+      {
+        "line": 0,
+        "x": 26,
+        "y": 172,
+        "w": 214,
+        "h": 47
+      },
+      {
+        "line": 1,
+        "x": 26,
+        "y": 270,
+        "w": 145,
+        "h": 63
+      },
+      {
+        "line": 2,
+        "x": 27,
+        "y": 388,
+        "w": 318,
+        "h": 53
+      },
+      {
+        "line": 3,
+        "x": 27,
+        "y": 497,
+        "w": 448,
+        "h": 53
+      },
+      {
+        "line": 4,
+        "x": 26,
+        "y": 605,
+        "w": 423,
+        "h": 53
+      }
+    ],
     "brand_name": {
-      "value": "ASSUMED cold tablet (PPA formulation)",
-      "source_text": "ASSUMED cold tablet (PPA formulation)",
+      "value": "Viên cảm cúm PPA",
+      "source_text": "Viên cảm cúm PPA",
       "confidence": 0.95
     },
     "manufacturer": {

@@ -22,6 +22,8 @@ export function syntheticExtraction(p: Scenario["products"][number]): Extraction
   return {
     is_medicine_package: true,
     transcript: [p.brand, ...(lines.length ? ["Thành phần:", ...lines] : ["Hộp 3 vỉ x 10 viên"])],
+    // Filled with measured positions by scripts/demo-build.ts for the demo images.
+    line_boxes: [],
     brand_name: field(p.brand, p.brand),
     manufacturer: field<string>(null, null),
     registration_number: field<string>(null, null),

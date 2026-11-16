@@ -152,3 +152,48 @@ and enable it. Use the actual address displayed there. The repository now
 explicitly sets workers_dev: true so subsequent deployments request the public
 workers.dev route. No custom domain or DNS record is needed for this demo URL.
 This does not verify the app or Anthropic; run the hosted checks after enabling.
+
+## PR preview deployment configuration
+
+This Worker uses the native Worker Previews model. Cloudflare documents that
+custom commands in this model must invoke `wrangler preview` (or the supported
+`cf previews deploy` CLI). The earlier version-upload recommendation does not
+apply to this mode; changing its field to `npm run cf:upload` did not change the
+command executed by Builds, even after a fresh commit.
+
+| Cloudflare setting | Value |
+| --- | --- |
+| Build command | `npm run cf:build` |
+| Production branch | `main` |
+| Production deploy command | `npm run cf:deploy` |
+| Preview command | `npx wrangler preview` |
+| Root | `/` |
+
+The required `previews` block is now in `wrangler.jsonc`. Assets and compatibility
+settings remain at the top level and are inherited. Preview observability is
+explicitly disabled. Production's `WORKER_SELF_REFERENCE` service is deliberately
+not copied: a Preview service binding calls the target's production deployment.
+This application has no ISR or on-demand revalidation and uses a read-only static
+cache, so preview demo flows do not need that revalidation service. Revisit this
+configuration if revalidation is introduced.
+
+Secrets do not inherit from production. To test live extraction, add
+`ANTHROPIC_API_KEY` as a runtime Secret under Settings > Variables and secrets >
+Previews Base before creating a new Preview. Never add it to source or build
+variables. Synthetic demo flows need no Anthropic key. Existing Previews do not
+receive later Base secret updates automatically; configure their secret directly
+when needed.
+
+A fresh PR build should now pass the missing-previews-block validation. Check
+its actual logs and URL before claiming hosted success. Test synthetic demos,
+API routes, and printing on that URL; local build checks do not establish native
+remote Preview runtime behavior.
+
+`cf:upload` and `cf:upload:dry-run` remain available for manual version uploads.
+They create a version of the production Worker, not an isolated native Preview,
+and are not the Preview command for this Builds project.
+
+References:
+- https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/
+- https://developers.cloudflare.com/workers/previews/configuration/
+- https://opennext.js.org/cloudflare/cli

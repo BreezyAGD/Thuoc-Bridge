@@ -2,13 +2,13 @@
 
 import { useId, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { clearConsent, useLang } from "@/lib/client-store";
+import { clearConsent } from "@/lib/client-store";
 import { dict } from "@/lib/i18n";
 import { resetVisit, useVisit } from "@/lib/visit-store";
 
-export function NewVisit({ english = false }: { english?: boolean }) {
-  const { t: preferred } = useLang();
-  const t = english ? dict.en : preferred;
+/** Clinician-facing, so always English; it never changes the page language. */
+export function NewVisit() {
+  const t = dict.en;
   const visit = useVisit();
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
